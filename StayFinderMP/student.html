@@ -6,384 +6,737 @@
 
     <title>Student Dashboard - Stay Finder</title>
 
-    <!-- Student CSS ONLY -->
     <link rel="stylesheet" href="student.css">
 </head>
 
-<body>
+<body class="student-page">
 
-    <!-- ================= NAVBAR ================= -->
-    <header class="student-navbar">
+    <!-- ================= SIDEBAR ================= -->
 
-        <div class="logo-section">
-            <div class="logo-icon">🏠</div>
+    <aside class="student-sidebar">
+
+        <div class="student-brand">
+            <div class="brand-icon">🏠</div>
 
             <div>
                 <h2>Stay Finder</h2>
-                <p>Find. Compare. Choose.</p>
+                <span>Find. Compare. Choose.</span>
             </div>
         </div>
 
-        <nav>
-            <a href="#dashboard">Home</a>
-            <a href="#find-stay">Find Stay</a>
-            <a href="#saved">Saved Stays</a>
-            <a href="#compare">Compare</a>
-            <a href="#profile">My Profile</a>
+
+        <nav class="student-menu">
+
+            <a href="#" class="menu-item active">
+                <span class="menu-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#findStay" class="menu-item">
+                <span class="menu-icon">⌕</span>
+                <span>Find Stay</span>
+            </a>
+
+            <a href="#savedStays" class="menu-item">
+                <span class="menu-icon">♡</span>
+                <span>Saved Stays</span>
+            </a>
+
+            <a href="#compare" class="menu-item">
+                <span class="menu-icon">⚖</span>
+                <span>Compare</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <span class="menu-icon">▣</span>
+                <span>My Bookings</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <span class="menu-icon">✉</span>
+                <span>Messages</span>
+
+                <span class="notification-badge">3</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <span class="menu-icon">☆</span>
+                <span>Reviews</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <span class="menu-icon">▤</span>
+                <span>Payments</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <span class="menu-icon">♙</span>
+                <span>My Profile</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <span class="menu-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
         </nav>
 
-        <div class="nav-right">
-            <span id="studentName" class="student-name">
-                Student
-            </span>
 
-            <button class="logout-btn" onclick="logout()">
-                Logout
-            </button>
-        </div>
+        <!-- Sidebar bottom card -->
 
-    </header>
+        <div class="sidebar-help">
 
-
-    <!-- ================= MAIN CONTENT ================= -->
-    <main>
-
-        <!-- ================= WELCOME ================= -->
-        <section class="welcome-section" id="dashboard">
-
-            <div>
-                <p class="welcome-small">WELCOME BACK 👋</p>
-
-                <h1>
-                    Find Your Perfect Stay
-                    <span>Near Your College</span>
-                </h1>
-
-                <p class="welcome-text">
-                    Search, compare and choose the best hostels,
-                    PGs and rooms around your college.
-                </p>
-            </div>
-
-            <div class="welcome-icon">
-                🏠
-            </div>
-
-        </section>
-
-
-        <!-- ================= SEARCH ================= -->
-        <section class="search-section" id="find-stay">
-
-            <h2>🔎 Find Your Stay</h2>
+            <h3>Find your perfect stay</h3>
 
             <p>
-                Search accommodation according to your college,
-                location and budget.
+                Comfortable stays, great locations
+                and the best prices.
             </p>
 
-            <div class="search-box">
+            <button onclick="goToFindStay()">
+                Explore Stays
+                <span>→</span>
+            </button>
 
-                <input
-                    type="text"
-                    id="collegeSearch"
-                    placeholder="Search your college or location..."
-                >
+        </div>
 
-                <button onclick="searchStay()">
-                    🔍 Search
+    </aside>
+
+
+    <!-- ================= MAIN AREA ================= -->
+
+    <main class="student-main">
+
+
+        <!-- ================= TOP NAVBAR ================= -->
+
+        <header class="student-navbar">
+
+            <div class="mobile-menu">
+                ☰
+            </div>
+
+            <nav class="top-navigation">
+
+                <a href="#">Home</a>
+
+                <a href="#findStay">
+                    Find Stay
+                </a>
+
+                <a href="#savedStays">
+                    Saved Stays
+                </a>
+
+                <a href="#compare">
+                    Compare
+                </a>
+
+            </nav>
+
+
+            <div class="student-account">
+
+                <div class="notification">
+                    🔔
+                    <span>2</span>
+                </div>
+
+                <div class="profile-avatar">
+                    👩🏻
+                </div>
+
+                <div class="account-details">
+
+                    <strong id="studentName">
+                        Student
+                    </strong>
+
+                    <small>
+                        Student
+                    </small>
+
+                </div>
+
+                <span class="dropdown-arrow">
+                    ▼
+                </span>
+
+                <button
+                    class="logout-btn"
+                    onclick="studentLogout()">
+                    Logout
                 </button>
 
             </div>
 
-            <div class="popular-searches">
-
-                <span>Popular Searches:</span>
-
-                <button onclick="setSearch('KIT College')">
-                    KIT College
-                </button>
-
-                <button onclick="setSearch('Shivaji University')">
-                    Shivaji University
-                </button>
-
-                <button onclick="setSearch('D.Y. Patil College')">
-                    D.Y. Patil College
-                </button>
-
-            </div>
-
-        </section>
+        </header>
 
 
-        <!-- ================= QUICK ACTIONS ================= -->
-        <section class="section-container">
 
-            <h2 class="section-title">
-                What would you like to do?
-            </h2>
+        <!-- ================= DASHBOARD CONTENT ================= -->
 
-            <div class="action-grid">
+        <section class="dashboard-content">
 
-                <div class="action-card"
-                     onclick="scrollToSection('find-stay')">
 
-                    <div class="action-icon">🔎</div>
+            <!-- ================= HERO ================= -->
 
-                    <h3>Find Stay</h3>
+            <section class="student-hero">
+
+                <div class="hero-text">
+
+                    <div class="welcome-text">
+                        WELCOME BACK 👋
+                    </div>
+
+                    <h1>
+                        Find Your Perfect Stay
+                    </h1>
+
+                    <h2>
+                        Near Your College
+                    </h2>
 
                     <p>
-                        Search hostels, PGs and rooms
-                        near your college.
+                        Search, compare and choose the best
+                        hostels, PGs and rooms around your college.
                     </p>
-
-                    <button>Explore Stays →</button>
 
                 </div>
 
 
-                <div class="action-card"
-                     onclick="scrollToSection('saved')">
+                <div class="hero-illustration">
 
-                    <div class="action-icon">❤️</div>
-
-                    <h3>Saved Stays</h3>
-
-                    <p>
-                        View the accommodations
-                        you have saved.
-                    </p>
-
-                    <button>View Saved →</button>
-
-                </div>
-
-
-                <div class="action-card"
-                     onclick="scrollToSection('compare')">
-
-                    <div class="action-icon">⚖️</div>
-
-                    <h3>Compare Stays</h3>
-
-                    <p>
-                        Compare rent, facilities,
-                        location and ratings.
-                    </p>
-
-                    <button>Compare Now →</button>
-
-                </div>
-
-
-                <div class="action-card"
-                     onclick="scrollToSection('profile')">
-
-                    <div class="action-icon">👤</div>
-
-                    <h3>My Profile</h3>
-
-                    <p>
-                        View and manage your
-                        student information.
-                    </p>
-
-                    <button>View Profile →</button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= RECOMMENDED STAYS ================= -->
-        <section class="section-container">
-
-            <div class="section-heading">
-
-                <div>
-                    <h2>Recommended Stays</h2>
-
-                    <p>
-                        Popular accommodation options
-                        for students.
-                    </p>
-                </div>
-
-                <button class="view-all-btn">
-                    View All →
-                </button>
-
-            </div>
-
-
-            <div class="stay-grid">
-
-                <!-- STAY 1 -->
-                <div class="stay-card">
-
-                    <div class="stay-image">
+                    <div class="building">
                         🏢
                     </div>
 
-                    <div class="stay-content">
+                    <div class="tree tree-one">
+                        🌳
+                    </div>
 
-                        <span class="verified">
-                            ✓ Verified
-                        </span>
+                    <div class="tree tree-two">
+                        🌳
+                    </div>
 
-                        <h3>SAI Hostel</h3>
+                </div>
 
-                        <p class="location">
-                            📍 Kolhapur
-                        </p>
+            </section>
+
+
+
+            <!-- ================= SEARCH ================= -->
+
+            <section
+                class="find-stay-box"
+                id="findStay">
+
+                <div class="section-heading">
+
+                    <div class="heading-icon">
+                        🔍
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Find Your Stay
+                        </h2>
 
                         <p>
-                            ⭐ 4.5
-                            <span class="reviews">
-                                (128 reviews)
-                            </span>
+                            Search accommodation according to
+                            your college, location and budget.
                         </p>
-
-                        <div class="stay-details">
-
-                            <span>🛏️ Rooms Available</span>
-
-                            <span>📶 Wi-Fi</span>
-
-                            <span>🍽️ Mess</span>
-
-                        </div>
-
-                        <div class="stay-bottom">
-
-                            <div>
-                                <small>Starting from</small>
-
-                                <strong>
-                                    ₹5,000/month
-                                </strong>
-                            </div>
-
-                            <button>
-                                View Details
-                            </button>
-
-                        </div>
 
                     </div>
 
                 </div>
 
 
-                <!-- STAY 2 -->
-                <div class="stay-card">
+                <div class="search-container">
 
-                    <div class="stay-image">
-                        🏠
-                    </div>
+                    <div class="search-input">
 
-                    <div class="stay-content">
-
-                        <span class="verified">
-                            ✓ Verified
+                        <span>
+                            🔍
                         </span>
 
-                        <h3>Shiv Residency</h3>
+                        <input
+                            type="text"
+                            id="staySearch"
+                            placeholder="Search college, location or hostel..."
+                        >
 
-                        <p class="location">
-                            📍 Kolhapur
-                        </p>
+                    </div>
+
+                    <button
+                        class="search-button"
+                        onclick="searchStay()">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+
+                <div class="popular-searches">
+
+                    <strong>
+                        Popular Searches:
+                    </strong>
+
+                    <button onclick="setSearch('KIT College')">
+                        KIT College
+                    </button>
+
+                    <button onclick="setSearch('Shivaji University')">
+                        Shivaji University
+                    </button>
+
+                    <button onclick="setSearch('D Y Patil College')">
+                        D Y Patil College
+                    </button>
+
+                    <button onclick="setSearch('Rajaram College')">
+                        Rajaram College
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= QUICK ACCESS ================= -->
+
+            <section class="quick-section">
+
+                <div class="section-title">
+
+                    <h2>
+                        Quick Access
+                    </h2>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+
+                    <div
+                        class="quick-card blue-card"
+                        onclick="goToFindStay()">
+
+                        <div class="quick-icon">
+                            🔍
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Find Stay
+                            </h3>
+
+                            <p>
+                                Search hostels, PGs
+                                and rooms
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="quick-card pink-card"
+                        onclick="showSavedMessage()">
+
+                        <div class="quick-icon">
+                            ♡
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Saved Stays
+                            </h3>
+
+                            <p>
+                                View your saved
+                                properties
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="quick-card purple-card"
+                        onclick="showCompareMessage()">
+
+                        <div class="quick-icon">
+                            ⚖
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Compare
+                            </h3>
+
+                            <p>
+                                Compare properties
+                                side by side
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="quick-card green-card">
+
+                        <div class="quick-icon">
+                            📍
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Nearby Stays
+                            </h3>
+
+                            <p>
+                                Find stays near
+                                your location
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="quick-card orange-card">
+
+                        <div class="quick-icon">
+                            💬
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Messages
+                            </h3>
+
+                            <p>
+                                Chat with property
+                                owners
+                            </p>
+
+                        </div>
+
+                        <span class="card-badge">
+                            3
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= RECOMMENDED STAYS ================= -->
+
+            <section class="recommended-section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Recommended Stays
+                        </h2>
 
                         <p>
-                            ⭐ 4.3
-                            <span class="reviews">
-                                (96 reviews)
-                            </span>
+                            Popular accommodation near your college
                         </p>
 
-                        <div class="stay-details">
+                    </div>
 
-                            <span>🛏️ Single Rooms</span>
+                    <button class="view-all">
+                        View All →
+                    </button>
 
-                            <span>📶 Wi-Fi</span>
+                </div>
 
-                            <span>🧺 Laundry</span>
 
-                        </div>
 
-                        <div class="stay-bottom">
+                <div class="property-grid">
 
-                            <div>
-                                <small>Starting from</small>
 
-                                <strong>
-                                    ₹6,000/month
-                                </strong>
-                            </div>
+                    <!-- PROPERTY 1 -->
 
-                            <button>
-                                View Details
+                    <div class="property-card">
+
+                        <div class="property-image property-one">
+
+                            <span class="property-tag green-tag">
+                                Popular
+                            </span>
+
+                            <button class="heart-button">
+                                ♡
                             </button>
 
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- STAY 3 -->
-                <div class="stay-card">
-
-                    <div class="stay-image">
-                        🏨
-                    </div>
-
-                    <div class="stay-content">
-
-                        <span class="verified">
-                            ✓ Verified
-                        </span>
-
-                        <h3>College View PG</h3>
-
-                        <p class="location">
-                            📍 Near KIT College
-                        </p>
-
-                        <p>
-                            ⭐ 4.6
-                            <span class="reviews">
-                                (154 reviews)
-                            </span>
-                        </p>
-
-                        <div class="stay-details">
-
-                            <span>🛏️ Furnished</span>
-
-                            <span>📶 Wi-Fi</span>
-
-                            <span>🚗 Parking</span>
-
-                        </div>
-
-                        <div class="stay-bottom">
-
-                            <div>
-                                <small>Starting from</small>
-
-                                <strong>
-                                    ₹5,500/month
-                                </strong>
+                            <div class="property-house">
+                                🏢
                             </div>
 
-                            <button>
-                                View Details
+                        </div>
+
+
+                        <div class="property-info">
+
+                            <h3>
+                                Sai Hostel
+                                <span class="verified">✓</span>
+                            </h3>
+
+                            <p class="location">
+                                📍 Kolhapur • 0.8 km from KIT
+                            </p>
+
+                            <div class="property-rating">
+
+                                <span>
+                                    ⭐ 4.5
+                                </span>
+
+                                <small>
+                                    (28 reviews)
+                                </small>
+
+                                <strong>
+                                    ₹5,000
+                                    <small>/month</small>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="facility-list">
+
+                                <span>Wi-Fi</span>
+                                <span>Mess</span>
+                                <span>CCTV</span>
+                                <span>+4</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PROPERTY 2 -->
+
+                    <div class="property-card">
+
+                        <div class="property-image property-two">
+
+                            <span class="property-tag purple-tag">
+                                Best Rated
+                            </span>
+
+                            <button class="heart-button saved">
+                                ♥
                             </button>
+
+                            <div class="property-house">
+                                🏢
+                            </div>
+
+                        </div>
+
+
+                        <div class="property-info">
+
+                            <h3>
+                                Green View PG
+                                <span class="verified">✓</span>
+                            </h3>
+
+                            <p class="location">
+                                📍 Kolhapur • 1.2 km from KIT
+                            </p>
+
+                            <div class="property-rating">
+
+                                <span>
+                                    ⭐ 4.7
+                                </span>
+
+                                <small>
+                                    (35 reviews)
+                                </small>
+
+                                <strong>
+                                    ₹6,000
+                                    <small>/month</small>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="facility-list">
+
+                                <span>Wi-Fi</span>
+                                <span>Food</span>
+                                <span>Laundry</span>
+                                <span>+3</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PROPERTY 3 -->
+
+                    <div class="property-card">
+
+                        <div class="property-image property-three">
+
+                            <span class="property-tag blue-tag">
+                                Budget Friendly
+                            </span>
+
+                            <button class="heart-button">
+                                ♡
+                            </button>
+
+                            <div class="property-house">
+                                🛏️
+                            </div>
+
+                        </div>
+
+
+                        <div class="property-info">
+
+                            <h3>
+                                Shivam PG
+                                <span class="verified">✓</span>
+                            </h3>
+
+                            <p class="location">
+                                📍 Kolhapur • 1.5 km from KIT
+                            </p>
+
+                            <div class="property-rating">
+
+                                <span>
+                                    ⭐ 4.2
+                                </span>
+
+                                <small>
+                                    (18 reviews)
+                                </small>
+
+                                <strong>
+                                    ₹4,500
+                                    <small>/month</small>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="facility-list">
+
+                                <span>Wi-Fi</span>
+                                <span>Mess</span>
+                                <span>Parking</span>
+                                <span>+2</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PROPERTY 4 -->
+
+                    <div class="property-card">
+
+                        <div class="property-image property-four">
+
+                            <span class="property-tag orange-tag">
+                                Near College
+                            </span>
+
+                            <button class="heart-button">
+                                ♡
+                            </button>
+
+                            <div class="property-house">
+                                🏢
+                            </div>
+
+                        </div>
+
+
+                        <div class="property-info">
+
+                            <h3>
+                                Royal Hostel
+                                <span class="verified">✓</span>
+                            </h3>
+
+                            <p class="location">
+                                📍 Kolhapur • 0.5 km from KIT
+                            </p>
+
+                            <div class="property-rating">
+
+                                <span>
+                                    ⭐ 4.4
+                                </span>
+
+                                <small>
+                                    (22 reviews)
+                                </small>
+
+                                <strong>
+                                    ₹5,500
+                                    <small>/month</small>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="facility-list">
+
+                                <span>Wi-Fi</span>
+                                <span>Mess</span>
+                                <span>CCTV</span>
+                                <span>+3</span>
+
+                            </div>
 
                         </div>
 
@@ -391,215 +744,369 @@
 
                 </div>
 
-            </div>
-
-        </section>
+            </section>
 
 
-        <!-- ================= SAVED ================= -->
-        <section class="section-container hidden-section"
-                 id="saved">
 
-            <h2 class="section-title">
-                ❤️ Your Saved Stays
-            </h2>
+            <!-- ================= BOTTOM SECTION ================= -->
 
-            <div class="empty-box">
-
-                <div>❤️</div>
-
-                <h3>No saved stays yet</h3>
-
-                <p>
-                    When you find a stay you like,
-                    save it here for later.
-                </p>
-
-            </div>
-
-        </section>
+            <section class="bottom-grid">
 
 
-        <!-- ================= COMPARE ================= -->
-        <section class="section-container hidden-section"
-                 id="compare">
+                <!-- SAVED STAYS -->
 
-            <h2 class="section-title">
-                ⚖️ Compare Stays
-            </h2>
+                <div
+                    class="bottom-card"
+                    id="savedStays">
 
-            <div class="empty-box">
+                    <div class="bottom-header">
 
-                <div>⚖️</div>
+                        <div>
 
-                <h3>No stays selected</h3>
+                            <h2>
+                                Your Saved Stays
+                            </h2>
 
-                <p>
-                    Select stays to compare rent,
-                    facilities, location and ratings.
-                </p>
+                            <p>
+                                Properties you have saved
+                            </p>
 
-            </div>
+                        </div>
 
-        </section>
+                        <button>
+                            View All →
+                        </button>
+
+                    </div>
 
 
-        <!-- ================= PROFILE ================= -->
-        <section class="section-container"
-                 id="profile">
+                    <div class="saved-property">
 
-            <h2 class="section-title">
-                👤 My Profile
-            </h2>
+                        <div class="saved-image">
+                            🏢
+                        </div>
 
-            <div class="profile-card">
+                        <div class="saved-details">
 
-                <div class="profile-avatar">
-                    👤
-                </div>
+                            <h3>
+                                Sai Hostel
+                            </h3>
 
-                <div class="profile-info">
+                            <p>
+                                Kolhapur • 0.8 km from KIT
+                            </p>
 
-                    <h3 id="profileName">
-                        Student
-                    </h3>
+                        </div>
 
-                    <p>
-                        <strong>Email:</strong>
-                        <span id="profileEmail">
-                            Not available
+                        <strong>
+                            ₹5,000
+                            <small>/month</small>
+                        </strong>
+
+                        <span class="saved-heart">
+                            ♥
                         </span>
-                    </p>
 
-                    <p>
-                        <strong>Account Type:</strong>
-                        Student / Tenant
-                    </p>
+                    </div>
 
                 </div>
 
-            </div>
+
+
+                <!-- RECENT SEARCHES -->
+
+                <div class="bottom-card">
+
+                    <div class="bottom-header">
+
+                        <div>
+
+                            <h2>
+                                Recent Searches
+                            </h2>
+
+                            <p>
+                                Your latest searches
+                            </p>
+
+                        </div>
+
+                        <button onclick="clearSearches()">
+                            Clear All
+                        </button>
+
+                    </div>
+
+
+                    <div class="recent-search">
+
+                        <span>
+                            🔍
+                        </span>
+
+                        <strong>
+                            KIT College, Kolhapur
+                        </strong>
+
+                        <small>
+                            Today
+                        </small>
+
+                        <button>
+                            ×
+                        </button>
+
+                    </div>
+
+
+                    <div class="recent-search">
+
+                        <span>
+                            🔍
+                        </span>
+
+                        <strong>
+                            Shivaji University, Kolhapur
+                        </strong>
+
+                        <small>
+                            Yesterday
+                        </small>
+
+                        <button>
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
 
         </section>
 
     </main>
 
 
-    <!-- ================= FOOTER ================= -->
-    <footer>
-
-        <div class="footer-logo">
-            🏠 <strong>Stay Finder</strong>
-        </div>
-
-        <p>
-            Find. Compare. Choose.
-        </p>
-
-        <p class="copyright">
-            © 2026 Stay Finder. All rights reserved.
-        </p>
-
-    </footer>
-
 
     <!-- ================= JAVASCRIPT ================= -->
 
     <script>
 
-        /* ----------------------------------
-           LOAD STUDENT INFORMATION
-        ---------------------------------- */
+        /* --------------------------------
+           LOAD STUDENT NAME
+        -------------------------------- */
 
-        const student =
-            JSON.parse(localStorage.getItem("loggedInUser"));
+        function loadStudentName() {
 
-        if (student && student.name) {
+            let name = "Student";
 
-            document.getElementById("studentName")
-                .textContent = student.name;
+            /*
+             * Try to read the user information
+             * created by your existing auth system.
+             */
 
-            document.getElementById("profileName")
-                .textContent = student.name;
+            try {
 
-            if (student.email) {
+                const currentUser =
+                    JSON.parse(
+                        localStorage.getItem("currentUser")
+                    );
 
-                document.getElementById("profileEmail")
-                    .textContent = student.email;
+                if (currentUser) {
+
+                    name =
+                        currentUser.name ||
+                        currentUser.fullName ||
+                        currentUser.username ||
+                        "Student";
+
+                }
+
+            } catch (error) {
+
+                console.log(
+                    "Unable to read currentUser"
+                );
 
             }
+
+
+            /*
+             * Fallback for systems that store
+             * the name separately.
+             */
+
+            if (name === "Student") {
+
+                name =
+                    localStorage.getItem("studentName") ||
+                    localStorage.getItem("userName") ||
+                    "Student";
+
+            }
+
+
+            document.getElementById(
+                "studentName"
+            ).textContent = name;
 
         }
 
 
-        /* ----------------------------------
+        /* --------------------------------
            SEARCH
-        ---------------------------------- */
+        -------------------------------- */
 
         function searchStay() {
 
             const search =
-                document.getElementById("collegeSearch").value.trim();
+                document.getElementById(
+                    "staySearch"
+                ).value.trim();
 
             if (search === "") {
 
-                alert("Please enter a college or location.");
+                alert(
+                    "Please enter a college, location or hostel name."
+                );
 
                 return;
+
             }
 
+            localStorage.setItem(
+                "lastSearch",
+                search
+            );
+
             alert(
-                "Searching stays near: " + search
+                "Searching for: " + search
             );
 
         }
 
 
-        /* ----------------------------------
+        /* --------------------------------
            POPULAR SEARCH
-        ---------------------------------- */
+        -------------------------------- */
 
         function setSearch(value) {
 
-            document.getElementById("collegeSearch")
-                .value = value;
+            document.getElementById(
+                "staySearch"
+            ).value = value;
 
-            searchStay();
+            document.getElementById(
+                "findStay"
+            ).scrollIntoView({
+                behavior: "smooth"
+            });
 
         }
 
 
-        /* ----------------------------------
-           SCROLL
-        ---------------------------------- */
+        /* --------------------------------
+           FIND STAY
+        -------------------------------- */
 
-        function scrollToSection(id) {
+        function goToFindStay() {
 
-            const section =
-                document.getElementById(id);
+            document.getElementById(
+                "findStay"
+            ).scrollIntoView({
+                behavior: "smooth"
+            });
 
-            if (section) {
+        }
 
-                section.scrollIntoView({
-                    behavior: "smooth"
-                });
+
+        /* --------------------------------
+           SAVED STAYS
+        -------------------------------- */
+
+        function showSavedMessage() {
+
+            document.getElementById(
+                "savedStays"
+            ).scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /* --------------------------------
+           COMPARE
+        -------------------------------- */
+
+        function showCompareMessage() {
+
+            alert(
+                "Compare feature will be available soon."
+            );
+
+        }
+
+
+        /* --------------------------------
+           CLEAR SEARCHES
+        -------------------------------- */
+
+        function clearSearches() {
+
+            alert(
+                "Recent searches cleared."
+            );
+
+        }
+
+
+        /* --------------------------------
+           LOGOUT
+        -------------------------------- */
+
+        function studentLogout() {
+
+            /*
+             * Remove current login session.
+             */
+
+            localStorage.removeItem(
+                "currentUser"
+            );
+
+            localStorage.removeItem(
+                "loggedInUser"
+            );
+
+            localStorage.removeItem(
+                "studentName"
+            );
+
+            /*
+             * Return to homepage.
+             */
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        /* --------------------------------
+           PAGE LOAD
+        -------------------------------- */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadStudentName();
 
             }
-
-        }
-
-
-        /* ----------------------------------
-           LOGOUT
-        ---------------------------------- */
-
-        function logout() {
-
-            localStorage.removeItem("loggedInUser");
-
-            window.location.href = "index.html";
-
-        }
+        );
 
     </script>
 

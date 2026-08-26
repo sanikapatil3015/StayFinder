@@ -1,576 +1,1105 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Owner Dashboard | Stay Finder</title>
+    <title>Owner Dashboard - Stay Finder</title>
 
     <link rel="stylesheet" href="owner.css">
-
 </head>
 
+<body class="owner-page">
 
-<body>
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="owner-sidebar">
 
-
-<header class="owner-navbar">
-
-    <div class="owner-logo">
-
-        <span>🏠</span>
-
-        <div>
-
-            <h2>Stay Finder</h2>
-
-            <small>Owner Dashboard</small>
-
-        </div>
-
-    </div>
-
-
-    <nav>
-
-        <a href="#dashboard">
-            Dashboard
-        </a>
-
-        <a href="#property">
-            My Property
-        </a>
-
-        <a href="#availability">
-            Availability
-        </a>
-
-    </nav>
-
-
-    <div class="owner-user">
-
-        <span>
-            👤
-        </span>
-
-        <strong id="ownerName">
-            Owner
-        </strong>
-
-        <button onclick="logoutOwner()">
-            Logout
-        </button>
-
-    </div>
-
-</header>
-
-
-<main class="owner-dashboard"
-      id="dashboard">
-
-
-    <section class="owner-welcome">
-
-        <h1>
-            Welcome,
-            <span id="welcomeOwnerName">
-                Owner
-            </span>! 👋
-        </h1>
-
-        <p>
-            Manage your property and room availability.
-        </p>
-
-    </section>
-
-
-    <!-- STATS -->
-
-    <section class="owner-stats">
-
-        <div class="owner-stat">
-
-            <span>🏠</span>
+        <div class="owner-brand">
+            <div class="brand-icon">🏠</div>
 
             <div>
-
-                <strong>
-                    1
-                </strong>
-
-                <small>
-                    Properties
-                </small>
-
+                <h2>Stay Finder</h2>
+                <span>Owner Dashboard</span>
             </div>
-
         </div>
 
+        <nav class="owner-navigation">
 
-        <div class="owner-stat">
+            <a href="#dashboard" class="owner-nav-link active">
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
 
-            <span>🛏️</span>
+            <a href="#property" class="owner-nav-link">
+                <span class="nav-icon">🏢</span>
+                <span>My Property</span>
+            </a>
 
-            <div>
+            <a href="#rooms" class="owner-nav-link">
+                <span class="nav-icon">🛏</span>
+                <span>Room Availability</span>
+            </a>
 
-                <strong id="totalRooms">
-                    20
-                </strong>
+            <a href="#facilities" class="owner-nav-link">
+                <span class="nav-icon">✦</span>
+                <span>Facilities</span>
+            </a>
 
-                <small>
-                    Total Rooms
-                </small>
+            <a href="#pricing" class="owner-nav-link">
+                <span class="nav-icon">₹</span>
+                <span>Pricing & Rent</span>
+            </a>
 
-            </div>
+            <a href="#reviews" class="owner-nav-link">
+                <span class="nav-icon">★</span>
+                <span>Reviews</span>
+            </a>
 
+            <a href="#enquiries" class="owner-nav-link">
+                <span class="nav-icon">💬</span>
+                <span>Bookings / Enquiries</span>
+            </a>
+
+            <a href="#analytics" class="owner-nav-link">
+                <span class="nav-icon">▥</span>
+                <span>Analytics</span>
+            </a>
+
+            <a href="#profile" class="owner-nav-link">
+                <span class="nav-icon">⚙</span>
+                <span>Profile & Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>© 2026 Stay Finder</p>
+            <span>All rights reserved.</span>
         </div>
 
-
-        <div class="owner-stat">
-
-            <span>🟢</span>
-
-            <div>
-
-                <strong id="availableRooms">
-                    8
-                </strong>
-
-                <small>
-                    Available Rooms
-                </small>
-
-            </div>
-
-        </div>
+    </aside>
 
 
-        <div class="owner-stat">
+    <!-- ================= MAIN AREA ================= -->
 
-            <span>👥</span>
+    <main class="owner-main">
 
-            <div>
+        <!-- TOP HEADER -->
+        <header class="owner-header">
 
-                <strong>
-                    12
-                </strong>
-
-                <small>
-                    Occupied
-                </small>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- PROPERTY -->
-
-    <section
-        class="owner-property"
-        id="property">
-
-
-        <div class="owner-section-title">
-
-            <h2>
-                My Property
-            </h2>
-
-            <button onclick="editProperty()">
-                ✏️ Edit
+            <button class="sidebar-toggle" type="button">
+                ☰
             </button>
 
-        </div>
+            <div class="header-right">
 
+                <button class="notification-button" type="button">
+                    🔔
+                    <span class="notification-count">3</span>
+                </button>
 
-        <div class="property-card">
+                <div class="owner-profile">
 
-            <div class="property-image">
-                🏠
+                    <div class="owner-avatar" id="ownerAvatar">
+                        O
+                    </div>
+
+                    <div class="owner-profile-text">
+                        <strong id="ownerName">
+                            Owner
+                        </strong>
+
+                        <span>Property Owner</span>
+                    </div>
+
+                    <span class="profile-arrow">⌄</span>
+
+                </div>
+
+                <button
+                    class="logout-button"
+                    type="button"
+                    id="ownerLogout">
+                    Logout
+                </button>
+
             </div>
 
-
-            <div class="property-info">
-
-                <h2 id="propertyName">
-                    Property Name
-                </h2>
-
-                <p id="propertyLocation">
-                    📍 Property Location
-                </p>
-
-                <p>
-                    📞 Contact available after verification
-                </p>
+        </header>
 
 
-                <div class="property-tags">
+        <!-- ================= DASHBOARD ================= -->
 
-                    <span>
-                        Wi-Fi
-                    </span>
+        <section class="owner-content" id="dashboard">
 
-                    <span>
-                        Mess
-                    </span>
+            <!-- WELCOME -->
+            <div class="welcome-section">
 
-                    <span>
-                        CCTV
-                    </span>
+                <div>
+                    <p class="welcome-small">
+                        OWNER DASHBOARD
+                    </p>
 
-                    <span>
-                        Parking
-                    </span>
+                    <h1>
+                        Welcome back,
+                        <span id="welcomeOwnerName">Owner</span>! 👋
+                    </h1>
 
-                    <span>
-                        Laundry
-                    </span>
+                    <p>
+                        Here's what's happening with your property today.
+                    </p>
+                </div>
+
+                <div class="date-card">
+
+                    <div class="date-icon">
+                        📅
+                    </div>
+
+                    <div>
+                        <strong id="currentDate">
+                            Today
+                        </strong>
+
+                        <span>
+                            Manage your property easily
+                        </span>
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
 
-    </section>
+            <!-- ================= STATISTICS ================= -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card blue-card">
+
+                    <div class="stat-icon">
+                        🏢
+                    </div>
+
+                    <div>
+                        <span class="stat-label">
+                            Total Property
+                        </span>
+
+                        <strong>
+                            1
+                        </strong>
+
+                        <small>
+                            Active Property
+                        </small>
+                    </div>
+
+                </div>
 
 
-    <!-- AVAILABILITY -->
+                <div class="stat-card green-card">
 
-    <section
-        class="availability-section"
-        id="availability">
+                    <div class="stat-icon">
+                        🛏
+                    </div>
+
+                    <div>
+                        <span class="stat-label">
+                            Total Rooms
+                        </span>
+
+                        <strong id="totalRoomsDisplay">
+                            20
+                        </strong>
+
+                        <small>
+                            Rooms Listed
+                        </small>
+                    </div>
+
+                </div>
 
 
-        <div class="owner-section-title">
+                <div class="stat-card purple-card">
 
-            <h2>
-                Update Room Availability
-            </h2>
+                    <div class="stat-icon">
+                        👥
+                    </div>
 
-        </div>
+                    <div>
+                        <span class="stat-label">
+                            Occupied Rooms
+                        </span>
+
+                        <strong id="occupiedRoomsDisplay">
+                            12
+                        </strong>
+
+                        <small>
+                            <span id="occupancyDisplay">60%</span>
+                            Occupied
+                        </small>
+                    </div>
+
+                </div>
 
 
-        <div class="availability-form">
+                <div class="stat-card orange-card">
+
+                    <div class="stat-icon">
+                        🏷
+                    </div>
+
+                    <div>
+                        <span class="stat-label">
+                            Monthly Rent
+                        </span>
+
+                        <strong id="rentDisplay">
+                            ₹5,000
+                        </strong>
+
+                        <small>
+                            Starting From
+                        </small>
+                    </div>
+
+                </div>
 
 
-            <div>
+                <div class="stat-card yellow-card">
 
-                <label>
-                    Total Rooms
-                </label>
+                    <div class="stat-icon">
+                        ★
+                    </div>
 
-                <input
-                    type="number"
-                    id="totalRoomInput"
-                    value="20"
-                    min="1">
+                    <div>
+                        <span class="stat-label">
+                            Average Rating
+                        </span>
+
+                        <strong>
+                            4.5
+                        </strong>
+
+                        <small class="rating-stars">
+                            ★ ★ ★ ★ ☆
+                        </small>
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <div>
+            <!-- ================= PROPERTY SECTION ================= -->
 
-                <label>
-                    Available Rooms
-                </label>
+            <section class="property-dashboard-card" id="property">
 
-                <input
-                    type="number"
-                    id="availableRoomInput"
-                    value="8"
-                    min="0">
+                <div class="property-image">
+
+                    <div class="property-status">
+                        ● Active
+                    </div>
+
+                    <div class="property-placeholder">
+                        🏠
+                    </div>
+
+                </div>
+
+
+                <div class="property-information">
+
+                    <div class="property-title-row">
+
+                        <div>
+                            <h2 id="propertyName">
+                                Sai Hostel
+                            </h2>
+
+                            <span class="verified-badge">
+                                ✓ Verified
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <p class="property-location">
+                        📍 Gokul Shirgaon, Kolhapur, Maharashtra
+                    </p>
+
+                    <p class="property-contact">
+                        📞 Contact available after verification
+                    </p>
+
+
+                    <div class="facility-tags">
+
+                        <span>📶 Wi-Fi</span>
+                        <span>🍽 Mess</span>
+                        <span>📹 CCTV</span>
+                        <span>🚗 Parking</span>
+                        <span>🧺 Laundry</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="quick-actions">
+
+                    <div class="quick-title">
+                        <h3>Quick Actions</h3>
+                        <span>⚙</span>
+                    </div>
+
+
+                    <div class="quick-action-grid">
+
+                        <button type="button" class="quick-action">
+                            <span>✎</span>
+                            <strong>Edit Property</strong>
+                        </button>
+
+                        <button type="button"
+                                class="quick-action"
+                                onclick="document.getElementById('rooms').scrollIntoView({behavior:'smooth'})">
+                            <span>🛏</span>
+                            <strong>Update Rooms</strong>
+                        </button>
+
+                        <button type="button"
+                                class="quick-action"
+                                onclick="document.getElementById('facilities').scrollIntoView({behavior:'smooth'})">
+                            <span>✓</span>
+                            <strong>Facilities</strong>
+                        </button>
+
+                        <button type="button"
+                                class="quick-action"
+                                onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">
+                            <span>₹</span>
+                            <strong>Pricing & Rent</strong>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= LOWER GRID ================= -->
+
+            <div class="dashboard-lower-grid">
+
+
+                <!-- ROOM AVAILABILITY -->
+
+                <section class="dashboard-card room-card" id="rooms">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+                            <h2>🛏 Room Availability</h2>
+                            <p>Current room status</p>
+                        </div>
+
+                        <button type="button">
+                            View All
+                        </button>
+
+                    </div>
+
+
+                    <div class="room-content">
+
+                        <div class="room-chart">
+
+                            <div class="chart-circle">
+
+                                <div class="chart-inner">
+                                    <strong id="chartTotalRooms">
+                                        20
+                                    </strong>
+
+                                    <span>
+                                        Total Rooms
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="room-status-list">
+
+                            <div class="room-status">
+
+                                <span class="status-dot available"></span>
+
+                                <div>
+                                    <strong>Available</strong>
+                                    <small>8 Rooms</small>
+                                </div>
+
+                                <b>40%</b>
+
+                            </div>
+
+
+                            <div class="room-status">
+
+                                <span class="status-dot occupied"></span>
+
+                                <div>
+                                    <strong>Occupied</strong>
+                                    <small>12 Rooms</small>
+                                </div>
+
+                                <b>60%</b>
+
+                            </div>
+
+
+                            <div class="room-status">
+
+                                <span class="status-dot maintenance"></span>
+
+                                <div>
+                                    <strong>Maintenance</strong>
+                                    <small>0 Rooms</small>
+                                </div>
+
+                                <b>0%</b>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="primary-dashboard-button"
+                            type="button"
+                            id="updateAvailabilityButton">
+
+                        Update Availability
+
+                    </button>
+
+                </section>
+
+
+                <!-- FACILITIES -->
+
+                <section class="dashboard-card" id="facilities">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+                            <h2>✦ Facilities Overview</h2>
+                            <p>Facilities available at your property</p>
+                        </div>
+
+                        <button type="button">
+                            Edit
+                        </button>
+
+                    </div>
+
+
+                    <div class="facilities-grid">
+
+                        <div class="facility-item">
+                            <span>✓</span>
+                            Wi-Fi
+                        </div>
+
+                        <div class="facility-item">
+                            <span>✓</span>
+                            Mess
+                        </div>
+
+                        <div class="facility-item">
+                            <span>✓</span>
+                            Laundry
+                        </div>
+
+                        <div class="facility-item">
+                            <span>✓</span>
+                            Parking
+                        </div>
+
+                        <div class="facility-item">
+                            <span>✓</span>
+                            CCTV
+                        </div>
+
+                        <div class="facility-item">
+                            <span>✓</span>
+                            24/7 Water
+                        </div>
+
+                        <div class="facility-item">
+                            <span>✓</span>
+                            Power Backup
+                        </div>
+
+                        <div class="facility-item">
+                            <span>✓</span>
+                            Security
+                        </div>
+
+                    </div>
+
+
+                    <button class="add-facility-button" type="button">
+                        + Add New Facility
+                    </button>
+
+                </section>
+
+
+                <!-- ENQUIRIES -->
+
+                <section class="dashboard-card" id="enquiries">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+                            <h2>💬 Recent Enquiries</h2>
+                            <p>Students interested in your property</p>
+                        </div>
+
+                        <button type="button">
+                            View All
+                        </button>
+
+                    </div>
+
+
+                    <div class="enquiry-list">
+
+                        <div class="enquiry">
+
+                            <div class="enquiry-avatar">
+                                PS
+                            </div>
+
+                            <div class="enquiry-info">
+                                <strong>
+                                    Prathamesh Sawant
+                                </strong>
+
+                                <span>
+                                    Interested in single room...
+                                </span>
+                            </div>
+
+                            <div class="enquiry-right">
+                                <small>
+                                    10 min ago
+                                </small>
+
+                                <label class="new-label">
+                                    New
+                                </label>
+                            </div>
+
+                        </div>
+
+
+                        <div class="enquiry">
+
+                            <div class="enquiry-avatar pink">
+                                AS
+                            </div>
+
+                            <div class="enquiry-info">
+                                <strong>
+                                    Anjali Shetty
+                                </strong>
+
+                                <span>
+                                    Is mess included in rent?
+                                </span>
+                            </div>
+
+                            <div class="enquiry-right">
+                                <small>
+                                    2 hours ago
+                                </small>
+
+                                <label class="contacted-label">
+                                    Contacted
+                                </label>
+                            </div>
+
+                        </div>
+
+
+                        <div class="enquiry">
+
+                            <div class="enquiry-avatar purple">
+                                RK
+                            </div>
+
+                            <div class="enquiry-info">
+                                <strong>
+                                    Rohan Kulkarni
+                                </strong>
+
+                                <span>
+                                    Want to visit the property.
+                                </span>
+                            </div>
+
+                            <div class="enquiry-right">
+                                <small>
+                                    5 hours ago
+                                </small>
+
+                                <label class="pending-label">
+                                    Pending
+                                </label>
+                            </div>
+
+                        </div>
+
+
+                        <div class="enquiry">
+
+                            <div class="enquiry-avatar green">
+                                SM
+                            </div>
+
+                            <div class="enquiry-info">
+                                <strong>
+                                    Siddhi More
+                                </strong>
+
+                                <span>
+                                    Do you have girls section?
+                                </span>
+                            </div>
+
+                            <div class="enquiry-right">
+                                <small>
+                                    1 day ago
+                                </small>
+
+                                <label class="closed-label">
+                                    Closed
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
 
             </div>
 
 
-            <div>
+            <!-- ================= PRICING ================= -->
 
-                <label>
-                    Monthly Rent
-                </label>
+            <section class="dashboard-card full-width-section"
+                     id="pricing">
 
-                <input
-                    type="number"
-                    id="rentInput"
-                    value="5000"
-                    min="0">
+                <div class="dashboard-card-header">
 
-            </div>
+                    <div>
+                        <h2>₹ Pricing & Rent</h2>
+                        <p>Manage your monthly accommodation pricing</p>
+                    </div>
 
+                </div>
 
-            <button onclick="updateAvailability()">
-                Update Availability
-            </button>
 
-        </div>
+                <div class="pricing-box">
 
+                    <div class="pricing-info">
+                        <span>Current Monthly Rent</span>
 
-        <div
-            id="availabilityMessage"
-            class="availability-message">
-        </div>
+                        <strong id="pricingRent">
+                            ₹5,000
+                        </strong>
+                    </div>
 
-    </section>
 
+                    <div class="pricing-info">
+                        <span>Security Deposit</span>
 
-    <!-- STATUS -->
+                        <strong>
+                            ₹5,000
+                        </strong>
+                    </div>
 
-    <section class="status-section">
 
-        <h2>
-            Current Status
-        </h2>
+                    <button type="button"
+                            class="primary-dashboard-button">
+                        Update Pricing
+                    </button>
 
+                </div>
 
-        <div
-            id="roomStatus"
-            class="room-status available-status">
+            </section>
 
-            🟢 Available
 
-        </div>
+            <!-- ================= REVIEWS ================= -->
 
+            <section class="dashboard-card full-width-section"
+                     id="reviews">
 
-        <p id="lastUpdated">
-            Last updated: Just now
-        </p>
+                <div class="dashboard-card-header">
 
-    </section>
+                    <div>
+                        <h2>★ Reviews</h2>
+                        <p>What students are saying about your property</p>
+                    </div>
 
+                    <div class="overall-rating">
+                        <strong>4.5</strong>
+                        <span>★★★★★</span>
+                    </div>
 
-</main>
+                </div>
 
 
-<footer class="owner-footer">
+                <div class="review-summary">
 
-    <h2>
-        🏠 Stay Finder
-    </h2>
+                    <div class="review-box">
+                        <strong>4.5 / 5</strong>
+                        <span>Overall Rating</span>
+                    </div>
 
-    <p>
-        Help students find your property easily.
-    </p>
+                    <div class="review-box">
+                        <strong>28</strong>
+                        <span>Total Reviews</span>
+                    </div>
 
-</footer>
+                    <div class="review-box">
+                        <strong>92%</strong>
+                        <span>Positive Reviews</span>
+                    </div>
 
+                </div>
 
-<script>
+            </section>
 
-    /* =================================================
-       CHECK OWNER LOGIN
-    ================================================= */
 
-    const loggedInOwner =
-        JSON.parse(
-            localStorage.getItem("loggedInUser")
-        );
+            <!-- ================= ANALYTICS ================= -->
 
+            <section class="dashboard-card full-width-section"
+                     id="analytics">
 
-    if (!loggedInOwner ||
-        loggedInOwner.role !== "owner") {
+                <div class="dashboard-card-header">
 
-        window.location.href =
-            "index.html";
+                    <div>
+                        <h2>▥ Analytics</h2>
+                        <p>Property performance overview</p>
+                    </div>
 
-    }
+                </div>
 
 
-    /* =================================================
-       DISPLAY OWNER DATA
-    ================================================= */
+                <div class="analytics-grid">
 
-    if (loggedInOwner) {
+                    <div class="analytics-item">
+                        <span>Profile Views</span>
+                        <strong>248</strong>
+                        <small>+12% this month</small>
+                    </div>
 
-        document.getElementById("ownerName")
-            .textContent =
-            loggedInOwner.name;
+                    <div class="analytics-item">
+                        <span>Student Enquiries</span>
+                        <strong>36</strong>
+                        <small>+8% this month</small>
+                    </div>
 
-        document.getElementById("welcomeOwnerName")
-            .textContent =
-            loggedInOwner.name;
+                    <div class="analytics-item">
+                        <span>Saved by Students</span>
+                        <strong>74</strong>
+                        <small>+15% this month</small>
+                    </div>
 
-        document.getElementById("propertyName")
-            .textContent =
-            loggedInOwner.propertyName;
+                    <div class="analytics-item">
+                        <span>Property Ranking</span>
+                        <strong>#8</strong>
+                        <small>Among nearby stays</small>
+                    </div>
 
-        document.getElementById("propertyLocation")
-            .textContent =
-            "📍 " +
-            loggedInOwner.propertyLocation;
+                </div>
 
-    }
+            </section>
 
 
-    /* =================================================
-       UPDATE AVAILABILITY
-    ================================================= */
+            <!-- ================= PROFILE ================= -->
 
-    function updateAvailability() {
+            <section class="dashboard-card full-width-section"
+                     id="profile">
 
-        const total =
-            Number(
-                document.getElementById(
-                    "totalRoomInput"
-                ).value
-            );
+                <div class="dashboard-card-header">
 
-        const available =
-            Number(
-                document.getElementById(
-                    "availableRoomInput"
-                ).value
-            );
+                    <div>
+                        <h2>⚙ Profile & Settings</h2>
+                        <p>Manage your owner account</p>
+                    </div>
 
+                </div>
 
-        if (total <= 0) {
 
-            alert(
-                "Total rooms must be greater than 0."
-            );
+                <div class="profile-settings">
 
-            return;
-        }
+                    <div>
+                        <span>Owner Name</span>
+                        <strong id="profileOwnerName">
+                            Owner
+                        </strong>
+                    </div>
 
+                    <div>
+                        <span>Email</span>
+                        <strong id="profileOwnerEmail">
+                            owner@example.com
+                        </strong>
+                    </div>
 
-        if (available < 0 ||
-            available > total) {
+                    <div>
+                        <span>Account Type</span>
+                        <strong>
+                            Hostel Owner
+                        </strong>
+                    </div>
 
-            alert(
-                "Available rooms cannot be greater than total rooms."
-            );
+                </div>
 
-            return;
-        }
+            </section>
 
+        </section>
 
-        document.getElementById(
-            "totalRooms"
-        ).textContent = total;
+    </main>
 
 
-        document.getElementById(
-            "availableRooms"
-        ).textContent = available;
+    <!-- ================= SMALL SCRIPT ================= -->
 
+    <script>
 
-        const status =
-            document.getElementById(
-                "roomStatus"
-            );
+        /*
+         * This script is only for the owner dashboard UI.
+         * It does NOT replace auth.js.
+         */
 
+        document.addEventListener("DOMContentLoaded", function () {
 
-        status.className =
-            "room-status";
+            /* Current date */
+            const dateElement =
+                document.getElementById("currentDate");
 
+            if (dateElement) {
 
-        if (available === 0) {
+                const today = new Date();
 
-            status.classList.add(
-                "full-status"
-            );
+                dateElement.textContent =
+                    today.toLocaleDateString("en-IN", {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    });
 
-            status.textContent =
-                "🔴 Full";
+            }
 
-        }
 
-        else if (available <= 3) {
+            /*
+             * Try to display the registered owner information.
+             * Supports common localStorage names without
+             * changing your existing authentication system.
+             */
 
-            status.classList.add(
-                "few-status"
-            );
+            let ownerData = null;
 
-            status.textContent =
-                "🟡 Few Rooms Left";
+            const possibleKeys = [
+                "owner",
+                "ownerUser",
+                "currentOwner",
+                "loggedInOwner",
+                "user"
+            ];
 
-        }
+            for (let key of possibleKeys) {
 
-        else {
+                const stored =
+                    localStorage.getItem(key);
 
-            status.classList.add(
-                "available-status"
-            );
+                if (stored) {
 
-            status.textContent =
-                "🟢 Available";
+                    try {
 
-        }
+                        const parsed =
+                            JSON.parse(stored);
 
+                        if (
+                            parsed &&
+                            (
+                                parsed.name ||
+                                parsed.fullName ||
+                                parsed.ownerName ||
+                                parsed.email
+                            )
+                        ) {
 
-        const now =
-            new Date().toLocaleString();
+                            ownerData = parsed;
+                            break;
 
+                        }
 
-        document.getElementById(
-            "lastUpdated"
-        ).textContent =
-            "Last updated: " + now;
+                    } catch (error) {
 
+                        console.log(
+                            "Stored owner data is not JSON."
+                        );
 
-        document.getElementById(
-            "availabilityMessage"
-        ).textContent =
-            "✓ Availability updated successfully.";
+                    }
 
+                }
 
-        localStorage.setItem(
-            "ownerAvailability",
-            JSON.stringify({
-                total: total,
-                available: available,
-                rent:
-                    document.getElementById(
-                        "rentInput"
-                    ).value,
-                updated: now
-            })
-        );
+            }
 
-    }
 
+            if (ownerData) {
 
-    /* =================================================
-       EDIT PROPERTY
-    ================================================= */
+                const name =
+                    ownerData.name ||
+                    ownerData.fullName ||
+                    ownerData.ownerName ||
+                    "Owner";
 
-    function editProperty() {
+                const email =
+                    ownerData.email ||
+                    ownerData.ownerEmail ||
+                    "owner@example.com";
 
-        alert(
-            "Property editing can be connected to the backend later."
-        );
 
-    }
+                const nameElements = [
+                    document.getElementById("ownerName"),
+                    document.getElementById("welcomeOwnerName"),
+                    document.getElementById("profileOwnerName")
+                ];
 
 
-    /* =================================================
-       LOGOUT
-    ================================================= */
+                nameElements.forEach(function (element) {
 
-    function logoutOwner() {
+                    if (element) {
+                        element.textContent = name;
+                    }
 
-        localStorage.removeItem(
-            "loggedInUser"
-        );
+                });
 
-        window.location.href =
-            "index.html";
 
-    }
+                const emailElement =
+                    document.getElementById("profileOwnerEmail");
 
-</script>
+                if (emailElement) {
+                    emailElement.textContent = email;
+                }
 
+
+                const avatar =
+                    document.getElementById("ownerAvatar");
+
+                if (avatar) {
+
+                    avatar.textContent =
+                        name.charAt(0).toUpperCase();
+
+                }
+
+            }
+
+
+            /* Sidebar mobile toggle */
+
+            const toggle =
+                document.querySelector(".sidebar-toggle");
+
+            const sidebar =
+                document.querySelector(".owner-sidebar");
+
+
+            if (toggle && sidebar) {
+
+                toggle.addEventListener("click", function () {
+
+                    sidebar.classList.toggle("sidebar-open");
+
+                });
+
+            }
+
+
+            /*
+             * Logout
+             *
+             * This only redirects to index.html.
+             * It does not modify your existing auth.js.
+             */
+
+            const logoutButton =
+                document.getElementById("ownerLogout");
+
+
+            if (logoutButton) {
+
+                logoutButton.addEventListener(
+                    "click",
+                    function () {
+
+                        window.location.href =
+                            "index.html";
+
+                    }
+                );
+
+            }
+
+
+            /* Smooth navigation */
+
+            document
+                .querySelectorAll(".owner-nav-link")
+                .forEach(function (link) {
+
+                    link.addEventListener(
+                        "click",
+                        function () {
+
+                            document
+                                .querySelectorAll(".owner-nav-link")
+                                .forEach(function (item) {
+
+                                    item.classList.remove("active");
+
+                                });
+
+                            this.classList.add("active");
+
+                        }
+                    );
+
+                });
+
+        });
+
+    </script>
 
 </body>
 </html>
