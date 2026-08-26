@@ -1,0 +1,344 @@
+/* =====================================================
+   AUTHENTICATION MODAL
+===================================================== */
+
+.auth-modal {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(7, 26, 61, 0.65);
+
+    z-index: 9999;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    overflow-y: auto;
+}
+
+.auth-modal.show {
+    display: flex;
+}
+
+
+/* CONTAINER */
+
+.auth-container {
+    width: 450px;
+    max-width: 100%;
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 30px;
+
+    position: relative;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+
+    animation: authAppear 0.25s ease;
+}
+
+@keyframes authAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* CLOSE */
+
+.close-auth {
+    position: absolute;
+
+    top: 12px;
+    right: 15px;
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+
+    background: #f1f5f9;
+
+    border-radius: 50%;
+
+    font-size: 25px;
+
+    color: #475569;
+
+    cursor: pointer;
+}
+
+.close-auth:hover {
+    background: #e2e8f0;
+}
+
+
+/* HEADER */
+
+.auth-header {
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+.auth-icon {
+    font-size: 40px;
+
+    margin-bottom: 5px;
+}
+
+.auth-header h2 {
+    color: #172554;
+
+    margin-bottom: 7px;
+}
+
+.auth-header p {
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* ROLE */
+
+.role-tabs {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+}
+
+.role-btn {
+    padding: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 7px;
+
+    color: #475569;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.role-btn.active {
+    background: #eff6ff;
+
+    border-color: #155eef;
+
+    color: #155eef;
+}
+
+
+/* LOGIN / REGISTER MODE */
+
+.auth-mode {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    border-bottom: 1px solid #e2e8f0;
+
+    margin-bottom: 20px;
+}
+
+.auth-mode button {
+    border: none;
+
+    background: white;
+
+    padding: 12px;
+
+    color: #64748b;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.auth-mode button.active {
+    color: #155eef;
+
+    border-bottom: 2px solid #155eef;
+}
+
+
+/* FORM */
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #172554;
+}
+
+.form-group input {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 6px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #155eef;
+
+    box-shadow: 0 0 0 3px rgba(21, 94, 239, 0.1);
+}
+
+
+/* OWNER FIELDS */
+
+.owner-only {
+    display: none;
+}
+
+
+/* SMALL NOTE */
+
+.field-note {
+    display: block;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    margin-top: 5px;
+
+    line-height: 1.4;
+}
+
+
+/* ERROR / SUCCESS MESSAGE */
+
+.auth-message {
+    display: none;
+
+    padding: 10px;
+
+    border-radius: 6px;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+
+    text-align: center;
+}
+
+.auth-message.error {
+    display: block;
+
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+.auth-message.success {
+    display: block;
+
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+
+/* SUBMIT */
+
+.auth-submit {
+    width: 100%;
+
+    padding: 13px;
+
+    background: #155eef;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.auth-submit:hover {
+    background: #0d47c9;
+}
+
+
+/* SWITCH */
+
+.switch-text {
+    text-align: center;
+
+    margin-top: 18px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+.switch-text button {
+    border: none;
+
+    background: none;
+
+    color: #155eef;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .auth-container {
+        padding: 25px 20px;
+    }
+
+}

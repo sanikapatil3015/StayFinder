@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Owner Dashboard | Stay Finder</title>
+
+    <link rel="stylesheet" href="owner.css">
+
+</head>
+
+
+<body>
+
+
+<header class="owner-navbar">
+
+    <div class="owner-logo">
+
+        <span>🏠</span>
+
+        <div>
+
+            <h2>Stay Finder</h2>
+
+            <small>Owner Dashboard</small>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="#dashboard">
+            Dashboard
+        </a>
+
+        <a href="#property">
+            My Property
+        </a>
+
+        <a href="#availability">
+            Availability
+        </a>
+
+    </nav>
+
+
+    <div class="owner-user">
+
+        <span>
+            👤
+        </span>
+
+        <strong id="ownerName">
+            Owner
+        </strong>
+
+        <button onclick="logoutOwner()">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="owner-dashboard"
+      id="dashboard">
+
+
+    <section class="owner-welcome">
+
+        <h1>
+            Welcome,
+            <span id="welcomeOwnerName">
+                Owner
+            </span>! 👋
+        </h1>
+
+        <p>
+            Manage your property and room availability.
+        </p>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="owner-stats">
+
+        <div class="owner-stat">
+
+            <span>🏠</span>
+
+            <div>
+
+                <strong>
+                    1
+                </strong>
+
+                <small>
+                    Properties
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="owner-stat">
+
+            <span>🛏️</span>
+
+            <div>
+
+                <strong id="totalRooms">
+                    20
+                </strong>
+
+                <small>
+                    Total Rooms
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="owner-stat">
+
+            <span>🟢</span>
+
+            <div>
+
+                <strong id="availableRooms">
+                    8
+                </strong>
+
+                <small>
+                    Available Rooms
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="owner-stat">
+
+            <span>👥</span>
+
+            <div>
+
+                <strong>
+                    12
+                </strong>
+
+                <small>
+                    Occupied
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROPERTY -->
+
+    <section
+        class="owner-property"
+        id="property">
+
+
+        <div class="owner-section-title">
+
+            <h2>
+                My Property
+            </h2>
+
+            <button onclick="editProperty()">
+                ✏️ Edit
+            </button>
+
+        </div>
+
+
+        <div class="property-card">
+
+            <div class="property-image">
+                🏠
+            </div>
+
+
+            <div class="property-info">
+
+                <h2 id="propertyName">
+                    Property Name
+                </h2>
+
+                <p id="propertyLocation">
+                    📍 Property Location
+                </p>
+
+                <p>
+                    📞 Contact available after verification
+                </p>
+
+
+                <div class="property-tags">
+
+                    <span>
+                        Wi-Fi
+                    </span>
+
+                    <span>
+                        Mess
+                    </span>
+
+                    <span>
+                        CCTV
+                    </span>
+
+                    <span>
+                        Parking
+                    </span>
+
+                    <span>
+                        Laundry
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- AVAILABILITY -->
+
+    <section
+        class="availability-section"
+        id="availability">
+
+
+        <div class="owner-section-title">
+
+            <h2>
+                Update Room Availability
+            </h2>
+
+        </div>
+
+
+        <div class="availability-form">
+
+
+            <div>
+
+                <label>
+                    Total Rooms
+                </label>
+
+                <input
+                    type="number"
+                    id="totalRoomInput"
+                    value="20"
+                    min="1">
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Available Rooms
+                </label>
+
+                <input
+                    type="number"
+                    id="availableRoomInput"
+                    value="8"
+                    min="0">
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Monthly Rent
+                </label>
+
+                <input
+                    type="number"
+                    id="rentInput"
+                    value="5000"
+                    min="0">
+
+            </div>
+
+
+            <button onclick="updateAvailability()">
+                Update Availability
+            </button>
+
+        </div>
+
+
+        <div
+            id="availabilityMessage"
+            class="availability-message">
+        </div>
+
+    </section>
+
+
+    <!-- STATUS -->
+
+    <section class="status-section">
+
+        <h2>
+            Current Status
+        </h2>
+
+
+        <div
+            id="roomStatus"
+            class="room-status available-status">
+
+            🟢 Available
+
+        </div>
+
+
+        <p id="lastUpdated">
+            Last updated: Just now
+        </p>
+
+    </section>
+
+
+</main>
+
+
+<footer class="owner-footer">
+
+    <h2>
+        🏠 Stay Finder
+    </h2>
+
+    <p>
+        Help students find your property easily.
+    </p>
+
+</footer>
+
+
+<script>
+
+    /* =================================================
+       CHECK OWNER LOGIN
+    ================================================= */
+
+    const loggedInOwner =
+        JSON.parse(
+            localStorage.getItem("loggedInUser")
+        );
+
+
+    if (!loggedInOwner ||
+        loggedInOwner.role !== "owner") {
+
+        window.location.href =
+            "index.html";
+
+    }
+
+
+    /* =================================================
+       DISPLAY OWNER DATA
+    ================================================= */
+
+    if (loggedInOwner) {
+
+        document.getElementById("ownerName")
+            .textContent =
+            loggedInOwner.name;
+
+        document.getElementById("welcomeOwnerName")
+            .textContent =
+            loggedInOwner.name;
+
+        document.getElementById("propertyName")
+            .textContent =
+            loggedInOwner.propertyName;
+
+        document.getElementById("propertyLocation")
+            .textContent =
+            "📍 " +
+            loggedInOwner.propertyLocation;
+
+    }
+
+
+    /* =================================================
+       UPDATE AVAILABILITY
+    ================================================= */
+
+    function updateAvailability() {
+
+        const total =
+            Number(
+                document.getElementById(
+                    "totalRoomInput"
+                ).value
+            );
+
+        const available =
+            Number(
+                document.getElementById(
+                    "availableRoomInput"
+                ).value
+            );
+
+
+        if (total <= 0) {
+
+            alert(
+                "Total rooms must be greater than 0."
+            );
+
+            return;
+        }
+
+
+        if (available < 0 ||
+            available > total) {
+
+            alert(
+                "Available rooms cannot be greater than total rooms."
+            );
+
+            return;
+        }
+
+
+        document.getElementById(
+            "totalRooms"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "availableRooms"
+        ).textContent = available;
+
+
+        const status =
+            document.getElementById(
+                "roomStatus"
+            );
+
+
+        status.className =
+            "room-status";
+
+
+        if (available === 0) {
+
+            status.classList.add(
+                "full-status"
+            );
+
+            status.textContent =
+                "🔴 Full";
+
+        }
+
+        else if (available <= 3) {
+
+            status.classList.add(
+                "few-status"
+            );
+
+            status.textContent =
+                "🟡 Few Rooms Left";
+
+        }
+
+        else {
+
+            status.classList.add(
+                "available-status"
+            );
+
+            status.textContent =
+                "🟢 Available";
+
+        }
+
+
+        const now =
+            new Date().toLocaleString();
+
+
+        document.getElementById(
+            "lastUpdated"
+        ).textContent =
+            "Last updated: " + now;
+
+
+        document.getElementById(
+            "availabilityMessage"
+        ).textContent =
+            "✓ Availability updated successfully.";
+
+
+        localStorage.setItem(
+            "ownerAvailability",
+            JSON.stringify({
+                total: total,
+                available: available,
+                rent:
+                    document.getElementById(
+                        "rentInput"
+                    ).value,
+                updated: now
+            })
+        );
+
+    }
+
+
+    /* =================================================
+       EDIT PROPERTY
+    ================================================= */
+
+    function editProperty() {
+
+        alert(
+            "Property editing can be connected to the backend later."
+        );
+
+    }
+
+
+    /* =================================================
+       LOGOUT
+    ================================================= */
+
+    function logoutOwner() {
+
+        localStorage.removeItem(
+            "loggedInUser"
+        );
+
+        window.location.href =
+            "index.html";
+
+    }
+
+</script>
+
+
+</body>
+</html>

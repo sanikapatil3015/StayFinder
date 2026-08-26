@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Stay Finder</title>
+    <title>Stay Finder | Find. Compare. Choose.</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
 </head>
 
 <body>
@@ -35,20 +36,22 @@
     </nav>
 
     <div class="auth-buttons">
-        <button class="login-btn" onclick="showPage('login')">
+
+        <button class="login-btn" onclick="openAuth('login')">
             Login
         </button>
 
-        <button class="register-btn" onclick="showPage('register')">
+        <button class="register-btn" onclick="openAuth('register')">
             Register
         </button>
+
     </div>
 
 </header>
 
 
 <!-- =====================================================
-                    HOME / HERO
+                    HOME
 ===================================================== -->
 
 <section id="home" class="hero">
@@ -105,7 +108,16 @@
 
     <div class="hero-image">
 
-        <img src="hostel.jpeg" alt="A descriptive name of my image">
+        <div class="college-icon">
+            🏫
+        </div>
+
+        <div class="student-icon">
+            🧑‍🎓
+        </div>
+
+        <div class="pin pin1">📍</div>
+        <div class="pin pin2">📍</div>
 
     </div>
 
@@ -118,48 +130,41 @@
 
 <section class="why-us">
 
-    <h2>Why Students Choose <span>Stay Finder?</span></h2>
+    <h2>
+        Why Students Choose
+        <span>Stay Finder?</span>
+    </h2>
 
     <div class="features">
 
         <div class="feature">
             <div>🔍</div>
             <h3>Smart Search</h3>
-            <p>
-                Search stays by college, location and budget.
-            </p>
+            <p>Search stays by college, location and budget.</p>
         </div>
 
         <div class="feature">
             <div>🛡️</div>
             <h3>Verified Stays</h3>
-            <p>
-                Find reliable accommodation listings.
-            </p>
+            <p>Find reliable accommodation listings.</p>
         </div>
 
         <div class="feature">
             <div>⭐</div>
             <h3>Real Reviews</h3>
-            <p>
-                Check ratings and reviews from students.
-            </p>
+            <p>Check ratings and reviews from students.</p>
         </div>
 
         <div class="feature">
             <div>⚖️</div>
             <h3>Easy Comparison</h3>
-            <p>
-                Compare multiple stays side by side.
-            </p>
+            <p>Compare multiple stays side by side.</p>
         </div>
 
         <div class="feature">
             <div>📍</div>
             <h3>Easy Location</h3>
-            <p>
-                Check distance from your college.
-            </p>
+            <p>Check distance from your college.</p>
         </div>
 
     </div>
@@ -183,7 +188,6 @@
 
     </div>
 
-
     <div class="search-large">
 
         <input
@@ -198,214 +202,81 @@
 
     </div>
 
-
     <div class="stay-layout">
-
-
-        <!-- FILTERS -->
 
         <aside class="filters">
 
-              <div class="filter-header">
-        <div>
             <h3>Filters</h3>
-            <span>Find your ideal stay</span>
-        </div>
 
-        <button onclick="clearFilters()" class="reset-btn">
-            Reset
-        </button>
-    </div>
-
-    <!-- BUDGET -->
-
-    <div class="filter-group">
-
-        <h4>💰 Monthly Budget</h4>
-
-        <div class="price-values">
-            <span>₹3,000 -</span>
-            <span id="priceValue">₹10,000</span>
-        </div>
-
-        <input
-            type="range"
-            id="budgetRange"
-            min="3000"
-            max="10000"
-            value="10000"
-            step="500"
-            oninput="updateBudget()"
-        >
-
-    </div>
-
-
-    <!-- ROOM TYPE -->
-
-    <div class="filter-group">
-
-        <h4>🛏️ Room Type</h4>
-
-        <div class="filter-options">
-
-            <label class="filter-option">
-                <input
-                    type="checkbox"
-                    value="Single"
-                    class="room-filter"
-                >
-                <span>Single</span>
-            </label>
-
-            <label class="filter-option">
-                <input
-                    type="checkbox"
-                    value="Double"
-                    class="room-filter"
-                >
-                <span>Double</span>
-            </label>
-
-            <label class="filter-option">
-                <input
-                    type="checkbox"
-                    value="Triple"
-                    class="room-filter"
-                >
-                <span>Triple</span>
-            </label>
-
-            <label class="filter-option">
-                <input
-                    type="checkbox"
-                    value="Shared"
-                    class="room-filter"
-                >
-                <span>Shared</span>
-            </label>
-
-        </div>
-
-    </div>
-
-
-    <!-- FACILITIES -->
-
-    <div class="filter-group">
-
-        <h4>✨ Facilities</h4>
-
-        <div class="facility-grid">
+            <h4>Budget</h4>
 
             <label>
-                <input type="checkbox" value="Wi-Fi"
-                       class="facility-filter">
+                <input type="checkbox">
+                Under ₹4,000
+            </label>
+
+            <label>
+                <input type="checkbox">
+                ₹4,000 - ₹6,000
+            </label>
+
+            <label>
+                <input type="checkbox">
+                ₹6,000 - ₹8,000
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Above ₹8,000
+            </label>
+
+            <h4>Room Type</h4>
+
+            <label>
+                <input type="checkbox">
+                Single
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Double
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Triple
+            </label>
+
+            <h4>Facilities</h4>
+
+            <label>
+                <input type="checkbox">
                 Wi-Fi
             </label>
 
             <label>
-                <input type="checkbox" value="Mess"
-                       class="facility-filter">
+                <input type="checkbox">
                 Mess
             </label>
 
             <label>
-                <input type="checkbox" value="Laundry"
-                       class="facility-filter">
-                Laundry
-            </label>
-
-            <label>
-                <input type="checkbox" value="Parking"
-                       class="facility-filter">
+                <input type="checkbox">
                 Parking
             </label>
 
             <label>
-                <input type="checkbox" value="CCTV"
-                       class="facility-filter">
-                CCTV
+                <input type="checkbox">
+                Laundry
             </label>
-
-            <label>
-                <input type="checkbox" value="Study Room"
-                       class="facility-filter">
-                Study Room
-            </label>
-
-        </div>
-
-    </div>
-
-
-    <!-- AVAILABILITY -->
-
-    <div class="filter-group">
-
-        <h4>📊 Availability</h4>
-
-        <label class="availability-option">
-            <input
-                type="checkbox"
-                name="availability"
-                value="available"
-                onchange="applyFilters()"
-            >
-
-            <span class="status-dot green"></span>
-
-            Available
-        </label>
-
-        <label class="availability-option">
-            <input
-                type="checkbox"
-                name="availability"
-                value="few"
-                onchange="applyFilters()"
-            >
-
-            <span class="status-dot yellow"></span>
-
-            Few Rooms Left
-        </label>
-
-        <label class="availability-option">
-            <input
-                type="checkbox"
-                name="availability"
-                value="full"
-                onchange="applyFilters()"
-            >
-
-            <span class="status-dot red"></span>
-
-            Full
-        </label>
-
-    </div>
-
-
-    <button
-        class="apply-filter-btn"
-        onclick="applyFilters()"
-    >
-        Apply Filters
-    </button>
 
         </aside>
 
-
-        <!-- STAY LIST -->
 
         <div class="stay-results">
 
             <div class="result-header">
 
-                <h3>
-                    120+ Stays Found
-                </h3>
+                <h3>120+ Stays Found</h3>
 
                 <select>
                     <option>Sort by Popularity</option>
@@ -419,17 +290,16 @@
 
             <div class="stay-grid">
 
-
-                <!-- STAY 1 -->
-
                 <div class="stay-card">
 
                     <div class="stay-image">
+
                         🏠
 
                         <span class="available">
                             🟢 Available
                         </span>
+
                     </div>
 
                     <div class="stay-info">
@@ -440,7 +310,10 @@
 
                         <p>⭐ 4.5 (128 Reviews)</p>
 
-                        <h3>₹5,000 <small>/ month</small></h3>
+                        <h3>
+                            ₹5,000
+                            <small>/ month</small>
+                        </h3>
 
                         <div class="amenities">
                             Wi-Fi • Mess • CCTV • Parking
@@ -455,16 +328,16 @@
                 </div>
 
 
-                <!-- STAY 2 -->
-
                 <div class="stay-card">
 
                     <div class="stay-image">
+
                         🏠
 
                         <span class="few">
                             🟡 Few Rooms Left
                         </span>
+
                     </div>
 
                     <div class="stay-info">
@@ -475,7 +348,10 @@
 
                         <p>⭐ 4.6 (96 Reviews)</p>
 
-                        <h3>₹5,500 <small>/ month</small></h3>
+                        <h3>
+                            ₹5,500
+                            <small>/ month</small>
+                        </h3>
 
                         <div class="amenities">
                             Wi-Fi • Mess • CCTV • Study Room
@@ -490,16 +366,16 @@
                 </div>
 
 
-                <!-- STAY 3 -->
-
                 <div class="stay-card">
 
                     <div class="stay-image">
+
                         🏠
 
-                        <span class="full">
-                            🔴 Full
+                        <span class="available">
+                            🟢 Available
                         </span>
+
                     </div>
 
                     <div class="stay-info">
@@ -510,7 +386,10 @@
 
                         <p>⭐ 4.0 (72 Reviews)</p>
 
-                        <h3>₹4,500 <small>/ month</small></h3>
+                        <h3>
+                            ₹4,500
+                            <small>/ month</small>
+                        </h3>
 
                         <div class="amenities">
                             Wi-Fi • Mess • CCTV • Laundry
@@ -549,10 +428,7 @@
 
     </div>
 
-
     <div class="compare-box">
-
-        <h3>Selected Stays</h3>
 
         <div class="compare-table">
 
@@ -561,15 +437,10 @@
                 <thead>
 
                     <tr>
-
                         <th>Features</th>
-
                         <th>Sai Hostel</th>
-
                         <th>ABC PG</th>
-
                         <th>Green View Hostel</th>
-
                     </tr>
 
                 </thead>
@@ -588,13 +459,6 @@
                         <td>₹5,000</td>
                         <td>₹5,500</td>
                         <td>₹4,500</td>
-                    </tr>
-
-                    <tr>
-                        <td>Room Type</td>
-                        <td>Triple Sharing</td>
-                        <td>Double Sharing</td>
-                        <td>Triple Sharing</td>
                     </tr>
 
                     <tr>
@@ -619,47 +483,10 @@
                     </tr>
 
                     <tr>
-                        <td>CCTV</td>
-                        <td>✅</td>
-                        <td>✅</td>
-                        <td>✅</td>
-                    </tr>
-
-                    <tr>
-                        <td>Laundry</td>
-                        <td>❌</td>
-                        <td>❌</td>
-                        <td>✅</td>
-                    </tr>
-
-                    <tr>
                         <td>Rating</td>
                         <td>⭐ 4.5</td>
                         <td>⭐ 4.6</td>
                         <td>⭐ 4.0</td>
-                    </tr>
-
-                    <tr>
-                        <td>Availability</td>
-
-                        <td>
-                            <span class="available">
-                                Available
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="few">
-                                Few Left
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="full">
-                                Full
-                            </span>
-                        </td>
-
                     </tr>
 
                 </tbody>
@@ -667,10 +494,6 @@
             </table>
 
         </div>
-
-        <button class="primary-button">
-            View Selected Stay
-        </button>
 
     </div>
 
@@ -688,27 +511,23 @@
         <h2>How It Works</h2>
 
         <p>
-            Finding your perfect stay is simple with Stay Finder.
+            Finding your perfect stay is simple.
         </p>
 
     </div>
-
 
     <div class="steps">
 
         <div class="step">
 
-            <div class="step-icon">
-                🔍
-            </div>
+            <div class="step-icon">🔍</div>
 
             <span>1</span>
 
             <h3>Search Your College</h3>
 
             <p>
-                Search your college or location and
-                we'll show nearby stays.
+                Search your college or location.
             </p>
 
         </div>
@@ -716,17 +535,14 @@
 
         <div class="step">
 
-            <div class="step-icon">
-                ⚙️
-            </div>
+            <div class="step-icon">⚙️</div>
 
             <span>2</span>
 
             <h3>Filter & Explore</h3>
 
             <p>
-                Use filters such as budget, room type,
-                facilities and availability.
+                Filter by budget, room type and facilities.
             </p>
 
         </div>
@@ -734,17 +550,14 @@
 
         <div class="step">
 
-            <div class="step-icon">
-                ⚖️
-            </div>
+            <div class="step-icon">⚖️</div>
 
             <span>3</span>
 
-            <h3>Compare & Decide</h3>
+            <h3>Compare</h3>
 
             <p>
-                Compare multiple stays based on price,
-                distance, facilities and ratings.
+                Compare different accommodation options.
             </p>
 
         </div>
@@ -752,17 +565,14 @@
 
         <div class="step">
 
-            <div class="step-icon">
-                📞
-            </div>
+            <div class="step-icon">📞</div>
 
             <span>4</span>
 
-            <h3>Connect & Move In</h3>
+            <h3>Connect</h3>
 
             <p>
-                Contact the owner, get the details
-                and choose your perfect stay.
+                Contact the owner and choose your stay.
             </p>
 
         </div>
@@ -793,55 +603,28 @@
 
             <div class="about-points">
 
-                <p>🛡️ <strong>Verified Listings</strong><br>
-                    Reliable accommodation information.
+                <p>
+                    🛡️ <strong>Verified Listings</strong>
                 </p>
 
-                <p>🎓 <strong>Built for Students</strong><br>
-                    Designed around student requirements.
+                <p>
+                    🎓 <strong>Built for Students</strong>
                 </p>
 
-                <p>💰 <strong>Save Time & Money</strong><br>
-                    Compare options before making a decision.
+                <p>
+                    💰 <strong>Save Time & Money</strong>
                 </p>
 
-                <p>🌎 <strong>Expand Across India</strong><br>
-                    Start with selected colleges and expand
-                    to more cities.
+                <p>
+                    🌎 <strong>Expand Across Colleges</strong>
                 </p>
 
             </div>
 
         </div>
 
-
         <div class="about-image">
-            🧑‍🎓 👩‍🎓     
-        </div>
-
-    </div>
-
-
-    <div class="stats">
-
-        <div>
-            <strong>2000+</strong>
-            <span>Stays</span>
-        </div>
-
-        <div>
-            <strong>500+</strong>
-            <span>Colleges</span>
-        </div>
-
-        <div>
-            <strong>10K+</strong>
-            <span>Students</span>
-        </div>
-
-        <div>
-            <strong>4.5</strong>
-            <span>Average Rating</span>
+            🧑‍🎓 👩‍🎓
         </div>
 
     </div>
@@ -850,261 +633,279 @@
 
 
 <!-- =====================================================
-                    LOGIN
+                    AUTH MODAL
 ===================================================== -->
 
-<section id="login" class="auth-page">
+<div id="authModal" class="auth-modal">
 
-    <div class="auth-box">
+    <div class="auth-container">
 
-        <h2>Welcome Back!</h2>
-
-        <p>
-            Login to your Stay Finder account.
-        </p>
+        <button class="close-auth" onclick="closeAuth()">
+            ×
+        </button>
 
 
-       <div class="role-tabs">
+        <!-- AUTH HEADER -->
 
-    <button class="role-login-btn active"
-            onclick="showLoginForm('student', this)">
-        Student / Tenant
-    </button>
+        <div class="auth-header">
 
-    <button class="role-login-btn"
-            onclick="showLoginForm('owner', this)">
-        Owner
-    </button>
+            <div class="auth-icon">
+                🏠
+            </div>
 
-</div>
-	<!-- ================= STUDENT LOGIN ================= -->
+            <h2 id="authTitle">
+                Create Account
+            </h2>
 
-<div id="student-login" class="login-form">
+            <p id="authSubtitle">
+                Join Stay Finder today.
+            </p>
 
-    <label>Email or Phone Number</label>
-
-    <input
-        type="text"
-        placeholder="Enter email or phone number"
-    >
-
-    <label>Password</label>
-
-    <input
-        type="password"
-        placeholder="Enter password"
-    >
-
-    <div class="forgot">
-        Forgot Password?
-    </div>
-
-    <button class="auth-submit">
-        Login
-    </button>
-
-</div>
+        </div>
 
 
-<!-- ================= OWNER LOGIN ================= -->
-
-<div id="owner-login"
-     class="login-form"
-     style="display:none;">
-
-    <label>Owner Email or Phone Number</label>
-
-    <input
-        type="text"
-        placeholder="Enter email or phone number"
-    >
-
-    <label>Password</label>
-
-    <input
-        type="password"
-        placeholder="Enter password"
-    >
-
-    <div class="forgot">
-        Forgot Password?
-    </div>
-
-    <button class="auth-submit">
-         Login
-    </button>
-
-</div>
-       
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-                    REGISTER
-===================================================== -->
-
-<section id="register" class="auth-page">
-
-    <div class="auth-box">
-
-        <h2>Create Account</h2>
-
-        <p>
-            Join Stay Finder today.
-        </p>
-
+        <!-- ROLE SELECTION -->
 
         <div class="role-tabs">
 
-    <button class="role-btn active"
-            onclick="showRegisterForm('student', this)">
-        Student / Tenant
-    </button>
+            <button
+                id="studentRoleBtn"
+                class="role-btn active"
+                onclick="selectRole('student')">
 
-    <button class="role-btn"
-            onclick="showRegisterForm('owner', this)">
-        Owner
-    </button>
+                🎓 Student
 
-</div>
+            </button>
 
 
-        <!-- ================= STUDENT REGISTER ================= -->
+            <button
+                id="ownerRoleBtn"
+                class="role-btn"
+                onclick="selectRole('owner')">
 
-<div id="student-register" class="register-form">
+                🏠 Owner
 
-    <label>Full Name</label>
+            </button>
 
-    <input
-        type="text"
-        placeholder="Enter your full name"
-    >
-
-    <label>Email</label>
-
-    <input
-        type="email"
-        placeholder="Enter your email"
-    >
-
-    <label>Phone Number</label>
-
-    <input
-        type="tel"
-        placeholder="Enter phone number"
-    >
-
-    <label>Password</label>
-
-    <input
-        type="password"
-        placeholder="Create a password"
-    >
-
-    <label class="terms">
-
-        <input type="checkbox">
-
-        I agree to the Terms & Conditions
-        and Privacy Policy.
-
-    </label>
-
-    <button class="auth-submit">
-        Register
-    </button>
-
-</div>
+        </div>
 
 
-<!-- ================= OWNER REGISTER ================= -->
+        <!-- MODE -->
 
-<div id="owner-register" class="register-form" style="display:none;">
+        <div class="auth-mode">
 
-    <label>Owner Full Name</label>
+            <button
+                id="loginModeBtn"
+                onclick="switchAuthMode('login')">
 
-    <input
-        type="text"
-        placeholder="Enter owner full name"
-    >
+                Login
 
-    <label>Email</label>
+            </button>
 
-    <input
-        type="email"
-        placeholder="Enter owner email"
-    >
+            <button
+                id="registerModeBtn"
+                class="active"
+                onclick="switchAuthMode('register')">
 
-    <label>Phone Number</label>
+                Register
 
-    <input
-        type="tel"
-        placeholder="Enter owner phone number"
-    >
+            </button>
 
-    <label>Aadhaar Number</label>
+        </div>
 
-    <input
-        type="text"
-        maxlength="12"
-        placeholder="Enter 12-digit Aadhaar number"
-    >
 
-    <label>Property Name</label>
+        <!-- FORM -->
 
-    <input
-        type="text"
-        placeholder="Enter hostel / PG name"
-    >
+        <form id="authForm">
 
-    <label>Property Location</label>
 
-    <input
-        type="text"
-        placeholder="Enter property location"
-    >
+            <!-- NAME -->
 
-    <label>Accommodation Type</label>
+            <div
+                class="form-group"
+                id="nameGroup">
 
-    <select>
-        <option value="">Select type</option>
-        <option>Hostel</option>
-        <option>PG</option>
-        <option>Room</option>
-    </select>
+                <label>Full Name</label>
 
-    <label>Password</label>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name">
 
-    <input
-        type="password"
-        placeholder="Create a password"
-    >
+            </div>
 
-    <label class="terms">
 
-        <input type="checkbox">
+            <!-- EMAIL -->
 
-        I agree to the Terms & Conditions
-        and Privacy Policy.
+            <div class="form-group">
 
-    </label>
+                <label>Email</label>
 
-    <button class="auth-submit">
-        Register as Owner
-    </button>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required>
 
-</div>
+            </div>
 
-        <p>
-            Already have an account?
-            <a href="#login">Login here</a>
+
+            <!-- PHONE -->
+
+            <div
+                class="form-group"
+                id="phoneGroup">
+
+                <label>Phone Number</label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter 10-digit phone number">
+
+            </div>
+
+
+            <!-- COLLEGE -->
+
+            <div
+                class="form-group"
+                id="collegeGroup">
+
+                <label>College Name</label>
+
+                <input
+                    type="text"
+                    id="college"
+                    placeholder="Enter your college name">
+
+            </div>
+
+
+            <!-- OWNER PROPERTY -->
+
+            <div
+                class="form-group owner-only"
+                id="propertyGroup">
+
+                <label>Property / Hostel Name</label>
+
+                <input
+                    type="text"
+                    id="propertyName"
+                    placeholder="Enter property name">
+
+            </div>
+
+
+            <div
+                class="form-group owner-only"
+                id="locationGroup">
+
+                <label>Property Location</label>
+
+                <input
+                    type="text"
+                    id="propertyLocation"
+                    placeholder="Enter property location">
+
+            </div>
+
+
+            <!-- AADHAAR -->
+
+            <div
+                class="form-group owner-only"
+                id="aadhaarGroup">
+
+                <label>Aadhaar Number</label>
+
+                <input
+                    type="text"
+                    id="aadhaar"
+                    maxlength="12"
+                    placeholder="Enter 12-digit Aadhaar number">
+
+                <small class="field-note">
+                    Aadhaar is required only for owner verification.
+                </small>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    required>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div
+                class="form-group"
+                id="confirmPasswordGroup">
+
+                <label>Confirm Password</label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm password">
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                id="authMessage"
+                class="auth-message">
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                id="authSubmit"
+                class="auth-submit">
+
+                Register as Student
+
+            </button>
+
+        </form>
+
+
+        <p class="switch-text">
+
+            <span id="switchText">
+                Already have an account?
+            </span>
+
+            <button
+                type="button"
+                id="switchButton"
+                onclick="switchAuthMode('login')">
+
+                Login
+
+            </button>
+
         </p>
 
     </div>
 
-</section>
+</div>
 
 
 <!-- =====================================================
@@ -1140,8 +941,13 @@
 
         <h3>For Owners</h3>
 
-        <a href="#register">Register Property</a>
-        <a href="#login">Owner Login</a>
+        <a href="#" onclick="openOwnerRegister(event)">
+            Register Property
+        </a>
+
+        <a href="#" onclick="openOwnerLogin(event)">
+            Owner Login
+        </a>
 
     </div>
 
@@ -1150,7 +956,7 @@
 
         <h3>Contact</h3>
 
-        <p>📧 support@stayfinder.com</p>
+        <p>📧 support@stayfinder.in</p>
         <p>📞 +91 98765 43210</p>
 
     </div>
@@ -1159,7 +965,7 @@
 
 
 <script src="script.js"></script>
+<script src="auth.js"></script>
 
 </body>
-
 </html>
