@@ -811,57 +811,118 @@
             </div>
 
 
-            <!-- AADHAAR -->
+           <!-- AADHAAR - OWNER ONLY -->
+<div
+    class="form-group owner-only"
+    id="aadhaarGroup">
 
-            <div
-                class="form-group owner-only"
-                id="aadhaarGroup">
+    <label for="aadhaar">Aadhaar Number</label>
 
-                <label>Aadhaar Number</label>
+    <div class="aadhaar-input-wrapper">
+        <span class="aadhaar-prefix">XXXXXXXX</span>
 
-                <input
-                    type="text"
-                    id="aadhaar"
-                    maxlength="12"
-                    placeholder="Enter 12-digit Aadhaar number">
+        <input
+            type="text"
+            id="aadhaar"
+            maxlength="4"
+            inputmode="numeric"
+            pattern="[0-9]{4}"
+            placeholder="1234"
+            autocomplete="off"
+            aria-label="Last 4 digits of Aadhaar number">
+    </div>
 
-                <small class="field-note">
-                    Aadhaar is required only for owner verification.
-                </small>
-
-            </div>
-
-
-            <!-- PASSWORD -->
-
-            <div class="form-group">
-
-                <label>Password</label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter password"
-                    required>
-
-            </div>
+    <small class="field-note">
+        Enter only the last 4 digits of your Aadhaar number.
+    </small>
+</div>
 
 
-            <!-- CONFIRM PASSWORD -->
+           <!-- PASSWORD -->
+<div class="form-group password-group">
+    <label>Password</label>
 
-            <div
-                class="form-group"
-                id="confirmPasswordGroup">
+    <div class="password-input-wrapper">
+        <input
+            type="password"
+            id="password"
+            placeholder="Create a strong password"
+            minlength="8"
+            required>
 
-                <label>Confirm Password</label>
+        <button
+            type="button"
+            class="toggle-password"
+            onclick="togglePassword('password', this)"
+            aria-label="Show password">
 
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="Confirm password">
+            <svg class="eye-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
 
-            </div>
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="3"
+                    stroke="currentColor"
+                    stroke-width="2"/>
+            </svg>
 
+        </button>
+    </div>
+
+    <small class="password-hint">
+        8+ characters • Uppercase • Lowercase • Number • Special character
+    </small>
+</div>
+
+
+<!-- CONFIRM PASSWORD -->
+<div
+    class="form-group"
+    id="confirmPasswordGroup">
+
+    <label>Confirm Password</label>
+
+    <div class="password-input-wrapper">
+
+        <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm your password"
+            minlength="8"
+            required>
+
+        <button
+            type="button"
+            class="toggle-password"
+            onclick="togglePassword('confirmPassword', this)"
+            aria-label="Show password">
+
+            <svg class="eye-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="3"
+                    stroke="currentColor"
+                    stroke-width="2"/>
+            </svg>
+
+        </button>
+
+    </div>
+</div>
 
             <!-- ERROR -->
 

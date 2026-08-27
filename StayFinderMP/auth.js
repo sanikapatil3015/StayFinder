@@ -311,15 +311,47 @@ function registerUser() {
 
     /* PASSWORD */
 
-    if (password.length < 6) {
+  /* STRONG PASSWORD VALIDATION */
 
-        showMessage(
-            "Password must contain at least 6 characters.",
-            "error"
-        );
+if (password.length < 8) {
+    showMessage(
+        "Password must be at least 8 characters long.",
+        "error"
+    );
+    return;
+}
 
-        return;
-    }
+if (!/[A-Z]/.test(password)) {
+    showMessage(
+        "Password must contain at least one uppercase letter.",
+        "error"
+    );
+    return;
+}
+
+if (!/[a-z]/.test(password)) {
+    showMessage(
+        "Password must contain at least one lowercase letter.",
+        "error"
+    );
+    return;
+}
+
+if (!/[0-9]/.test(password)) {
+    showMessage(
+        "Password must contain at least one number.",
+        "error"
+    );
+    return;
+}
+
+if (!/[@$!%*?&#]/.test(password)) {
+    showMessage(
+        "Password must contain at least one special character.",
+        "error"
+    );
+    return;
+}
 
 
     if (password !== confirmPassword) {
@@ -501,15 +533,15 @@ function registerOwner(
     }
 
 
-    if (!/^[0-9]{12}$/.test(aadhaar)) {
+    if (!/^[0-9]{4}$/.test(aadhaar)) {
 
-        showMessage(
-            "Please enter a valid 12-digit Aadhaar number.",
-            "error"
-        );
+    showMessage(
+        "Please enter the last 4 digits of your Aadhaar number.",
+        "error"
+    );
 
-        return;
-    }
+    return;
+}
 
 
     const existingUser =
@@ -739,3 +771,74 @@ document
         }
 
     });
+// =====================================================
+// PASSWORD VISIBILITY TOGGLE
+// =====================================================
+
+function togglePassword(inputId, button) {
+
+    const passwordInput = document.getElementById(inputId);
+
+    if (passwordInput.type === "password") {
+
+        // Show password
+        passwordInput.type = "text";
+
+        button.innerHTML = `
+            <svg class="eye-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M3 3l18 18"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+                <path
+                    d="M10.6 10.6a2 2 0 0 0 2.8 2.8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+                <path
+                    d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.6 18.6 0 0 1-3.1 3.8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+
+                <path
+                    d="M6.1 6.1C3.5 8.1 2 12 2 12s3.5 7 10 7c1.4 0 2.7-.3 3.8-.8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+            </svg>
+        `;
+
+        button.setAttribute("aria-label", "Hide password");
+
+    } else {
+
+        // Hide password
+        passwordInput.type = "password";
+
+        button.innerHTML = `
+            <svg class="eye-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="3"
+                    stroke="currentColor"
+                    stroke-width="2"/>
+            </svg>
+        `;
+
+        button.setAttribute("aria-label", "Show password");
+    }
+}

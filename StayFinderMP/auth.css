@@ -342,3 +342,120 @@
     }
 
 }
+/* =========================================
+   PASSWORD REQUIREMENTS
+========================================= */
+
+.password-hint {
+    display: block;
+    margin-top: 7px;
+    padding: 8px 10px;
+
+    background: #f8fafc;
+    border-left: 3px solid #155eef;
+    border-radius: 5px;
+
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.5;
+}
+/* =====================================================
+   PASSWORD VISIBILITY
+===================================================== */
+
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 48px !important;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    background: transparent;
+
+    color: #64748b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    cursor: pointer;
+
+    border-radius: 6px;
+
+    transition: 
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: #155eef;
+    background: #eff6ff;
+}
+
+.toggle-password:focus {
+    outline: 2px solid #155eef;
+    outline-offset: 1px;
+}
+
+.eye-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+/* ===============================
+   MASKED AADHAAR INPUT
+================================ */
+
+.aadhaar-input-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.aadhaar-input-wrapper:focus-within {
+    border-color: #155eef;
+    box-shadow: 0 0 0 3px rgba(21, 94, 239, 0.1);
+}
+
+.aadhaar-prefix {
+    padding: 12px 0 12px 12px;
+    color: #64748b;
+    font-size: 14px;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.aadhaar-input-wrapper input {
+    flex: 1;
+    width: auto;
+    border: none !important;
+    outline: none;
+    box-shadow: none !important;
+    padding: 12px 12px 12px 5px;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.aadhaar-input-wrapper input::placeholder {
+    color: #94a3b8;
+    letter-spacing: 2px;
+}

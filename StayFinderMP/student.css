@@ -344,7 +344,16 @@
     transform: translateY(-2px);
 
 }
+.header-right {
 
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
 
 /* =====================================================
    MAIN
