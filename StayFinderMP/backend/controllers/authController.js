@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-
+const Hostel = require("../models/Hostel");
 
 // =====================================================
 // PASSWORD VALIDATION
@@ -359,7 +359,21 @@ const register = async (req, res) => {
         // =================================================
 
         await user.save();
+        if (role === "owner") {
+    const hostel = new Hostel({
+        owner: user._id,
+        name: propertyName,
+        location: propertyLocation,
+        totalRooms: 0,
+        availableRooms: 0,
+        rent: 0,
+        securityDeposit: 0,
+        facilities: [],
+        status: "Available"
+    });
 
+    await hostel.save();
+}
 
         // =================================================
         // CREATE JWT

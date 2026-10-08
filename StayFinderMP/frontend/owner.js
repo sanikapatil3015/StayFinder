@@ -4,7 +4,7 @@
 // =====================================================
 
 const API_URL = "/api/hostels";
-
+let currentHostel = null;
 
 // =====================================================
 // LOAD OWNER HOSTEL
@@ -124,7 +124,7 @@ function displayHostel(hostel) {
         "Hostel received from backend:",
         hostel
     );
-
+        currentHostel = hostel;
 
     // -------------------------------------------------
     // PROPERTY NAME
@@ -498,3 +498,344 @@ document.addEventListener(
 
     }
 );
+// =====================================================
+// EDIT PROPERTY
+// =====================================================
+
+function openEditPropertyForm() {
+
+    if (!currentHostel) {
+        alert("Hostel information is not loaded yet.");
+        return;
+    }
+
+
+    const editSection =
+        document.getElementById(
+            "editPropertySection"
+        );
+
+    if (editSection) {
+        editSection.style.display = "block";
+    }
+
+
+    document.getElementById(
+        "editHostelName"
+    ).value =
+        currentHostel.name || "";
+
+
+    document.getElementById(
+        "editHostelLocation"
+    ).value =
+        currentHostel.location || "";
+
+
+    document.getElementById(
+        "editTotalRooms"
+    ).value =
+        currentHostel.totalRooms || 0;
+
+
+    document.getElementById(
+        "editAvailableRooms"
+    ).value =
+        currentHostel.availableRooms || 0;
+
+
+    document.getElementById(
+        "editRent"
+    ).value =
+        currentHostel.rent || 0;
+
+
+    document.getElementById(
+        "editSecurityDeposit"
+    ).value =
+        currentHostel.securityDeposit || 0;
+
+
+    // Clear all facility checkboxes first
+
+    const facilityCheckboxes =
+        document.querySelectorAll(
+            'input[name="facility"]'
+        );
+
+    facilityCheckboxes.forEach(
+        function (checkbox) {
+
+            checkbox.checked = false;
+
+        }
+    );
+
+
+    // Select existing facilities
+
+    const facilities =
+        currentHostel.facilities || [];
+
+    facilityCheckboxes.forEach(
+        function (checkbox) {
+
+            if (
+                facilities.includes(
+                    checkbox.value
+                )
+            ) {
+                checkbox.checked = true;
+            }
+
+        }
+    );
+
+
+    editSection.scrollIntoView({
+        behavior: "smooth"
+    });
+}
+const editPropertyButton =
+    document.getElementById(
+        "editPropertyButton"
+    );
+
+if (editPropertyButton) {
+
+    editPropertyButton.addEventListener(
+        "click",
+        openEditPropertyForm
+    );
+
+}
+// =====================================================
+// SAVE PROPERTY CHANGES
+// =====================================================
+
+const editPropertyForm =
+    document.getElementById(
+        "editPropertyForm"
+    );
+
+if (editPropertyForm) {
+
+    editPropertyForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            if (!currentHostel) {
+
+                alert(
+                    "Hostel information is not loaded."
+                );
+
+                return;
+            }
+
+
+            const token =
+                localStorage.getItem(
+                    "stayFinderToken"
+                );
+
+
+            if (!token) {
+
+                alert(
+                    "Please login again."
+                );
+
+                return;
+            }
+
+
+            const facilities = [];
+
+
+            document
+                .querySelectorAll(
+                    'input[name="facility"]:checked'
+                )
+                .forEach(
+                    function (checkbox) {
+
+                        facilities.push(
+                            checkbox.value
+                        );
+
+                    }
+                );
+
+
+            const updatedData = {
+
+                name:
+                    document.getElementById(
+                        "editHostelName"
+                    ).value,
+
+                location:
+                    document.getElementById(
+                        "editHostelLocation"
+                    ).value,
+
+                totalRooms:
+                    Number(
+                        document.getElementById(
+                            "editTotalRooms"
+                        ).value
+                    ),
+
+                availableRooms:
+                    Number(
+                        document.getElementById(
+                            "editAvailableRooms"
+                        ).value
+                    ),
+
+                rent:
+                    Number(
+                        document.getElementById(
+                            "editRent"
+                        ).value
+                    ),
+
+                securityDeposit:
+                    Number(
+                        document.getElementById(
+                            "editSecurityDeposit"
+                        ).value
+                    ),
+
+                facilities:
+                    facilities
+            };
+
+
+            if (
+                updatedData.availableRooms >
+                updatedData.totalRooms
+            ) {
+
+                alert(
+                    "Available rooms cannot be greater than total rooms."
+                );
+
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/${currentHostel._id}`,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    updatedData
+                                )
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    alert(
+                        data.message ||
+                        "Unable to update property."
+                    );
+
+                    return;
+                }
+
+
+                alert(
+                    "Property updated successfully!"
+                );
+
+
+                currentHostel =
+                    data.hostel;
+
+
+                displayHostel(
+                    data.hostel
+                );
+
+
+                const editSection =
+                    document.getElementById(
+                        "editPropertySection"
+                    );
+
+                if (editSection) {
+
+                    editSection.style.display =
+                        "none";
+
+                }
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Update property error:",
+                    error
+                );
+
+                alert(
+                    "Cannot connect to the server."
+                );
+
+            }
+
+        }
+    );
+
+}
+const cancelEditProperty =
+    document.getElementById(
+        "cancelEditProperty"
+    );
+
+if (cancelEditProperty) {
+
+    cancelEditProperty.addEventListener(
+        "click",
+        function () {
+
+            const editSection =
+                document.getElementById(
+                    "editPropertySection"
+                );
+
+            if (editSection) {
+
+                editSection.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}

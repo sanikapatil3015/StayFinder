@@ -1,7 +1,8 @@
 const express = require("express");
 
 const {
-    getMyHostels
+    getMyHostels,
+    updateMyHostel
 } = require("../controllers/hostelController");
 
 const protect =
@@ -19,6 +20,11 @@ router.get(
     "/my",
     protect,
     getMyHostels
+);
+router.put(
+    "/:id",
+    protect,
+    updateMyHostel
 );
 
 

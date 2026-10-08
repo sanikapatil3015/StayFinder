@@ -361,10 +361,12 @@
 
                     <div class="quick-action-grid">
 
-                        <button type="button" class="quick-action">
-                            <span>✎</span>
-                            <strong>Edit Property</strong>
-                        </button>
+                      <button type="button"
+                        class="quick-action"
+                        id="editPropertyButton">
+                        <span>✎</span>
+                        <strong>Edit Property</strong>
+                    </button>
 
                         <button type="button"
                                 class="quick-action"
@@ -392,6 +394,247 @@
                 </div>
 
             </section>
+
+                        </section>
+
+
+            <!-- ================= EDIT PROPERTY FORM ================= -->
+
+            <section id="editPropertySection"
+                     class="dashboard-card full-width-section"
+                     style="display: none;">
+
+                <div class="dashboard-card-header">
+                    <div>
+                        <h2>✎ Edit Property</h2>
+                        <p>Update your hostel information</p>
+                    </div>
+                </div>
+
+
+                <form id="editPropertyForm">
+
+                    <!-- HOSTEL NAME -->
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="editHostelName">
+                            Hostel Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editHostelName"
+                            required
+                            style="width: 100%; padding: 12px; margin-top: 8px;"
+                        >
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="editHostelLocation">
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editHostelLocation"
+                            required
+                            style="width: 100%; padding: 12px; margin-top: 8px;"
+                        >
+                    </div>
+
+
+                    <!-- TOTAL ROOMS -->
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="editTotalRooms">
+                            Total Rooms
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editTotalRooms"
+                            min="0"
+                            required
+                            style="width: 100%; padding: 12px; margin-top: 8px;"
+                        >
+                    </div>
+
+
+                    <!-- AVAILABLE ROOMS -->
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="editAvailableRooms">
+                            Available Rooms
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editAvailableRooms"
+                            min="0"
+                            required
+                            style="width: 100%; padding: 12px; margin-top: 8px;"
+                        >
+                    </div>
+
+
+                    <!-- MONTHLY RENT -->
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="editRent">
+                            Monthly Rent
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editRent"
+                            min="0"
+                            required
+                            style="width: 100%; padding: 12px; margin-top: 8px;"
+                        >
+                    </div>
+
+
+                    <!-- SECURITY DEPOSIT -->
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="editSecurityDeposit">
+                            Security Deposit
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editSecurityDeposit"
+                            min="0"
+                            required
+                            style="width: 100%; padding: 12px; margin-top: 8px;"
+                        >
+                    </div>
+
+
+                    <!-- FACILITIES -->
+
+                    <div style="margin-bottom: 20px;">
+
+                        <label>
+                            Facilities
+                        </label>
+
+                        <div style="margin-top: 10px;">
+
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input
+                                    type="checkbox"
+                                    name="facility"
+                                    value="Wi-Fi"
+                                >
+                                Wi-Fi
+                            </label>
+
+
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input
+                                    type="checkbox"
+                                    name="facility"
+                                    value="Mess"
+                                >
+                                Mess
+                            </label>
+
+
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input
+                                    type="checkbox"
+                                    name="facility"
+                                    value="Laundry"
+                                >
+                                Laundry
+                            </label>
+
+
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input
+                                    type="checkbox"
+                                    name="facility"
+                                    value="Parking"
+                                >
+                                Parking
+                            </label>
+
+
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input
+                                    type="checkbox"
+                                    name="facility"
+                                    value="CCTV"
+                                >
+                                CCTV
+                            </label>
+
+
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input
+                                    type="checkbox"
+                                    name="facility"
+                                    value="24/7 Water"
+                                >
+                                24/7 Water
+                            </label>
+
+
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input
+                                    type="checkbox"
+                                    name="facility"
+                                    value="Power Backup"
+                                >
+                                Power Backup
+                            </label>
+
+
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input
+                                    type="checkbox"
+                                    name="facility"
+                                    value="Security"
+                                >
+                                Security
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div style="display: flex; gap: 10px;">
+
+                        <button
+                            type="submit"
+                            class="primary-dashboard-button">
+                            Save Changes
+                        </button>
+
+                        <button
+                            type="button"
+                            id="cancelEditProperty"
+                            class="primary-dashboard-button">
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- ================= LOWER GRID ================= -->
+
+            <div class="dashboard-lower-grid">
 
 
             <!-- ================= LOWER GRID ================= -->
