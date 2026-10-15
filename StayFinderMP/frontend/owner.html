@@ -57,7 +57,7 @@
 
             <a href="#enquiries" class="owner-nav-link">
                 <span class="nav-icon">💬</span>
-                <span>Bookings / Enquiries</span>
+                <span>Enquiries</span>
             </a>
 
             <a href="#analytics" class="owner-nav-link">
@@ -93,10 +93,47 @@
 
             <div class="header-right">
 
-                <button class="notification-button" type="button">
-                    🔔
-                    <span class="notification-count">3</span>
-                </button>
+                <div class="notification-wrapper">
+    <button
+        class="notification-button"
+        id="ownerNotificationButton"
+        type="button"
+        aria-label="Notifications"
+        aria-expanded="false"
+        aria-controls="ownerNotificationPanel"
+    >
+        🔔
+        <span
+            class="notification-count"
+            id="ownerNotificationCount"
+            hidden
+        >0</span>
+    </button>
+
+
+<div
+    class="notification-panel"
+    id="ownerNotificationPanel"
+    hidden
+>
+    <div class="notification-panel-header">
+        <h3>Notifications</h3>
+        <button
+            type="button"
+            id="markAllNotificationsRead"
+        >
+            Mark all as read
+        </button>
+    </div>
+
+    <div id="ownerNotificationList" aria-live="polite">
+        <p>Loading notifications...</p>
+    </div>
+</div>
+
+
+</div>
+
 
                 <div class="owner-profile">
 
@@ -269,26 +306,24 @@
 
 
                 <div class="stat-card yellow-card">
+    <div class="stat-icon">
+        ★
+    </div>
 
-                    <div class="stat-icon">
-                        ★
-                    </div>
+    <div>
+        <span class="stat-label">
+            Average Rating
+        </span>
 
-                    <div>
-                        <span class="stat-label">
-                            Average Rating
-                        </span>
+        <strong id="dashboardAverageRating">
+            0.0
+        </strong>
 
-                        <strong>
-                            4.5
-                        </strong>
-
-                        <small class="rating-stars">
-                            ★ ★ ★ ★ ☆
-                        </small>
-                    </div>
-
-                </div>
+        <small class="rating-stars" id="dashboardRatingStars">
+            ☆ ☆ ☆ ☆ ☆
+        </small>
+    </div>
+</div>
 
             </div>
 
@@ -319,8 +354,11 @@
                                 Sai Hostel
                             </h2>
 
-                            <span class="verified-badge">
-                                ✓ Verified
+                            <span
+                            class="verified-badge"
+                             id="hostelVerificationBadge"
+                            >
+                                Loading verification status...
                             </span>
                         </div>
 
@@ -368,12 +406,7 @@
                         <strong>Edit Property</strong>
                     </button>
 
-                        <button type="button"
-                                class="quick-action"
-                                onclick="document.getElementById('rooms').scrollIntoView({behavior:'smooth'})">
-                            <span>🛏</span>
-                            <strong>Update Rooms</strong>
-                        </button>
+                        
 
                         <button type="button"
                                 class="quick-action"
@@ -395,8 +428,110 @@
 
             </section>
 
-                        </section>
 
+        </section>
+
+                <!-- ================= HOSTEL VERIFICATION ================= -->
+        <section id="hostelVerification"
+                 class="dashboard-card full-width-section">
+
+            <div class="verification-header">
+                <h2>Hostel Verification</h2>
+                <p>
+                    Upload supporting documents so the Stay Finder admin
+                    can review your hostel.
+                </p>
+            </div>
+
+            <!-- Verification Status -->
+            <div class="verification-status-card">
+                <h3>Verification Status</h3>
+
+                <span id="verificationStatusText">
+                    Loading...
+                </span>
+
+                <p id="verificationMessage">
+                    Your verification information will appear here.
+                </p>
+            </div>
+
+            <!-- Rejection Reason -->
+            <div id="rejectionReasonContainer" hidden>
+                <h3>Reason for Rejection</h3>
+                <p id="rejectionReasonText"></p>
+            </div>
+
+            <!-- Upload Verification Documents -->
+            <div class="verification-upload-card">
+
+                <h3>Upload Verification Documents</h3>
+
+                <p>
+                    Accepted formats: PDF, JPG and PNG.
+                    Maximum file size: 5 MB per file.
+                </p>
+
+                <form id="verificationDocumentForm">
+
+                    <label for="documentType">
+                        Document Type
+                    </label>
+
+                    <select id="documentType"
+                            name="documentType"
+                            required>
+                        <option value="">Select document type</option>
+                        <option value="Property Proof">
+                            Property Proof
+                        </option>
+                        <option value="Owner Identity">
+                            Owner Identity
+                        </option>
+                        <option value="Business Registration">
+                            Business Registration
+                        </option>
+                        <option value="Other">
+                            Other
+                        </option>
+                    </select>
+
+                    <label for="verificationDocuments">
+                        Select Documents
+                    </label>
+
+                    <input
+                        type="file"
+                        id="verificationDocuments"
+                        name="documents"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        multiple
+                        required
+                    >
+
+                    <small>
+                        Select up to 5 documents per submission.
+                    </small>
+
+                    <button type="submit"
+                            id="uploadVerificationButton"
+                            class="primary-dashboard-button">
+                        Upload Documents
+                    </button>
+
+                    <p
+                        id="verificationUploadMessage"
+                        role="status"
+                        aria-live="polite">
+                    </p>
+
+                </form>
+            </div>
+
+        </section>
+        <!-- ================= END HOSTEL VERIFICATION ================= -->
+                    
+      
 
             <!-- ================= EDIT PROPERTY FORM ================= -->
 
@@ -606,6 +741,75 @@
                         </div>
 
                     </div>
+                          <!-- ================= HOSTEL PHOTOS ================= -->
+<section
+    id="hostelPhotos"
+    class="dashboard-card full-width-section"
+>
+    <div class="dashboard-card-header">
+        <div>
+            <h2>📸 Hostel Photos</h2>
+            <p>Manage your main hostel photo and gallery</p>
+        </div>
+    </div>
+
+    <!-- Main Photo -->
+    <div style="margin-bottom: 24px;">
+        <h3>Main Hostel Photo</h3>
+        <p>Choose the cover photo students will see first.</p>
+
+        <input
+            type="file"
+            id="mainPhotoInput"
+            accept="image/jpeg,image/png,image/webp"
+        >
+
+        <div id="mainPhotoPreview" style="margin-top: 12px;">
+            <p>No main photo selected.</p>
+        </div>
+    </div>
+
+    <!-- Additional Photos -->
+    <div style="margin-bottom: 24px;">
+        <h3>Additional Photos</h3>
+        <p>Select up to 8 additional hostel photos.</p>
+
+        <input
+            type="file"
+            id="additionalPhotosInput"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+        >
+
+        <div
+            id="additionalPhotosPreview"
+            style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px;"
+        ></div>
+    </div>
+
+    <!-- Upload Button -->
+    <button
+        type="button"
+        id="uploadHostelPhotosButton"
+        class="primary-dashboard-button"
+    >
+        Upload Photos
+    </button>
+
+    <p id="photoUploadMessage" style="margin-top: 12px;"></p>
+
+    <!-- Saved Photos -->
+    <div style="margin-top: 28px;">
+        <h3>Saved Hostel Photos</h3>
+
+        <div
+            id="savedHostelPhotos"
+            style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px;"
+        >
+            <p>Your saved photos will appear here.</p>
+        </div>
+    </div>
+</section>
 
 
                     <!-- BUTTONS -->
@@ -637,26 +841,15 @@
             <div class="dashboard-lower-grid">
 
 
-            <!-- ================= LOWER GRID ================= -->
-
-            <div class="dashboard-lower-grid">
-
-
                 <!-- ROOM AVAILABILITY -->
 
                 <section class="dashboard-card room-card" id="rooms">
 
                     <div class="dashboard-card-header">
-
-                        <div>
-                            <h2>🛏 Room Availability</h2>
-                            <p>Current room status</p>
-                        </div>
-
-                        <button type="button">
-                            View All
-                        </button>
-
+                    <div>
+                        <h2>🛏 Room Availability</h2>
+                        <p>Current room status</p>
+                    </div>
                     </div>
 
 
@@ -729,14 +922,7 @@
                     </div>
 
 
-                    <button class="primary-dashboard-button"
-                            type="button"
-                            id="updateAvailabilityButton">
-
-                        Update Availability
-
-                    </button>
-
+                    
                 </section>
 
 
@@ -751,9 +937,7 @@
                             <p>Facilities available at your property</p>
                         </div>
 
-                        <button type="button">
-                            Edit
-                        </button>
+                        
 
                     </div>
 
@@ -803,9 +987,7 @@
                     </div>
 
 
-                    <button class="add-facility-button" type="button">
-                        + Add New Facility
-                    </button>
+                    
 
                 </section>
 
@@ -821,131 +1003,17 @@
                             <p>Students interested in your property</p>
                         </div>
 
-                        <button type="button">
+                        <button type="button" id="viewAllEnquiriesBtn">
                             View All
                         </button>
 
                     </div>
 
 
-                    <div class="enquiry-list">
+                    <div class="enquiry-list" id="enquiryList">
+                    <p>Loading enquiries...</p>
+                     </div>
 
-                        <div class="enquiry">
-
-                            <div class="enquiry-avatar">
-                                PS
-                            </div>
-
-                            <div class="enquiry-info">
-                                <strong>
-                                    Prathamesh Sawant
-                                </strong>
-
-                                <span>
-                                    Interested in single room...
-                                </span>
-                            </div>
-
-                            <div class="enquiry-right">
-                                <small>
-                                    10 min ago
-                                </small>
-
-                                <label class="new-label">
-                                    New
-                                </label>
-                            </div>
-
-                        </div>
-
-
-                        <div class="enquiry">
-
-                            <div class="enquiry-avatar pink">
-                                AS
-                            </div>
-
-                            <div class="enquiry-info">
-                                <strong>
-                                    Anjali Shetty
-                                </strong>
-
-                                <span>
-                                    Is mess included in rent?
-                                </span>
-                            </div>
-
-                            <div class="enquiry-right">
-                                <small>
-                                    2 hours ago
-                                </small>
-
-                                <label class="contacted-label">
-                                    Contacted
-                                </label>
-                            </div>
-
-                        </div>
-
-
-                        <div class="enquiry">
-
-                            <div class="enquiry-avatar purple">
-                                RK
-                            </div>
-
-                            <div class="enquiry-info">
-                                <strong>
-                                    Rohan Kulkarni
-                                </strong>
-
-                                <span>
-                                    Want to visit the property.
-                                </span>
-                            </div>
-
-                            <div class="enquiry-right">
-                                <small>
-                                    5 hours ago
-                                </small>
-
-                                <label class="pending-label">
-                                    Pending
-                                </label>
-                            </div>
-
-                        </div>
-
-
-                        <div class="enquiry">
-
-                            <div class="enquiry-avatar green">
-                                SM
-                            </div>
-
-                            <div class="enquiry-info">
-                                <strong>
-                                    Siddhi More
-                                </strong>
-
-                                <span>
-                                    Do you have girls section?
-                                </span>
-                            </div>
-
-                            <div class="enquiry-right">
-                                <small>
-                                    1 day ago
-                                </small>
-
-                                <label class="closed-label">
-                                    Closed
-                                </label>
-                            </div>
-
-                        </div>
-
-                    </div>
 
                 </section>
 
@@ -981,8 +1049,8 @@
                     <div class="pricing-info">
                         <span>Security Deposit</span>
 
-                        <strong>
-                            ₹5,000
+                        <strong id="pricingSecurityDeposit">
+                            ₹0
                         </strong>
                     </div>
 
@@ -999,44 +1067,46 @@
 
             <!-- ================= REVIEWS ================= -->
 
-            <section class="dashboard-card full-width-section"
-                     id="reviews">
+           <section class="dashboard-card full-width-section" id="reviews">
 
-                <div class="dashboard-card-header">
+    <div class="dashboard-card-header">
 
-                    <div>
-                        <h2>★ Reviews</h2>
-                        <p>What students are saying about your property</p>
-                    </div>
+        <div>
+            <h2>★ Reviews</h2>
+            <p>What students are saying about your property</p>
+        </div>
 
-                    <div class="overall-rating">
-                        <strong>4.5</strong>
-                        <span>★★★★★</span>
-                    </div>
+        <div class="overall-rating">
+            <strong id="overallRating">0.0</strong>
+            <span id="overallStars">☆☆☆☆☆</span>
+        </div>
 
-                </div>
+    </div>
 
+    <div class="review-summary">
 
-                <div class="review-summary">
+        <div class="review-box">
+            <strong id="averageRating">0.0 / 5</strong>
+            <span>Overall Rating</span>
+        </div>
 
-                    <div class="review-box">
-                        <strong>4.5 / 5</strong>
-                        <span>Overall Rating</span>
-                    </div>
+        <div class="review-box">
+            <strong id="totalReviews">0</strong>
+            <span>Total Reviews</span>
+        </div>
 
-                    <div class="review-box">
-                        <strong>28</strong>
-                        <span>Total Reviews</span>
-                    </div>
+        <div class="review-box">
+            <strong id="positivePercentage">0%</strong>
+            <span>Positive Reviews</span>
+        </div>
 
-                    <div class="review-box">
-                        <strong>92%</strong>
-                        <span>Positive Reviews</span>
-                    </div>
+    </div>
 
-                </div>
+    <div id="reviewsList">
+        <p>Reviews will appear here.</p>
+    </div>
 
-            </section>
+</section>
 
 
             <!-- ================= ANALYTICS ================= -->
@@ -1057,28 +1127,33 @@
                 <div class="analytics-grid">
 
                     <div class="analytics-item">
-                        <span>Profile Views</span>
-                        <strong>248</strong>
-                        <small>+12% this month</small>
-                    </div>
+        <span>Total Rooms</span>
+        <strong id="analyticsTotalRooms">0</strong>
+        <small>Registered hostel rooms</small>
+    </div>
 
-                    <div class="analytics-item">
-                        <span>Student Enquiries</span>
-                        <strong>36</strong>
-                        <small>+8% this month</small>
-                    </div>
+    <div class="analytics-item">
+        <span>Available Rooms</span>
+        <strong id="analyticsAvailableRooms">0</strong>
+        <small>Rooms available for students</small>
+    </div>
 
-                    <div class="analytics-item">
-                        <span>Saved by Students</span>
-                        <strong>74</strong>
-                        <small>+15% this month</small>
-                    </div>
+    <div class="analytics-item">
+        <span>Occupied Rooms</span>
+        <strong id="analyticsOccupiedRooms">0</strong>
+        <small>Estimated occupied rooms</small>
+    </div>
 
-                    <div class="analytics-item">
-                        <span>Property Ranking</span>
-                        <strong>#8</strong>
-                        <small>Among nearby stays</small>
-                    </div>
+    <div class="analytics-item">
+        <span>Occupancy Rate</span>
+        <strong id="analyticsOccupancyRate">0%</strong>
+        <small>Based on registered room counts</small>
+    </div>
+    <div class="analytics-item">
+    <span>Student Enquiries</span>
+    <strong id="analyticsStudentEnquiries">0</strong>
+    <small>Total enquiries received</small>
+</div>
 
                 </div>
 
@@ -1098,32 +1173,129 @@
                     </div>
 
                 </div>
-
+                <button type="button" id="editOwnerProfileBtn">
+                  Edit Profile
+                </button>
 
                 <div class="profile-settings">
 
-                    <div>
-                        <span>Owner Name</span>
-                        <strong id="profileOwnerName">
-                            Owner
-                        </strong>
-                    </div>
+    <div>
+        <span>Owner Name</span>
+        <strong id="profileOwnerName">Owner</strong>
+    </div>
 
-                    <div>
-                        <span>Email</span>
-                        <strong id="profileOwnerEmail">
-                            owner@example.com
-                        </strong>
-                    </div>
+    <div>
+        <span>Email</span>
+        <strong id="profileOwnerEmail">owner@example.com</strong>
+    </div>
 
-                    <div>
-                        <span>Account Type</span>
-                        <strong>
-                            Hostel Owner
-                        </strong>
-                    </div>
+    <div>
+        <span>Phone Number</span>
+        <strong id="profileOwnerPhone">Not available</strong>
+    </div>
 
-                </div>
+    <div>
+        <span>Account Type</span>
+        <strong>Hostel Owner</strong>
+    </div>
+
+</div>
+
+<div class="profile-edit-form" id="ownerProfileEditContainer" hidden>
+
+    <h3>Edit Personal Details</h3>
+    <p>Update the personal information associated with your owner account.</p>
+
+    <form id="ownerProfileForm">
+
+        <label for="editOwnerName">Full Name</label>
+        <input
+            type="text"
+            id="editOwnerName"
+            required
+        >
+
+        <label for="editOwnerEmail">Email Address</label>
+        <input
+            type="email"
+            id="editOwnerEmail"
+            required
+        >
+
+        <label for="editOwnerPhone">Phone Number</label>
+        <input
+            type="tel"
+            id="editOwnerPhone"
+            inputmode="numeric"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            minlength="10"
+            required
+        >
+
+        <button type="submit" id="saveOwnerProfileBtn">
+            Save Changes
+        </button>
+
+        <p id="ownerProfileMessage" role="status" aria-live="polite"></p>
+
+    </form>
+
+</div>
+        <!-- ================= CHANGE PASSWORD ================= -->
+
+        <div class="password-settings">
+    <h3>Change Password</h3>
+    <p>Keep your account secure by updating your password.</p>
+
+
+<button type="button" id="togglePasswordFormBtn">
+    Change Password
+</button>
+
+<div id="changePasswordContainer" hidden>
+    <form id="changePasswordForm">
+        <label for="currentPassword">Current Password</label>
+        <input
+            type="password"
+            id="currentPassword"
+            autocomplete="current-password"
+            required
+        >
+
+        <label for="newPassword">New Password</label>
+        <input
+            type="password"
+            id="newPassword"
+            minlength="8"
+            autocomplete="new-password"
+            required
+        >
+
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <input
+            type="password"
+            id="confirmNewPassword"
+            minlength="8"
+            autocomplete="new-password"
+            required
+        >
+
+        <button type="submit" id="saveNewPasswordBtn">
+            Save New Password
+        </button>
+
+        <button type="button" id="cancelPasswordFormBtn">
+            Cancel
+        </button>
+
+        <p id="changePasswordMessage" role="status" aria-live="polite"></p>
+    </form>
+</div>
+
+
+</div>
+
 
             </section>
 

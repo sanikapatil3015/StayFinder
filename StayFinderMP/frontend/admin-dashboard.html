@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stay Finder | Admin Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            background: #163b65;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            color: #dbeafe;
+        }
+
+        button {
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .logout-button {
+            background: white;
+            color: #163b65;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .toolbar h2 {
+            margin: 0;
+        }
+
+        .refresh-button {
+            background: #163b65;
+            color: white;
+        }
+
+        .summary {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 8px #0000000d;
+        }
+
+        .summary h3 {
+            margin: 0 0 8px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .summary strong {
+            font-size: 30px;
+            color: #163b65;
+        }
+
+        #message {
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        .hostel-card {
+            background: white;
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px #0000000d;
+            border: 1px solid #e5e7eb;
+        }
+
+        .hostel-card h3 {
+            margin-top: 0;
+            color: #163b65;
+        }
+
+        .hostel-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .detail {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-wrap: anywhere;
+        }
+
+        .detail strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .documents {
+            margin: 18px 0;
+        }
+
+        .documents a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            color: #1d4ed8;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .approve-button {
+            background: #15803d;
+            color: white;
+        }
+
+        .reject-button {
+            background: #b91c1c;
+            color: white;
+        }
+
+        .empty-state {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 18px;
+            }
+
+            main {
+                padding: 0 12px;
+            }
+
+            .hostel-card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>Stay Finder</h1>
+            <p>Administrator Dashboard</p>
+        </div>
+
+        <button id="logoutButton" class="logout-button">
+            Logout
+        </button>
+    </header>
+
+    <main>
+        <div class="toolbar">
+            <h2>Hostel Verification</h2>
+
+            <button id="refreshButton" class="refresh-button">
+                Refresh Applications
+            </button>
+        </div>
+
+        <section class="summary">
+            <h3>Pending Applications</h3>
+            <strong id="pendingCount">—</strong>
+        </section>
+
+        <p id="message" role="status" aria-live="polite">
+            Loading pending applications...
+        </p>
+
+        <section id="applications">
+            <!-- Applications will appear here. -->
+        </section>
+    </main>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>

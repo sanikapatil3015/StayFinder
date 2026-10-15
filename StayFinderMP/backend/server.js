@@ -8,6 +8,12 @@ const authRoutes = require("./routes/authRoutes");
 
 const hostelRoutes =
     require("./routes/hostelRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
+
+const enquiryRoutes = require("./routes/enquiryRoutes");
+
+const profileRoutes = require("./routes/profileRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 // =====================================================
 // LOAD ENVIRONMENT VARIABLES
 // =====================================================
@@ -32,6 +38,10 @@ app.use(
 );
 
 app.use(express.json());
+app.use(
+    "/uploads",
+    express.static(path.join(__dirname, "uploads"))
+);
 
 // =====================================================
 // AUTHENTICATION API
@@ -39,7 +49,10 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/hostels", hostelRoutes);
-
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/enquiries", enquiryRoutes);
+app.use("/api/owner/profile", profileRoutes);
+app.use("/api/notifications", notificationRoutes);
 // =====================================================
 // HEALTH CHECK
 // =====================================================

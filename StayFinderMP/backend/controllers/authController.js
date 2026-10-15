@@ -559,11 +559,104 @@ const login = async (req, res) => {
 
 };
 
+// =====================================================
+// CHANGE PASSWORD
+// =====================================================
+
+const changePassword = async (req, res) => {
+    try {
+        const {
+            currentPassword,
+            newPassword,
+            confirmPassword
+        } = req.body;
+
+        // Validate required fields
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "Please fill in all password fields."
+            });
+        }
+
+        // Check new password length
+        if (newPassword.length < 8) {
+            return res.status(400).json({
+                success: false,
+                message: "New password must contain at least 8 characters."
+            });
+        }
+
+        // Confirm new password
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "New passwords do not match."
+            });
+        }
+
+        // Find the logged-in user
+        const user = await User.findById(req.user.id).select("+password");
+       
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User account not found."
+            });
+        }
+
+        // Verify current password
+        const passwordMatch = await bcrypt.compare(
+            currentPassword,
+            user.password
+        );
+            
+
+        if (!passwordMatch) {
+            return res.status(400).json({
+                success: false,
+                message: "Current password is incorrect."
+            });
+        }
+
+        // Prevent reusing the current password
+        const samePassword = await bcrypt.compare(
+            newPassword,
+            user.password
+        );
+
+        if (samePassword) {
+            return res.status(400).json({
+                success: false,
+                message: "New password must differ from your current password."
+            });
+        }
+
+        // Hash the new password before saving
+        user.password = await bcrypt.hash(newPassword, 12);
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Password changed successfully."
+        });
+
+    } catch (error) {
+        console.error("Change password error:", error.message);
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to change password."
+        });
+    }
+};
 
 module.exports = {
 
     register,
 
-    login
+    login,
+    changePassword
 
 };

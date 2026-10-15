@@ -461,269 +461,14 @@
                 </div>
 
 
+<div class="property-grid" id="propertyGrid">
 
-                <div class="property-grid">
+    <p id="hostelLoadingMessage">
+        Loading available stays...
+    </p>
 
-
-                    <!-- PROPERTY 1 -->
-
-                    <div class="property-card">
-
-                        <div class="property-image property-one">
-
-                            <span class="property-tag green-tag">
-                                Popular
-                            </span>
-
-                            <button class="heart-button">
-                                ♡
-                            </button>
-
-                            <div class="property-house">
-                                🏢
-                            </div>
-
-                        </div>
-
-
-                        <div class="property-info">
-
-                            <h3>
-                                Sai Hostel
-                                <span class="verified">✓</span>
-                            </h3>
-
-                            <p class="location">
-                                📍 Kolhapur • 0.8 km from KIT
-                            </p>
-
-                            <div class="property-rating">
-
-                                <span>
-                                    ⭐ 4.5
-                                </span>
-
-                                <small>
-                                    (28 reviews)
-                                </small>
-
-                                <strong>
-                                    ₹5,000
-                                    <small>/month</small>
-                                </strong>
-
-                            </div>
-
-
-                            <div class="facility-list">
-
-                                <span>Wi-Fi</span>
-                                <span>Mess</span>
-                                <span>CCTV</span>
-                                <span>+4</span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- PROPERTY 2 -->
-
-                    <div class="property-card">
-
-                        <div class="property-image property-two">
-
-                            <span class="property-tag purple-tag">
-                                Best Rated
-                            </span>
-
-                            <button class="heart-button saved">
-                                ♥
-                            </button>
-
-                            <div class="property-house">
-                                🏢
-                            </div>
-
-                        </div>
-
-
-                        <div class="property-info">
-
-                            <h3>
-                                Green View PG
-                                <span class="verified">✓</span>
-                            </h3>
-
-                            <p class="location">
-                                📍 Kolhapur • 1.2 km from KIT
-                            </p>
-
-                            <div class="property-rating">
-
-                                <span>
-                                    ⭐ 4.7
-                                </span>
-
-                                <small>
-                                    (35 reviews)
-                                </small>
-
-                                <strong>
-                                    ₹6,000
-                                    <small>/month</small>
-                                </strong>
-
-                            </div>
-
-
-                            <div class="facility-list">
-
-                                <span>Wi-Fi</span>
-                                <span>Food</span>
-                                <span>Laundry</span>
-                                <span>+3</span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- PROPERTY 3 -->
-
-                    <div class="property-card">
-
-                        <div class="property-image property-three">
-
-                            <span class="property-tag blue-tag">
-                                Budget Friendly
-                            </span>
-
-                            <button class="heart-button">
-                                ♡
-                            </button>
-
-                            <div class="property-house">
-                                🛏️
-                            </div>
-
-                        </div>
-
-
-                        <div class="property-info">
-
-                            <h3>
-                                Shivam PG
-                                <span class="verified">✓</span>
-                            </h3>
-
-                            <p class="location">
-                                📍 Kolhapur • 1.5 km from KIT
-                            </p>
-
-                            <div class="property-rating">
-
-                                <span>
-                                    ⭐ 4.2
-                                </span>
-
-                                <small>
-                                    (18 reviews)
-                                </small>
-
-                                <strong>
-                                    ₹4,500
-                                    <small>/month</small>
-                                </strong>
-
-                            </div>
-
-
-                            <div class="facility-list">
-
-                                <span>Wi-Fi</span>
-                                <span>Mess</span>
-                                <span>Parking</span>
-                                <span>+2</span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- PROPERTY 4 -->
-
-                    <div class="property-card">
-
-                        <div class="property-image property-four">
-
-                            <span class="property-tag orange-tag">
-                                Near College
-                            </span>
-
-                            <button class="heart-button">
-                                ♡
-                            </button>
-
-                            <div class="property-house">
-                                🏢
-                            </div>
-
-                        </div>
-
-
-                        <div class="property-info">
-
-                            <h3>
-                                Royal Hostel
-                                <span class="verified">✓</span>
-                            </h3>
-
-                            <p class="location">
-                                📍 Kolhapur • 0.5 km from KIT
-                            </p>
-
-                            <div class="property-rating">
-
-                                <span>
-                                    ⭐ 4.4
-                                </span>
-
-                                <small>
-                                    (22 reviews)
-                                </small>
-
-                                <strong>
-                                    ₹5,500
-                                    <small>/month</small>
-                                </strong>
-
-                            </div>
-
-
-                            <div class="facility-list">
-
-                                <span>Wi-Fi</span>
-                                <span>Mess</span>
-                                <span>CCTV</span>
-                                <span>+3</span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+</div>
+                
 
             </section>
 
@@ -1075,6 +820,157 @@
 
         }
 
+        /* --------------------------------
+LOAD HOSTELS FROM MONGODB
+-------------------------------- */
+
+async function loadHostels() {
+const propertyGrid = document.getElementById("propertyGrid");
+
+
+try {
+    const response = await fetch("/api/hostels");
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+        throw new Error("Unable to load hostels.");
+    }
+
+    propertyGrid.replaceChildren();
+
+    if (!data.hostels || data.hostels.length === 0) {
+        propertyGrid.textContent = "No hostels are available yet.";
+        return;
+    }
+
+    data.hostels.forEach(function (hostel) {
+        const card = document.createElement("div");
+        card.className = "property-card";
+
+        const image = document.createElement("div");
+        image.className = "property-image property-one";
+
+        const house = document.createElement("div");
+        house.className = "property-house";
+        house.textContent = "🏢";
+        image.appendChild(house);
+
+        const info = document.createElement("div");
+        info.className = "property-info";
+
+        const name = document.createElement("h3");
+        name.textContent = hostel.name || "Unnamed Hostel";
+
+        const location = document.createElement("p");
+        location.className = "location";
+        location.textContent = "📍 " + (hostel.location || "Location not specified");
+
+        const rating = document.createElement("div");
+        rating.className = "property-rating";
+
+        const status = document.createElement("span");
+        status.textContent = hostel.status || "Status unavailable";
+
+        const rent = document.createElement("strong");
+        rent.textContent = "₹" + (hostel.rent ?? 0) + " ";
+
+        const rentPeriod = document.createElement("small");
+        rentPeriod.textContent = "/month";
+        rent.appendChild(rentPeriod);
+
+        rating.append(status, rent);
+
+        const facilities = document.createElement("div");
+        facilities.className = "facility-list";
+
+        (hostel.facilities || []).slice(0, 3).forEach(function (facility) {
+            const item = document.createElement("span");
+            item.textContent = facility;
+            facilities.appendChild(item);
+        });
+
+        const rooms = document.createElement("p");
+        rooms.className = "location";
+        rooms.textContent =
+            "Available rooms: " + (hostel.availableRooms ?? 0);
+
+        const deposit = document.createElement("p");
+        deposit.className = "location";
+        deposit.textContent =
+            "Security deposit: ₹" + (hostel.securityDeposit ?? 0);
+
+        info.append(name, location, rating, facilities, rooms, deposit);
+        const enquiryButton = document.createElement("button");
+enquiryButton.type = "button";
+enquiryButton.textContent = "Send Enquiry";
+enquiryButton.className = "search-button";
+
+enquiryButton.addEventListener("click", function () {
+sendEnquiry(hostel._id, hostel.name);
+});
+
+info.appendChild(enquiryButton);
+
+        card.append(image, info);
+        propertyGrid.appendChild(card);
+    });
+
+} catch (error) {
+    console.error("Error loading hostels:", error);
+    propertyGrid.textContent =
+        "Unable to load hostels. Please try again later.";
+}
+
+
+}
+async function sendEnquiry(hostelId, hostelName) {
+const token = localStorage.getItem("stayFinderToken");
+
+
+if (!token) {
+    alert("Please log in as a student before sending an enquiry.");
+    return;
+}
+
+const message = prompt(
+    "Enter your enquiry for " + hostelName + ":"
+);
+
+if (!message || !message.trim()) {
+    return;
+}
+
+try {
+    const response = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+            hostelId: hostelId,
+            message: message.trim()
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+        alert(data.message || "Unable to send enquiry.");
+        return;
+    }
+
+    alert("Your enquiry was sent successfully!");
+
+} catch (error) {
+    console.error("Error sending enquiry:", error);
+    alert("Could not send your enquiry. Please try again.");
+}
+
+
+}
+
+
 
         /* --------------------------------
            PAGE LOAD
@@ -1085,6 +981,7 @@
             function () {
 
                 loadStudentName();
+                loadHostels();
 
             }
         );
