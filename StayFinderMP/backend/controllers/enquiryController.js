@@ -2,7 +2,7 @@
 const Enquiry = require("../models/Enquiry");
 const Hostel = require("../models/Hostel");
 const Notification = require("../models/Notification");
-const User = require("../models/User");
+const User = require("../models/user");
 
 // Get enquiries for the logged-in owner's hostel
 const getOwnerEnquiries = async (req, res) => {
@@ -37,6 +37,38 @@ const getOwnerEnquiries = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Unable to fetch enquiries."
+        });
+    }
+};
+// Get enquiries sent by the logged-in student
+const getStudentEnquiries = async (req, res) => {
+    try {
+        // Only students can view their own enquiries
+        if (req.user.role !== "student") {
+            return res.status(403).json({
+                success: false,
+                message: "Only students can view their enquiries."
+            });
+        }
+
+        // Find enquiries belonging to this student
+        const enquiries = await Enquiry.find({
+            student: req.user.id
+        })
+            .populate("hostel", "name location collegeName rent status mainPhoto")
+            .sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            success: true,
+            enquiries
+        });
+
+    } catch (error) {
+        console.error("Error fetching student enquiries:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to fetch your enquiries."
         });
     }
 };
@@ -79,7 +111,8 @@ const { hostelId, message } = req.body;
 const student = await User.findById(req.user.id).select("name");
 
 await Notification.create({
-    owner: hostel.owner,
+    recipient: hostel.owner,
+    recipientRole: "owner",
     type: "enquiry",
     title: "New Student Enquiry",
     message: `${student ? student.name : "A student"} sent an enquiry: ${enquiry.message}`
@@ -177,10 +210,81 @@ const { enquiryId } = req.params;
 
 }
 
+const replyToEnquiry = async (req, res) => {
+    try {
+        const { enquiryId } = req.params;
+        const { message } = req.body;
 
+        if (!message || !message.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Reply message is required"
+            });
+        }
+
+        if (req.user.role !== "owner") {
+            return res.status(403).json({
+                success: false,
+                message: "Only hostel owners can reply"
+            });
+        }
+
+        const enquiry = await Enquiry.findById(enquiryId);
+
+        if (!enquiry) {
+            return res.status(404).json({
+                success: false,
+                message: "Enquiry not found"
+            });
+        }
+
+        const hostel = await Hostel.findOne({
+            _id: enquiry.hostel,
+            owner: req.user.id
+        });
+
+        if (!hostel) {
+            return res.status(403).json({
+                success: false,
+                message: "You cannot reply to this enquiry"
+            });
+        }
+
+        enquiry.replies.push({
+            message: message.trim(),
+            repliedAt: new Date(),
+            isRead: false
+        });
+
+        await enquiry.save();
+
+        await Notification.create({
+            recipient: enquiry.student,
+            recipientRole: "student",
+            type: "message",
+            title: "New Reply from Hostel Owner",
+            message: message.trim()
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: "Reply sent successfully",
+            enquiry
+        });
+    } catch (error) {
+        console.error("Reply to enquiry error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to send reply"
+        });
+    }
+};
 module.exports = {
 getOwnerEnquiries,
+getStudentEnquiries,
 createEnquiry,
-updateEnquiryStatus
+updateEnquiryStatus,
+replyToEnquiry
 };
 

@@ -1,3 +1,4 @@
+
 /* =========================================================
    STAY FINDER - OWNER DASHBOARD
    This CSS is isolated to .owner-page
@@ -2308,5 +2309,911 @@ height: 100px;
         top: 70px !important;
         right: 12px !important;
         width: 350px;
+    }
+}
+/* Enquiry card layout */
+.enquiry {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+/* Student details, date and status */
+.enquiry-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+}
+
+.enquiry-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.enquiry-info span {
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.enquiry-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Reply area */
+.owner-reply-section {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    box-sizing: border-box;
+}
+
+.owner-reply-section > strong {
+    font-size: 14px;
+    color: #1e293b;
+}
+
+.owner-reply-input {
+    width: 100%;
+    min-height: 76px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font: inherit;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.owner-reply-input:focus {
+    outline: 2px solid #93c5fd;
+    border-color: #2563eb;
+}
+
+.send-reply-btn {
+    align-self: flex-start;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 7px;
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.send-reply-btn:hover {
+    background: #1d4ed8;
+}
+
+.send-reply-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.reply-status {
+    color: #15803d;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.owner-replies {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.owner-replies p {
+    margin: 0;
+    padding: 12px;
+    background: #eff6ff;
+    border-radius: 8px;
+    color: #1e40af;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Mobile layout */
+@media (max-width: 700px) {
+    .enquiry-row {
+        flex-wrap: wrap;
+    }
+
+    .enquiry-right {
+        width: 100%;
+    }
+
+    .enquiry-right select {
+        max-width: 100%;
+    }
+}
+
+/* =========================================
+   OWNER PROFILE & SETTINGS
+========================================= */
+
+.owner-page #profile {
+    margin-top: 24px;
+    scroll-margin-top: 95px;
+    padding: 24px;
+}
+
+/* Section heading */
+.owner-page #profile .dashboard-card-header {
+    margin-bottom: 20px;
+}
+
+.owner-page #profile .dashboard-card-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #102a56;
+}
+
+.owner-page #profile .dashboard-card-header p {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #718096;
+}
+
+/* Edit Profile button */
+.owner-page #editOwnerProfileBtn,
+.owner-page #togglePasswordFormBtn {
+    min-height: 42px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.owner-page #editOwnerProfileBtn:hover,
+.owner-page #togglePasswordFormBtn:hover {
+    background: #1d4ed8;
+}
+
+/* Profile details */
+.owner-page #profile .profile-settings {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 22px;
+}
+
+.owner-page #profile .profile-settings > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #e1e8f5;
+    border-radius: 12px;
+    background: #f7f9fe;
+}
+
+.owner-page #profile .profile-settings span {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.owner-page #profile .profile-settings strong {
+    color: #102a56;
+    font-size: 15px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* Edit Profile and Change Password panels */
+.owner-page #ownerProfileEditContainer,
+.owner-page #changePasswordContainer {
+    margin-top: 22px;
+}
+
+.owner-page #ownerProfileEditContainer[hidden],
+.owner-page #changePasswordContainer[hidden] {
+    display: none !important;
+}
+
+/* Change Password heading and description */
+.owner-page #profile .password-settings {
+    margin-top: 28px;
+}
+
+.owner-page #profile .password-settings h3,
+.owner-page #ownerProfileEditContainer h3 {
+    margin-bottom: 8px;
+    color: #102a56;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.owner-page #profile .password-settings > p,
+.owner-page #ownerProfileEditContainer > p {
+    margin-bottom: 16px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Profile and password forms */
+.owner-page #ownerProfileForm,
+.owner-page #changePasswordForm {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+    margin-top: 18px;
+}
+
+.owner-page #ownerProfileForm label,
+.owner-page #changePasswordForm label {
+    margin-top: 7px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.owner-page #ownerProfileForm input,
+.owner-page #changePasswordForm input {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 13px;
+    box-sizing: border-box;
+    border: 1px solid #d8e0ed;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #102a56;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.owner-page #ownerProfileForm input:focus,
+.owner-page #changePasswordForm input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Form buttons */
+.owner-page #ownerProfileForm button,
+.owner-page #changePasswordForm button {
+    width: fit-content;
+    min-height: 42px;
+    margin-top: 10px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.owner-page #ownerProfileForm button:hover,
+.owner-page #changePasswordForm button:hover {
+    background: #1d4ed8;
+}
+
+/* Cancel button */
+.owner-page #changePasswordForm #cancelPasswordFormBtn {
+    background: #e8edf5;
+    color: #334155;
+}
+
+.owner-page #changePasswordForm #cancelPasswordFormBtn:hover {
+    background: #d8e0ed;
+}
+
+/* Status messages */
+.owner-page #ownerProfileMessage,
+.owner-page #changePasswordMessage {
+    margin: 5px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Mobile layout */
+@media (max-width: 650px) {
+    .owner-page #profile {
+        padding: 18px;
+    }
+
+    .owner-page #profile .profile-settings {
+        grid-template-columns: 1fr;
+    }
+
+    .owner-page #ownerProfileForm button,
+    .owner-page #changePasswordForm button {
+        width: 100%;
+    }
+}
+/* =========================================
+   HOSTEL VERIFICATION - PROFESSIONAL DESIGN
+========================================= */
+
+#hostelVerification {
+    width: 100%;
+    padding: 28px;
+    margin: 25px 0;
+    background: linear-gradient(135deg, #ffffff 0%, #f5f8ff 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(30, 64, 175, 0.07);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Decorative top border */
+#hostelVerification::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #2563eb, #60a5fa, #38bdf8);
+}
+
+/* Main heading */
+#hostelVerification .verification-header {
+    padding-bottom: 22px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e8edf5;
+}
+
+#hostelVerification .verification-header h2 {
+    margin: 0 0 10px;
+    color: #172554;
+    font-size: 25px;
+    font-weight: 750;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#hostelVerification .verification-header h2::before {
+    content: "🛡️";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: #dbeafe;
+    border-radius: 13px;
+    font-size: 23px;
+}
+
+#hostelVerification .verification-header p {
+    margin: 0;
+    max-width: 650px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Verification status card */
+#hostelVerification .verification-status-card {
+    padding: 22px;
+    margin-bottom: 22px;
+    background: linear-gradient(135deg, #eff6ff, #f8faff);
+    border: 1px solid #bfdbfe;
+    border-radius: 15px;
+    position: relative;
+}
+
+#hostelVerification .verification-status-card h3 {
+    margin: 0 0 14px;
+    color: #1e3a8a;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#hostelVerification #verificationStatusText {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 30px;
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+#hostelVerification #verificationMessage {
+    margin: 14px 0 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* Rejection reason */
+#hostelVerification #rejectionReasonContainer:not([hidden]) {
+    padding: 18px 20px;
+    margin-bottom: 22px;
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-left: 5px solid #e11d48;
+    border-radius: 12px;
+}
+
+#hostelVerification #rejectionReasonContainer h3 {
+    margin: 0 0 8px;
+    color: #9f1239;
+    font-size: 15px;
+}
+
+#hostelVerification #rejectionReasonText {
+    margin: 0;
+    color: #881337;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* Document upload card */
+#hostelVerification .verification-upload-card {
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.035);
+}
+
+#hostelVerification .verification-upload-card h3 {
+    margin: 0 0 8px;
+    color: #172554;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#hostelVerification .verification-upload-card > p {
+    margin: 0 0 22px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* Form labels */
+#hostelVerification #verificationDocumentForm label {
+    display: block;
+    margin: 18px 0 9px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+/* Document type dropdown */
+#hostelVerification #documentType {
+    display: block;
+    width: 100%;
+    padding: 13px 14px;
+    background: #f8fafc;
+    border: 1px solid #dbe3ef;
+    border-radius: 10px;
+    color: #334155;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+#hostelVerification #documentType:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+/* File upload input */
+#hostelVerification #verificationDocuments {
+    display: block;
+    width: 100%;
+    min-height: 100px;
+    padding: 22px;
+    background: #f8fbff;
+    border: 2px dashed #93b4ed;
+    border-radius: 12px;
+    color: #475569;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+#hostelVerification #verificationDocuments:hover {
+    background: #eff6ff;
+    border-color: #2563eb;
+}
+
+/* Helper text */
+#hostelVerification #verificationDocumentForm small {
+    display: block;
+    margin-top: 9px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Upload button */
+#hostelVerification #uploadVerificationButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 22px;
+    padding: 13px 22px;
+    min-height: 46px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 650;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#hostelVerification #uploadVerificationButton::before {
+    content: "↑";
+    font-size: 19px;
+    font-weight: 700;
+}
+
+#hostelVerification #uploadVerificationButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+}
+
+#hostelVerification #uploadVerificationButton:active {
+    transform: translateY(0);
+}
+
+#hostelVerification #uploadVerificationButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Upload response message */
+#hostelVerification #verificationUploadMessage {
+    margin: 15px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+/* Existing verification badge */
+#hostelVerification .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 13px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    #hostelVerification {
+        padding: 18px;
+        margin: 18px 0;
+        border-radius: 15px;
+    }
+
+    #hostelVerification .verification-header h2 {
+        font-size: 21px;
+    }
+
+    #hostelVerification .verification-upload-card {
+        padding: 18px;
+    }
+
+    #hostelVerification #uploadVerificationButton {
+        width: 100%;
+    }
+}
+/* ==========================================
+   HOSTEL PHOTOS - PROFESSIONAL DASHBOARD
+========================================== */
+
+#hostelPhotos {
+    width: 100%;
+    padding: 28px;
+    margin: 24px 0;
+    background: #ffffff;
+    border: 1px solid #e5eaf3;
+    border-radius: 18px;
+    box-shadow: 0 6px 24px rgba(30, 64, 175, 0.06);
+    box-sizing: border-box;
+}
+
+/* Section heading */
+#hostelPhotos .dashboard-card-header {
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #edf0f6;
+}
+
+#hostelPhotos .dashboard-card-header h2 {
+    margin: 0 0 8px;
+    color: #172554;
+    font-size: 23px;
+    font-weight: 750;
+    letter-spacing: -0.4px;
+}
+
+#hostelPhotos .dashboard-card-header p {
+    margin: 0;
+    color: #718096;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Main photo and additional photo sections */
+#hostelPhotos > div:not(.dashboard-card-header) {
+    padding: 22px;
+    margin-bottom: 22px;
+    background: #f8faff;
+    border: 1px solid #e7edf7;
+    border-radius: 14px;
+    box-sizing: border-box;
+}
+
+/* Subheadings */
+#hostelPhotos h3 {
+    margin: 0 0 8px;
+    color: #243451;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#hostelPhotos > div > p {
+    margin: 0 0 17px;
+    color: #718096;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* File input styling */
+#hostelPhotos input[type="file"] {
+    display: block;
+    width: 100%;
+    min-height: 95px;
+    padding: 20px;
+    background: #ffffff;
+    border: 2px dashed #b7c9e8;
+    border-radius: 12px;
+    color: #52627a;
+    font-size: 13px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+#hostelPhotos input[type="file"]:hover {
+    background: #f0f6ff;
+    border-color: #3974df;
+}
+
+/* Browser file selector button */
+#hostelPhotos input[type="file"]::file-selector-button {
+    padding: 10px 15px;
+    margin-right: 14px;
+    background: #e8f0ff;
+    color: #2458b8;
+    border: 1px solid #c8d9fa;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#hostelPhotos input[type="file"]::file-selector-button:hover {
+    background: #d7e5ff;
+}
+
+/* Main photo preview area */
+#mainPhotoPreview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 15px;
+    min-height: 25px;
+    margin-top: 16px !important;
+}
+
+#mainPhotoPreview > p {
+    margin: 0;
+    padding: 14px 16px;
+    color: #8491a7;
+    font-size: 12px;
+    background: #ffffff;
+    border: 1px solid #e7edf5;
+    border-radius: 9px;
+}
+
+#mainPhotoPreview img {
+    display: block;
+    width: 230px;
+    height: 160px;
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #dce5f2;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+/* Additional photo preview gallery */
+#additionalPhotosPreview {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+    gap: 14px !important;
+    margin-top: 18px !important;
+}
+
+#additionalPhotosPreview img {
+    display: block;
+    width: 100%;
+    height: 115px;
+    object-fit: cover;
+    border-radius: 11px;
+    border: 1px solid #dfe7f2;
+    background: #ffffff;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#additionalPhotosPreview img:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 16px rgba(15, 23, 42, 0.12);
+}
+
+/* Upload button */
+#uploadHostelPhotosButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 46px;
+    padding: 13px 23px;
+    margin: 0 0 15px;
+    background: linear-gradient(135deg, #326be5, #2453c4);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#uploadHostelPhotosButton::before {
+    content: "↑";
+    font-size: 19px;
+    line-height: 1;
+}
+
+#uploadHostelPhotosButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 17px rgba(37, 99, 235, 0.27);
+}
+
+#uploadHostelPhotosButton:active {
+    transform: translateY(0);
+}
+
+#uploadHostelPhotosButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Upload message */
+#photoUploadMessage {
+    color: #52627a;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Saved gallery */
+#hostelPhotos #savedHostelPhotos {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px !important;
+    margin-top: 18px !important;
+    padding: 18px;
+    min-height: 65px;
+    background: #f8faff;
+    border: 1px solid #e7edf7;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+#savedHostelPhotos img {
+    display: block;
+    width: 100%;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 11px;
+    border: 1px solid #dfe7f2;
+    background: #ffffff;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
+    transition: transform 0.2s ease;
+}
+
+#savedHostelPhotos img:hover {
+    transform: scale(1.02);
+}
+
+#savedHostelPhotos > p {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 12px;
+    color: #8491a7;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    #hostelPhotos {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    #hostelPhotos .dashboard-card-header h2 {
+        font-size: 20px;
+    }
+
+    #hostelPhotos > div:not(.dashboard-card-header) {
+        padding: 15px;
+    }
+
+    #mainPhotoPreview img {
+        width: 100%;
+        height: 180px;
+    }
+
+    #additionalPhotosPreview {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #additionalPhotosPreview img {
+        height: 105px;
+    }
+
+    #savedHostelPhotos {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    #uploadHostelPhotosButton {
+        width: 100%;
     }
 }

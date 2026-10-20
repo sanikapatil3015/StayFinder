@@ -1,6 +1,6 @@
 const Review = require("../models/Review");
 const Hostel = require("../models/Hostel");
-
+const mongoose = require("mongoose");
 
 // =====================================================
 // CREATE REVIEW
@@ -84,17 +84,28 @@ async function createReview(req, res) {
         // CREATE REVIEW
         // ---------------------------------------------
 
-        const review = new Review({
-
-            student: req.user.id,
-
-            hostel: hostelId,
-
+        const review = await Review.findOneAndUpdate(
+    {
+        student: req.user.id,
+        hostel: hostelId
+    },
+    {
+        $set: {
             rating: Number(rating),
-
             comment: comment.trim()
-
-        });
+        },
+        $setOnInsert: {
+            student: req.user.id,
+            hostel: hostelId
+        }
+    },
+    {
+        new: true,
+        upsert: true,
+        runValidators: true,
+        setDefaultsOnInsert: true
+    }
+);
 
 
         await review.save();
@@ -141,181 +152,175 @@ async function createReview(req, res) {
 
 // =====================================================
 // GET HOSTEL REVIEWS
-// Owner can see reviews for their hostel
+// Students can read reviews.
+// Owners can read reviews only for their own hostels.
 // =====================================================
 
 async function getHostelReviews(req, res) {
-
     try {
+        const { hostelId } = req.params;
 
-        // ---------------------------------------------
-        // CHECK USER ROLE
-        // ---------------------------------------------
-
-        if (req.user.role !== "owner") {
-
-            return res.status(403).json({
-
-                success: false,
-
-                message:
-                    "Only hostel owners can access reviews."
-
-            });
-
-        }
-
-
-        // ---------------------------------------------
-        // FIND OWNER'S HOSTEL
-        // ---------------------------------------------
-
-        const hostel = await Hostel.findOne({
-
-            _id: req.params.hostelId,
-
-            owner: req.user.id
-
-        });
-
+        // Find the hostel
+        const hostel = await Hostel.findById(hostelId);
 
         if (!hostel) {
-
             return res.status(404).json({
-
                 success: false,
-
-                message:
-                    "Hostel not found or you do not own this hostel."
-
+                message: "Hostel not found."
             });
-
         }
 
+        // Only students and owners may view reviews
+        if (!["student", "owner"].includes(req.user.role)) {
+            return res.status(403).json({
+                success: false,
+                message: "You are not allowed to view reviews."
+            });
+        }
 
-        // ---------------------------------------------
-        // GET REVIEWS
-        // ---------------------------------------------
+        // Owners can view reviews only for their own hostels
+        if (
+            req.user.role === "owner" &&
+            hostel.owner.toString() !== req.user.id
+        ) {
+            return res.status(403).json({
+                success: false,
+                message: "You can only view reviews for your own hostels."
+            });
+        }
 
+        // Retrieve reviews and student names
         const reviews = await Review.find({
-
             hostel: hostel._id
-
         })
-        .populate("student", "name")
-        .sort({ createdAt: -1 });
-
-
-        // ---------------------------------------------
-        // CALCULATE SUMMARY
-        // ---------------------------------------------
+            .populate("student", "name")
+            .sort({ createdAt: -1 });
 
         const totalReviews = reviews.length;
 
-
-        let averageRating = 0;
-
-        if (totalReviews > 0) {
-
-            const totalRating =
-                reviews.reduce(
-                    function (sum, review) {
-
-                        return sum + review.rating;
-
-                    },
-                    0
-                );
-
-            averageRating =
-                totalRating / totalReviews;
-
-        }
-
-
-        // ---------------------------------------------
-        // POSITIVE REVIEWS
-        // Rating 4 or 5 = positive
-        // ---------------------------------------------
-
-        const positiveReviews =
-            reviews.filter(
-                function (review) {
-
-                    return review.rating >= 4;
-
-                }
-            ).length;
-
-
-        let positivePercentage = 0;
-
-        if (totalReviews > 0) {
-
-            positivePercentage =
-                Math.round(
-                    (positiveReviews / totalReviews) * 100
-                );
-
-        }
-
-
-        // ---------------------------------------------
-        // SUCCESS
-        // ---------------------------------------------
-
-        return res.status(200).json({
-
-            success: true,
-
-            summary: {
-
-                averageRating:
-                    Number(averageRating.toFixed(1)),
-
-                totalReviews:
-                    totalReviews,
-
-                positivePercentage:
-                    positivePercentage
-
-            },
-
-            reviews:
-                reviews
-
-        });
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            "Get hostel reviews error:",
-            error
+        const totalRating = reviews.reduce(
+            (sum, review) => sum + review.rating,
+            0
         );
 
+        const averageRating =
+            totalReviews > 0
+                ? Number((totalRating / totalReviews).toFixed(1))
+                : 0;
 
-        return res.status(500).json({
+        const positiveReviews = reviews.filter(
+            review => review.rating >= 4
+        ).length;
 
-            success: false,
+        const positivePercentage =
+            totalReviews > 0
+                ? Math.round((positiveReviews / totalReviews) * 100)
+                : 0;
 
-            message:
-                "Unable to load reviews."
-
+        return res.status(200).json({
+            success: true,
+            summary: {
+                averageRating,
+                totalReviews,
+                positivePercentage
+            },
+            reviews
         });
 
+    } catch (error) {
+        console.error("Get hostel reviews error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to load reviews."
+        });
     }
-
 }
+// GET REVIEW SUMMARIES FOR MULTIPLE HOSTELS
+async function getComparisonRatings(req, res) {
+    try {
+        if (req.user.role !== "student") {
+            return res.status(403).json({
+                success: false,
+                message: "Only students can compare hostel ratings."
+            });
+        }
 
+        const { hostelIds } = req.body;
+
+        if (!Array.isArray(hostelIds) || hostelIds.length < 2 ||
+            hostelIds.length > 3) {
+            return res.status(400).json({
+                success: false,
+                message: "Select 2 or 3 hostels to compare."
+            });
+        }
+
+        const summaries = await Review.aggregate([
+            {
+                $match: {
+                    hostel: {
+                        $in: hostelIds
+                            .filter(id => mongoose.isValidObjectId(id))
+                            .map(id => new mongoose.Types.ObjectId(id))
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: "$hostel",
+                    averageRating: { $avg: "$rating" },
+                    totalReviews: { $sum: 1 },
+                    positiveReviews: {
+                        $sum: {
+                            $cond: [{ $gte: ["$rating", 4] }, 1, 0]
+                        }
+                    }
+                }
+            }
+        ]);
+
+        const ratings = {};
+
+        hostelIds.forEach(id => {
+            const summary = summaries.find(
+                item => item._id.toString() === id
+            );
+
+            const totalReviews = summary?.totalReviews || 0;
+
+            ratings[id] = {
+                averageRating: totalReviews
+                    ? Number(summary.averageRating.toFixed(1))
+                    : null,
+                totalReviews,
+                positivePercentage: totalReviews
+                    ? Math.round(
+                        (summary.positiveReviews / totalReviews) * 100
+                    )
+                    : 0
+            };
+        });
+
+        return res.status(200).json({
+            success: true,
+            ratings
+        });
+    } catch (error) {
+        console.error("Comparison ratings error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to load comparison ratings."
+        });
+    }
+}
 
 
 module.exports = {
 
     createReview,
 
-    getHostelReviews
-
+    getHostelReviews,
+    getComparisonRatings
 };

@@ -1,6 +1,7 @@
-const API_URL = "/api/hostels";
+const API_URL = "http://localhost:5000/api/hostels";
 
 const token = localStorage.getItem("stayFinderToken");
+
 
 const applicationsContainer = document.getElementById("applications");
 const pendingCount = document.getElementById("pendingCount");
@@ -53,7 +54,7 @@ async function apiRequest(url, options = {}) {
         }
     });
 
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
 
     if (response.status === 401 || response.status === 403) {
         throw new Error(
@@ -62,7 +63,9 @@ async function apiRequest(url, options = {}) {
     }
 
     if (!response.ok) {
-        throw new Error(data.message || "The request failed.");
+        throw new Error(
+            data.message || `Request failed with status ${response.status}.`
+        );
     }
 
     return data;

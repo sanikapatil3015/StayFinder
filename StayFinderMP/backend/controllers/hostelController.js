@@ -1,7 +1,7 @@
 const Hostel = require("../models/Hostel");
 const path = require("path");
 const fs = require("fs");
-
+const Review = require("../models/Review");
 
 // =====================================================
 // GET LOGGED-IN OWNER'S HOSTELS
@@ -74,6 +74,7 @@ async function getMyHostels(req, res) {
 
         const {
             name,
+            collegeName,
             location,
             totalRooms,
             availableRooms,
@@ -137,8 +138,14 @@ async function getMyHostels(req, res) {
 
         // Update hostel information
 
-        hostel.name = name.trim();
-        hostel.location = location.trim();
+       // Update hostel information
+hostel.name = name.trim();
+
+if (typeof req.body.collegeName === "string") {
+    hostel.collegeName = req.body.collegeName.trim();
+}
+
+hostel.location = location.trim();
 
         hostel.totalRooms =
             Number(totalRooms);
@@ -221,17 +228,16 @@ async function getAllHostels(req, res) {
     try {
         const hostels = await Hostel.find({
             verificationStatus: "Verified"
-            })
-            .select(
-                "name location rent securityDeposit facilities totalRooms availableRooms status"
-            )
-            .sort({ createdAt: -1 });
+        })
+        .select(
+            "name collegeName location rent rating securityDeposit facilities totalRooms availableRooms status mainPhoto photos"
+        )
+        .sort({ createdAt: -1 });
 
         return res.status(200).json({
             success: true,
             hostels
         });
-
     } catch (error) {
         console.error("Get all hostels error:", error);
 

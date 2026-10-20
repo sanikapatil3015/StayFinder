@@ -14,6 +14,8 @@ const enquiryRoutes = require("./routes/enquiryRoutes");
 
 const profileRoutes = require("./routes/profileRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+const savedStayRoutes = require("./routes/savedStayRoutes");
+const recentSearchRoutes = require("./routes/recentSearchRoutes");
 // =====================================================
 // LOAD ENVIRONMENT VARIABLES
 // =====================================================
@@ -53,6 +55,8 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/owner/profile", profileRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/saved-stays", savedStayRoutes);
+app.use("/api/recent-searches", recentSearchRoutes);
 // =====================================================
 // HEALTH CHECK
 // =====================================================

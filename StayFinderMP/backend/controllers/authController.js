@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const User = require("../models/user");
 const Hostel = require("../models/Hostel");
 
 // =====================================================
@@ -311,8 +311,7 @@ const register = async (req, res) => {
         // HASH PASSWORD
         // =================================================
 
-        const hashedPassword =
-            await bcrypt.hash(password, 12);
+        const hashedPassword = password;
 
 
         // =================================================
@@ -426,137 +425,85 @@ const register = async (req, res) => {
 // =====================================================
 
 const login = async (req, res) => {
-
     try {
+        const { role, email, password } = req.body;
 
-        const {
-            role,
-            email,
-            password
-        } = req.body;
-
-
-        // ---------------------------------------------
-        // REQUIRED FIELDS
-        // ---------------------------------------------
-
-        if (
-            !role ||
-            !email ||
-            !password
-        ) {
-
+        if (!role || !email || !password) {
             return res.status(400).json({
-
                 success: false,
-
-                message:
-                    "Please enter email and password."
-
+                message: "Please enter email and password."
             });
-
         }
+          console.log("Login database:", User.db.name);
+console.log("Login email received:", email.trim().toLowerCase());
+console.log("Login role received:", role);
+        const normalizedEmail = email.trim().toLowerCase();
 
+        // Check whether an account exists for this email.
+        const userByEmail = await User.findOne({
+            email: normalizedEmail
+        }).select("+password");
 
-        // ---------------------------------------------
-        // FIND USER
-        // ---------------------------------------------
-
+        // Check whether the account also matches the selected role.
         const user = await User.findOne({
-
-            email: email.toLowerCase().trim(),
-
+            email: normalizedEmail,
             role: role
+        }).select("+password");
 
-        });
-
-
-        // ---------------------------------------------
-        // USER NOT FOUND
-        // ---------------------------------------------
+        console.log("===== STAY FINDER LOGIN CHECK =====");
+        console.log("Selected role:", role);
+        console.log("Account exists:", Boolean(userByEmail));
+        console.log("Role matches:", Boolean(user));
+        console.log(
+            "Password field available:",
+            Boolean(user?.password)
+        );
+        console.log(
+            "Stored value looks like bcrypt hash:",
+            /^\$2[aby]\$\d{2}\$/.test(user?.password || "")
+        );
 
         if (!user) {
+            console.log("Login result: email or role did not match.");
 
             return res.status(401).json({
-
                 success: false,
-
-                message:
-                    "Invalid email or password."
-
+                message: "Invalid email or password."
             });
-
         }
 
+        const passwordMatch = await bcrypt.compare(
+            password,
+            user.password
+        );
 
-        // ---------------------------------------------
-        // CHECK PASSWORD
-        // ---------------------------------------------
-
-        const passwordMatch =
-            await bcrypt.compare(
-                password,
-                user.password
-            );
-
+        console.log("Password matches stored hash:", passwordMatch);
+        console.log("===================================");
 
         if (!passwordMatch) {
-
             return res.status(401).json({
-
                 success: false,
-
-                message:
-                    "Invalid email or password."
-
+                message: "Invalid email or password."
             });
-
         }
-
-
-        // ---------------------------------------------
-        // CREATE TOKEN
-        // ---------------------------------------------
 
         const token = createToken(user);
 
-
-        // ---------------------------------------------
-        // SUCCESS
-        // ---------------------------------------------
-
         return res.status(200).json({
-
             success: true,
-
             message: "Login successful.",
-
-            token: token,
-
+            token,
             user: userResponse(user)
-
         });
-
 
     } catch (error) {
-
-        console.error(
-            "Login error:",
-            error
-        );
-
+        console.error("Login error:", error.message);
 
         return res.status(500).json({
-
             success: false,
-
-            message:
-                "Server error during login."
-
+            message: "Server error during login."
         });
-
     }
-
 };
 
 // =====================================================
@@ -634,8 +581,8 @@ const changePassword = async (req, res) => {
         }
 
         // Hash the new password before saving
-        user.password = await bcrypt.hash(newPassword, 12);
-        await user.save();
+       user.password = newPassword;
+await user.save();
 
         return res.status(200).json({
             success: true,

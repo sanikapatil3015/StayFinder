@@ -687,67 +687,26 @@
 
 
 .hero-illustration {
-
-    width: 300px;
-
-    height: 190px;
-
-    position: relative;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
+    width: 45%;
+    height: 280px;
+    overflow: hidden;
+    background: transparent;
+}
 
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 
 
-.building {
-
-    width: 160px;
-
-    height: 120px;
-
-    background: #dce9ff;
-
-    border-radius: 20px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 85px;
-
-    box-shadow:
-        0 15px 35px rgba(57,105,180,0.12);
-
-}
-
-
-.tree {
-
-    position: absolute;
-
-    font-size: 40px;
-
-}
-
-
-.tree-one {
-
-    left: 10px;
-    bottom: 30px;
-
-}
-
-
-.tree-two {
-
-    right: 5px;
-    bottom: 22px;
-
-}
 
 
 /* =====================================================
@@ -1954,4 +1913,1717 @@
 
     }
 
+}
+/* Hostel filter toolbar */
+
+.hostel-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.hostel-toolbar select {
+    padding: 10px 12px;
+    border: 1px solid #dce3ee;
+    border-radius: 8px;
+    background: #fff;
+    color: #26354b;
+    font: inherit;
+    cursor: pointer;
+}
+
+.hostel-filter-dialog {
+    width: min(440px, calc(100% - 32px));
+    max-width: 440px;
+    max-height: 85%;
+    padding: 0;
+    border: none;
+    border-radius: 16px;
+    color: #24334b;
+    background: #fff;
+}
+
+.hostel-filter-dialog::backdrop {
+    background: rgba(15, 30, 55, 0.45);
+}
+
+.hostel-filter-dialog form {
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid #e7ebf2;
+}
+
+.filter-header h2 {
+    margin: 0;
+    font-size: 21px;
+}
+
+.filter-close {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 8px;
+    background: #f1f4f9;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.filter-body {
+    padding: 8px 22px;
+    overflow-y: auto;
+}
+
+.filter-body fieldset {
+    margin: 12px 0;
+    padding: 0 0 14px;
+    border: none;
+    border-bottom: 1px solid #e7ebf2;
+}
+
+.filter-body legend {
+    padding: 8px 0;
+    font-weight: 700;
+}
+
+.filter-body label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.filter-body input {
+    width: 17px;
+    height: 17px;
+    accent-color: #3867d6;
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 22px;
+    border-top: 1px solid #e7ebf2;
+    background: #fff;
+}
+
+.filter-actions button {
+    min-height: 42px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.filter-actions button:first-child {
+    border: 1px solid #dce3ee;
+    background: #fff;
+    color: #26354b;
+}
+
+.filter-actions .search-button {
+    border: none;
+}
+
+@media (max-width: 600px) {
+    .hostel-toolbar {
+        width: 100%;
+    }
+
+    .hostel-toolbar select,
+    .hostel-toolbar button {
+        flex: 1;
+    }
+}
+/* ================= HOSTEL DETAILS DIALOG ================= */
+
+.hostel-details-dialog {
+    width: min(700px, 92vw);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 24px;
+    border: none;
+    border-radius: 18px;
+    color: var(--text);
+    background: #ffffff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.hostel-details-dialog::backdrop {
+    background: rgba(15, 30, 60, 0.6);
+}
+
+.hostel-details-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.hostel-details-header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.hostel-details-close {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background: #edf3ff;
+    color: var(--text);
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.hostel-details-close:hover {
+    background: #dce8ff;
+}
+
+.hostel-details-body {
+    line-height: 1.7;
+}
+
+.hostel-details-body p {
+    margin: 10px 0;
+    overflow-wrap: anywhere;
+}
+
+.hostel-details-body h3 {
+    margin-top: 22px;
+    margin-bottom: 8px;
+}
+
+.hostel-details-facilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.hostel-details-facilities span {
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #edf4ff;
+    color: #245bb0;
+    font-size: 13px;
+}
+
+@media (max-width: 550px) {
+    .hostel-details-dialog {
+        padding: 18px;
+    }
+
+    .hostel-details-header h2 {
+        font-size: 20px;
+    }
+}
+
+/* Hostel details photo */
+.hostel-details-photo {
+    display: block;
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+/* View Details button */
+.view-details-btn {
+    display: inline-block;
+    margin: 10px 8px 10px 0;
+    padding: 10px 16px;
+    border: 1px solid #245bb0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #245bb0;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.view-details-btn:hover {
+    background: #edf4ff;
+}
+
+/* Hostel reviews */
+.hostel-reviews-section {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.hostel-reviews-section h3 {
+    margin: 18px 0 12px;
+    color: #173b70;
+}
+
+.hostel-reviews-section form label {
+    display: block;
+    margin: 12px 0;
+    font-weight: 600;
+}
+
+.hostel-reviews-section select,
+.hostel-reviews-section textarea {
+    display: block;
+    width: 100%;
+    margin-top: 7px;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.hostel-reviews-section textarea {
+    resize: vertical;
+}
+
+.hostel-review-card {
+    margin: 12px 0;
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+    overflow-wrap: anywhere;
+}
+
+.hostel-review-card p {
+    margin: 8px 0;
+}
+
+.hostel-review-card small {
+    color: #64748b;
+}
+
+.hostel-reviews-section button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Uploaded hostel photo on student dashboard cards */
+.property-card .property-image {
+    width: 100%;
+    height: 190px;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.property-card .property-card-photo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+.property-card .property-house {
+    font-size: 58px;
+}
+/* =====================================================
+   MODERN HOSTEL CARDS
+   ===================================================== */
+
+/* Card appearance */
+.student-page .property-card {
+    background: #ffffff;
+    border: 1px solid #e5eaf4;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(30, 64, 120, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover effect */
+.student-page .property-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(30, 64, 120, 0.14);
+}
+
+/* Hostel photo area */
+.student-page .property-card .property-image {
+    height: 190px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+}
+
+/* Uploaded photo */
+.student-page .property-card .property-card-photo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.4s ease;
+}
+
+/* Slight zoom on hover */
+.student-page .property-card:hover .property-card-photo {
+    transform: scale(1.04);
+}
+
+/* Hostel emoji fallback */
+.student-page .property-card .property-house {
+    font-size: 58px;
+}
+
+/* Card information */
+.student-page .property-card .property-info {
+    padding: 18px;
+}
+
+/* Hostel name */
+.student-page .property-card .property-info h3 {
+    margin: 0 0 8px;
+    color: #173b70;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+/* Location */
+.student-page .property-card .location {
+    color: #687799;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Rating and rent */
+.student-page .property-card .property-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0;
+}
+
+.student-page .property-card .property-rating strong {
+    color: #173b70;
+    font-size: 18px;
+}
+
+.student-page .property-card .property-rating strong small {
+    color: #687799;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+/* Facilities */
+.student-page .property-card .facility-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 12px 0;
+}
+
+.student-page .property-card .facility-list span {
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Card buttons */
+.student-page .property-card .view-details-btn,
+.student-page .property-card .search-button {
+    margin: 6px 5px 0 0;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.student-page .property-card .view-details-btn {
+    padding: 10px 14px;
+    border: 1px solid #2563eb;
+    background: #ffffff;
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+.student-page .property-card .view-details-btn:hover {
+    background: #eff6ff;
+}
+
+.student-page .property-card .search-button {
+    padding: 10px 14px;
+}
+/* =====================================================
+   STAY FINDER - MODERN HOSTEL DETAILS POPUP
+   ===================================================== */
+
+/* Main popup */
+.student-page .hostel-details-dialog {
+    width: min(760px, 94vw);
+    max-width: 760px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 28px;
+    border: 1px solid #e5eaf4;
+    border-radius: 22px;
+    background: #ffffff;
+    color: #17264d;
+    box-shadow: 0 25px 80px rgba(15, 35, 75, 0.22);
+}
+
+/* Popup background */
+.student-page .hostel-details-dialog::backdrop {
+    background: rgba(13, 29, 58, 0.65);
+}
+
+/* Popup heading */
+.student-page .hostel-details-header {
+    position: sticky;
+    top: -28px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin: -28px -28px 22px;
+    padding: 20px 24px;
+    background: rgba(255, 255, 255, 0.97);
+    border-bottom: 1px solid #edf0f7;
+}
+
+/* Hostel name */
+.student-page .hostel-details-header h2 {
+    margin: 0;
+    color: #173b70;
+    font-size: 24px;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+/* Close button */
+.student-page .hostel-details-close {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: #eff4ff;
+    color: #173b70;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.student-page .hostel-details-close:hover {
+    background: #dce8ff;
+    transform: rotate(90deg);
+}
+
+/* Popup content */
+.student-page .hostel-details-body {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.student-page .hostel-details-body p {
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+}
+
+/* Hostel photo */
+.student-page .hostel-details-photo {
+    display: block;
+    width: 100%;
+    height: 300px;
+    max-height: 40vh;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+    margin: 0 0 22px;
+    background: #eff6ff;
+}
+
+/* Section headings */
+.student-page .hostel-details-body h3 {
+    margin: 24px 0 12px;
+    color: #173b70;
+    font-size: 18px;
+    font-weight: 750;
+}
+
+/* Facilities */
+.student-page .hostel-details-facilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 12px 0 20px;
+}
+
+.student-page .hostel-details-facilities span {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 13px;
+    border: 1px solid #dce9ff;
+    border-radius: 22px;
+    background: #f1f6ff;
+    color: #245bb0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Enquiry and details buttons */
+.student-page .hostel-details-body button {
+    transition: background 0.2s, transform 0.2s;
+}
+
+.student-page .hostel-details-body button:hover {
+    transform: translateY(-1px);
+}
+
+/* Reviews section */
+.student-page .hostel-reviews-section {
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #e5eaf4;
+}
+
+.student-page .hostel-reviews-section h3 {
+    margin: 18px 0 14px;
+    color: #173b70;
+    font-size: 19px;
+}
+
+/* Review form */
+.student-page .hostel-reviews-section form {
+    padding: 18px;
+    border: 1px solid #e5eaf4;
+    border-radius: 14px;
+    background: #f8faff;
+}
+
+.student-page .hostel-reviews-section form label {
+    display: block;
+    margin: 14px 0;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.student-page .hostel-reviews-section select,
+.student-page .hostel-reviews-section textarea {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px 13px;
+    border: 1px solid #d8e0ed;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #17264d;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.student-page .hostel-reviews-section select:focus,
+.student-page .hostel-reviews-section textarea:focus {
+    outline: 2px solid #bfdbfe;
+    border-color: #1769e0;
+}
+
+.student-page .hostel-reviews-section textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Individual review cards */
+.student-page .hostel-review-card {
+    margin: 12px 0;
+    padding: 16px;
+    border: 1px solid #e5eaf4;
+    border-radius: 13px;
+    background: #ffffff;
+    overflow-wrap: anywhere;
+}
+
+.student-page .hostel-review-card p {
+    margin: 8px 0;
+    color: #475569;
+}
+
+.student-page .hostel-review-card small {
+    color: #687799;
+}
+
+/* Mobile popup */
+@media (max-width: 550px) {
+    .student-page .hostel-details-dialog {
+        width: 96vw;
+        max-width: 96vw;
+        max-height: 92vh;
+        padding: 18px;
+        border-radius: 17px;
+    }
+
+    .student-page .hostel-details-header {
+        top: -18px;
+        margin: -18px -18px 18px;
+        padding: 15px 17px;
+    }
+
+    .student-page .hostel-details-header h2 {
+        font-size: 19px;
+    }
+
+    .student-page .hostel-details-photo {
+        height: 220px;
+    }
+
+    .student-page .hostel-details-body {
+        font-size: 13px;
+    }
+
+    .student-page .hostel-reviews-section form {
+        padding: 13px;
+    }
+}
+/* =====================================
+   HOSTEL DETAILS - MODERN INFORMATION UI
+===================================== */
+
+.hostel-information-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 22px 0;
+}
+
+/* Location card */
+
+.hostel-location-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    background: #f5f8ff;
+    border: 1px solid #e1eaff;
+    border-radius: 14px;
+}
+
+.hostel-info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #e4ecff;
+    font-size: 23px;
+}
+
+.hostel-location-card > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.hostel-info-label {
+    display: block;
+    color: #6b7890;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.hostel-location-value {
+    color: #172b4d;
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+/* Rent and security deposit cards */
+
+.hostel-price-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.hostel-price-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #e5eaf3;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(31, 55, 90, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hostel-price-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(31, 55, 90, 0.09);
+}
+
+.hostel-price-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #edf3ff;
+    font-size: 21px;
+}
+
+.monthly-rent-card {
+    border-top: 3px solid #2563eb;
+}
+
+.security-deposit-card {
+    border-top: 3px solid #8b5cf6;
+}
+
+.hostel-price-value {
+    color: #173f8a;
+    font-size: clamp(20px, 3vw, 27px);
+    font-weight: 800;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.security-deposit-card .hostel-price-value {
+    color: #6d43b5;
+}
+
+/* Availability card */
+
+.hostel-availability-card {
+    padding: 20px;
+    border: 1px solid #e5eaf3;
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+.hostel-availability-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #edf0f6;
+}
+
+.hostel-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 12px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-available {
+    color: #137547;
+    background: #e1f8eb;
+}
+
+.status-limited {
+    color: #996000;
+    background: #fff1cc;
+}
+
+.status-full {
+    color: #b42318;
+    background: #fee4e2;
+}
+
+.status-unknown {
+    color: #536176;
+    background: #edf0f5;
+}
+
+.hostel-rooms-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+    color: #526078;
+    font-size: 14px;
+}
+
+.hostel-rooms-row strong {
+    color: #172b4d;
+    font-size: 20px;
+}
+
+/* Facilities */
+
+.hostel-facilities-section {
+    padding: 20px;
+    border: 1px solid #e5eaf3;
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+.hostel-facilities-section h3 {
+    margin: 0 0 7px;
+    color: #172b4d;
+    font-size: 19px;
+}
+
+.hostel-section-description {
+    margin: 0 0 16px !important;
+    color: #748096;
+    font-size: 13px;
+}
+
+.hostel-details-facilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hostel-facility-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 13px;
+    border: 1px solid #dce8ff;
+    border-radius: 10px;
+    color: #2454a6;
+    background: #f1f6ff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.hostel-facility-tag > span:first-child {
+    color: #168052;
+    font-weight: 800;
+}
+
+.hostel-empty-message {
+    margin: 0 !important;
+    color: #748096;
+    font-size: 14px;
+}
+
+/* Mobile layout */
+
+@media (max-width: 480px) {
+    .hostel-price-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hostel-price-card {
+        padding: 16px;
+    }
+
+    .hostel-location-card,
+    .hostel-availability-card,
+    .hostel-facilities-section {
+        padding: 16px;
+    }
+
+    .hostel-availability-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+.property-card button.search-button {
+    height: 44px;
+    min-height: 44px;
+    max-height: 44px;
+    width: auto;
+    min-width: 120px;
+    padding: 0 18px;
+    white-space: nowrap;
+}
+/* =================================
+   HOSTEL ENQUIRY FORM
+================================= */
+
+.hostel-enquiry-form {
+    margin: 20px 0;
+    padding: 24px;
+    border: 1px solid #dce7fa;
+    border-radius: 16px;
+    background: #f8faff;
+    box-shadow: 0 6px 20px rgba(31, 70, 130, 0.07);
+}
+
+.hostel-enquiry-form h3 {
+    margin: 0 0 8px;
+    color: #173f8a;
+    font-size: 22px;
+}
+
+.hostel-enquiry-form > p {
+    color: #68778e;
+    font-size: 14px;
+}
+
+.hostel-enquiry-form label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #243b5a;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.hostel-enquiry-form textarea {
+    display: block;
+    width: 100%;
+    min-height: 130px;
+    padding: 14px;
+    border: 1px solid #cbd7e8;
+    border-radius: 10px;
+    outline: none;
+    background: #ffffff;
+    color: #243b5a;
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.hostel-enquiry-form textarea:focus {
+    border-color: #2166e8;
+    box-shadow: 0 0 0 3px rgba(33, 102, 232, 0.12);
+}
+
+.hostel-enquiry-form textarea::placeholder {
+    color: #98a5b8;
+}
+
+.hostel-enquiry-form textarea:disabled {
+    background: #f0f3f8;
+}
+
+.hostel-enquiry-hint {
+    display: block;
+    margin-top: 7px;
+    color: #78869b;
+    font-size: 12px;
+}
+
+.hostel-enquiry-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.hostel-enquiry-actions button {
+    min-height: 42px;
+    padding: 10px 18px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.hostel-enquiry-submit {
+    border: 1px solid #2166e8;
+    background: #2166e8;
+    color: #ffffff;
+}
+
+.hostel-enquiry-submit:hover {
+    background: #174fb9;
+}
+
+.hostel-enquiry-cancel {
+    border: 1px solid #cbd7e8;
+    background: #ffffff;
+    color: #344766;
+}
+
+.hostel-enquiry-cancel:hover {
+    background: #edf3ff;
+}
+
+.hostel-enquiry-actions button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.hostel-enquiry-status {
+    margin: 12px 0 0;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.hostel-enquiry-status.enquiry-success {
+    color: #137547;
+    font-weight: 700;
+}
+
+.hostel-enquiry-status.enquiry-error {
+    color: #b42318;
+}
+
+@media (max-width: 480px) {
+    .hostel-enquiry-form {
+        padding: 16px;
+    }
+
+    .hostel-enquiry-actions {
+        flex-direction: column-reverse;
+    }
+
+    .hostel-enquiry-actions button {
+        width: 100%;
+    }
+}
+/* Save Stay Button */
+.student-page .save-stay-btn {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background: #ffffff;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.student-page .save-stay-btn:hover {
+    background: #edf4ff;
+}
+
+.student-page .save-stay-btn.is-saved {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.student-page .save-stay-btn.is-saved:hover {
+    background: var(--primary-dark);
+}
+
+/* Compare hostel selection */
+.student-page .compare-select-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.student-page .compare-hostel-checkbox {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.student-page #compareSelectedBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.student-page #compare {
+    scroll-margin-top: 24px;
+}
+
+.student-page #comparisonResult {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.student-page .hostel-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+.student-page .hostel-comparison-table th,
+.student-page .hostel-comparison-table td {
+    padding: 12px;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+    min-width: 130px;
+}
+
+.student-page .hostel-comparison-table th {
+    background: var(--light-bg);
+    font-weight: 600;
+}
+.student-page .comparison-recommendation {
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--light-bg);
+}
+
+.student-page .comparison-recommendation h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.student-page .comparison-recommendation h4 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.student-page .comparison-recommendation p {
+    line-height: 1.6;
+}
+
+.student-page .recommendation-note {
+    color: #475569;
+    font-size: 13px;
+}
+.saved-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    display: block;
+}
+
+.saved-property {
+    cursor: pointer;
+}
+/* =========================================
+   STUDENT SIDEBAR: MY PROFILE & SETTINGS
+========================================= */
+
+.student-menu-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 12px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.student-menu-bottom .menu-item {
+    min-height: 46px;
+}
+
+.student-menu-bottom .menu-item:hover {
+    background: rgba(255, 255, 255, 0.13);
+}
+
+.student-menu-bottom .menu-item.active {
+    background: #ffffff;
+    color: var(--primary);
+}
+
+
+/* =========================================
+   MESSAGES & ENQUIRIES
+========================================= */
+
+.student-page #messages {
+    margin-top: 30px;
+    scroll-margin-top: 95px;
+}
+
+.student-page #messages .section-header {
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.student-page #refreshMessagesBtn {
+    min-height: 40px;
+    padding: 9px 16px;
+    border: 1px solid #d5e2f7;
+    border-radius: 9px;
+    background: #ffffff;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.student-page #refreshMessagesBtn:hover {
+    background: #edf4ff;
+}
+
+.student-page #studentMessagesList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.student-page .student-message-card {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 5px 18px rgba(30, 64, 120, 0.05);
+    overflow-wrap: anywhere;
+}
+
+.student-page .student-message-card h3 {
+    margin: 0 0 10px;
+    color: #173b70;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.student-page .student-message-card p {
+    margin: 9px 0;
+    color: #52627f;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.student-page .student-message-card .student-message-details {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.student-page .enquiry-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #edf4ff;
+    color: #245bb0;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.student-page #studentMessagesList > p {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 24px;
+    border: 1px dashed #d5dfef;
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+}
+
+
+
+
+
+/* =========================================
+   HIDE ZERO-COUNT MESSAGE BADGE
+========================================= */
+
+.student-page .notification-badge[hidden] {
+    display: none !important;
+}
+
+
+/* =========================================
+   RESPONSIVE LAYOUT
+========================================= */
+
+@media (max-width: 850px) {
+    .student-page #studentMessagesList {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 550px) {
+    .student-page #messages .section-header {
+        align-items: flex-start;
+    }
+
+    .student-page #refreshMessagesBtn {
+        width: 100%;
+    }
+
+    .student-page #studentProfileForm .search-button,
+    .student-page #changePasswordForm .search-button {
+        width: 100%;
+    }
+}
+/* Display dashboard bottom sections vertically */
+.bottom-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.bottom-grid > .bottom-card,
+.bottom-grid > section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+/* Student notification popup — match owner popup */
+
+#studentNotificationPanel[hidden],
+#studentNotificationCount[hidden] {
+display: none !important;
+}
+
+#studentNotificationPanel:not([hidden]) {
+display: block !important;
+position: absolute !important;
+top: calc(100% + 12px) !important;
+right: 0 !important;
+left: auto !important;
+width: 350px;
+max-width: calc(100vw - 30px);
+max-height: 420px;
+overflow-y: auto;
+padding: 0;
+margin: 0;
+background: #ffffff;
+color: #1f2937;
+border: 1px solid #e5e7eb;
+border-radius: 14px;
+box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+z-index: 99999;
+}
+
+/* Popup header */
+#studentNotificationPanel .notification-panel-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 10px;
+padding: 15px;
+background: #ffffff;
+border-bottom: 1px solid #e5e7eb;
+}
+
+#studentNotificationPanel .notification-panel-header h3 {
+margin: 0;
+font-size: 16px;
+color: #111827;
+}
+
+/* Mark all as read button */
+#studentNotificationPanel button {
+cursor: pointer;
+}
+
+/* Notification list */
+#studentNotificationList {
+padding: 10px;
+}
+
+#studentNotificationList > p {
+margin: 0;
+padding: 20px 10px;
+text-align: center;
+color: #6b7280;
+font-size: 14px;
+}
+
+/* Individual notification */
+#studentNotificationList .notification-item {
+display: block;
+margin: 0 0 9px;
+padding: 13px;
+background: #ffffff;
+border: 1px solid #e5e7eb;
+border-radius: 9px;
+overflow-wrap: anywhere;
+}
+
+#studentNotificationList .notification-item:last-child {
+margin-bottom: 0;
+}
+
+#studentNotificationList .notification-item.unread {
+background: #eff6ff;
+border-left: 4px solid #2563eb;
+}
+
+#studentNotificationList .notification-item strong {
+display: block;
+margin-bottom: 7px;
+color: #111827;
+font-size: 14px;
+}
+
+#studentNotificationList .notification-item p {
+margin: 0 0 8px;
+color: #4b5563;
+font-size: 13px;
+line-height: 1.5;
+}
+
+#studentNotificationList .notification-item small {
+display: block;
+margin-bottom: 10px;
+color: #6b7280;
+font-size: 11px;
+}
+
+#studentNotificationList .notification-item button {
+display: inline-block;
+padding: 7px 11px;
+border: none;
+border-radius: 6px;
+background: #2563eb;
+color: #ffffff;
+font-size: 12px;
+}
+
+#studentNotificationList .notification-item button:hover {
+background: #1d4ed8;
+}
+
+/* Mobile popup */
+@media (max-width: 480px) {
+#studentNotificationPanel:not([hidden]) {
+position: fixed !important;
+top: 70px !important;
+right: 12px !important;
+left: auto !important;
+width: 350px;
+max-width: calc(100vw - 24px);
+}
+}
+/* =========================================
+   STUDENT PROFILE & SETTINGS
+========================================= */
+
+.student-page #myProfile,
+.student-page #settings {
+    margin-top: 24px;
+    scroll-margin-top: 95px;
+    padding: 24px;
+}
+
+/* Section heading */
+.student-page #myProfile .dashboard-card-header,
+.student-page #settings .dashboard-card-header {
+    margin-bottom: 20px;
+}
+
+.student-page #myProfile .dashboard-card-header h2,
+.student-page #settings .dashboard-card-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #102a56;
+}
+
+.student-page #myProfile .dashboard-card-header p,
+.student-page #settings .dashboard-card-header p {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #718096;
+}
+
+/* Profile and password forms */
+.student-page #studentProfileForm,
+.student-page #changePasswordForm {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+    margin-top: 18px;
+}
+
+/* Form labels */
+.student-page #studentProfileForm label,
+.student-page #changePasswordForm label {
+    margin-top: 7px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+/* Input fields */
+.student-page #studentProfileForm input,
+.student-page #changePasswordForm input {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 13px;
+    box-sizing: border-box;
+    border: 1px solid #d8e0ed;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #102a56;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Input focus effect */
+.student-page #studentProfileForm input:focus,
+.student-page #changePasswordForm input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Read-only inputs */
+.student-page #studentProfileForm input[readonly] {
+    background: #f2f5fa;
+    color: #687799;
+    cursor: not-allowed;
+}
+
+/* Form buttons */
+.student-page #studentProfileForm button,
+.student-page #changePasswordForm button {
+    width: fit-content;
+    min-width: 145px;
+    min-height: 42px;
+    margin-top: 10px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* Button hover */
+.student-page #studentProfileForm button:hover,
+.student-page #changePasswordForm button:hover {
+    background: #1d4ed8;
+}
+
+/* Cancel password button */
+.student-page #changePasswordForm #cancelPasswordFormBtn {
+    background: #e8edf5;
+    color: #334155;
+}
+
+.student-page #changePasswordForm #cancelPasswordFormBtn:hover {
+    background: #d8e0ed;
+}
+
+/* Profile and password messages */
+.student-page #profileMessage,
+.student-page #passwordMessage {
+    margin: 5px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Responsive layout */
+@media (max-width: 650px) {
+    .student-page #myProfile,
+    .student-page #settings {
+        scroll-margin-top: 75px;
+        padding: 18px;
+    }
+
+    .student-page #studentProfileForm button,
+    .student-page #changePasswordForm button {
+        max-width: 100%;
+    }
+}
+/* =========================================
+   STUDENT PROFILE & SETTINGS VISIBILITY
+========================================= */
+
+/* Hide profile editing form initially */
+.student-page #studentProfileForm[hidden] {
+    display: none !important;
+}
+
+/* Hide password form initially */
+.student-page #changePasswordForm[hidden] {
+    display: none !important;
+}
+
+/* Keep forms hidden when their containers are hidden */
+.student-page #studentProfileEditContainer[hidden],
+.student-page #changePasswordContainer[hidden] {
+    display: none !important;
+}
+/* Update Profile and Change Password toggle buttons */
+#showProfileBtn,
+#showPasswordBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: 150px;
+    min-height: 44px;
+    padding: 12px 22px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    line-height: 1.4;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#showProfileBtn:hover,
+#showPasswordBtn:hover {
+    background: #1d4ed8;
+}
+
+#showProfileBtn:active,
+#showPasswordBtn:active {
+    transform: scale(0.98);
+}
+
+#showProfileBtn:focus-visible,
+#showPasswordBtn:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 3px;
+}
+#studentNotificationButton.notification {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    appearance: none;
+}
+#studentNotificationButton.notification:hover,
+#studentNotificationButton.notification:focus,
+#studentNotificationButton.notification:active {
+    border: none;
+    outline: none;
+    box-shadow: none;
 }

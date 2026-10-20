@@ -52,6 +52,11 @@ const hostelSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    collegeName: {
+    type: String,
+    trim: true,
+    default: ""
+},
 
     location: {
       type: String,
@@ -76,6 +81,12 @@ const hostelSchema = new mongoose.Schema(
       default: 0,
       min: 0
     },
+    rating: {
+    type: Number,
+    default: null,
+    min: 0,
+    max: 5
+},
 
     securityDeposit: {
       type: Number,

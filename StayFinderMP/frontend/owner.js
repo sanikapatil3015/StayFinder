@@ -988,8 +988,99 @@ if (enquiriesCountElement) {
                 );
 
                 right.append(date, statusSelect);
-                card.append(avatar, info, right);
-                enquiryList.appendChild(card);
+                // Owner reply input
+const replyInput = document.createElement("textarea");
+replyInput.className = "owner-reply-input";
+replyInput.placeholder = "Write a reply to the student...";
+
+// Send reply button
+const replyButton = document.createElement("button");
+replyButton.type = "button";
+replyButton.textContent = "Send Reply";
+replyButton.className = "send-reply-btn";
+
+// Reply status/message
+const replyStatus = document.createElement("small");
+replyStatus.className = "reply-status";
+
+// Display existing replies
+const repliesContainer = document.createElement("div");
+repliesContainer.className = "owner-replies";
+
+(enquiry.replies || []).forEach(function (reply) {
+    const replyText = document.createElement("p");
+    replyText.textContent = "Owner reply: " + reply.message;
+    repliesContainer.appendChild(replyText);
+});
+replyButton.addEventListener("click", async function () {
+    const replyMessage = replyInput.value.trim();
+
+    if (!replyMessage) {
+        alert("Please write a reply first.");
+        return;
+    }
+
+    replyButton.disabled = true;
+    replyStatus.textContent = "Sending...";
+
+    try {
+        const response = await fetch(
+            `/api/enquiries/${enquiry._id}/reply`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    message: replyMessage
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || "Failed to send reply.");
+        }
+
+        replyStatus.textContent = "Reply sent successfully!";
+        replyInput.value = "";
+
+        // Reload enquiries to display the saved reply
+        await loadOwnerEnquiries();
+
+    } catch (error) {
+        console.error("Reply error:", error);
+        replyStatus.textContent = error.message || "Could not send reply.";
+    } finally {
+        replyButton.disabled = false;
+    }
+});
+                // Main enquiry row
+const enquiryRow = document.createElement("div");
+enquiryRow.className = "enquiry-row";
+
+enquiryRow.append(avatar, info, right);
+
+// Reply section underneath the enquiry
+const replySection = document.createElement("div");
+replySection.className = "owner-reply-section";
+
+const replyHeading = document.createElement("strong");
+replyHeading.textContent = "Reply to student";
+
+replySection.append(
+    replyHeading,
+    replyInput,
+    replyButton,
+    replyStatus,
+    repliesContainer
+);
+
+card.append(enquiryRow, replySection);
+enquiryList.appendChild(card);
+               
             });
 
            
@@ -1077,6 +1168,11 @@ function openEditPropertyForm() {
         "editHostelName"
     ).value =
         currentHostel.name || "";
+    const collegeNameInput = document.getElementById("editCollegeName");
+
+if (collegeNameInput) {
+    collegeNameInput.value = currentHostel.collegeName || "";
+}
 
 
     document.getElementById(
@@ -1230,6 +1326,11 @@ if (editPropertyForm) {
                     document.getElementById(
                         "editHostelName"
                     ).value,
+
+                    collegeName:
+        document.getElementById(
+            "editCollegeName"
+        ).value.trim(),
 
                 location:
                     document.getElementById(

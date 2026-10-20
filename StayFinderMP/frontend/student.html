@@ -47,37 +47,25 @@
                 <span>Compare</span>
             </a>
 
-            <a href="#" class="menu-item">
-                <span class="menu-icon">▣</span>
-                <span>My Bookings</span>
-            </a>
-
-            <a href="#" class="menu-item">
-                <span class="menu-icon">✉</span>
-                <span>Messages</span>
-
-                <span class="notification-badge">3</span>
-            </a>
-
-            <a href="#" class="menu-item">
-                <span class="menu-icon">☆</span>
-                <span>Reviews</span>
-            </a>
-
             
 
-            <a href="#" class="menu-item">
-                <span class="menu-icon">♙</span>
-                <span>My Profile</span>
-            </a>
+<a href="#messages" class="menu-item">
+    <span class="menu-icon">✉</span>
+    <span>Messages</span>
+</a>
+ <a href="#myProfile" class="menu-item">
+        <span class="menu-icon">♙</span>
+        <span>My Profile</span>
+    </a>
 
-            <a href="#" class="menu-item">
-                <span class="menu-icon">⚙</span>
-                <span>Settings</span>
-            </a>
+    <a href="#settings" class="menu-item">
+        <span class="menu-icon">⚙</span>
+        <span>Settings</span>
+    </a>
+
 
         </nav>
-
+       
 
         <!-- Sidebar bottom card -->
 
@@ -118,10 +106,43 @@
 
             <div class="header-right">
 
-                <div class="notification">
-                    🔔
-                    <span>2</span>
-                </div>
+                <div class="notification-wrapper">
+    <button
+        type="button"
+        id="studentNotificationButton"
+        class="notification"
+        aria-label="Notifications"
+        aria-expanded="false"
+        aria-controls="studentNotificationPanel"
+    >
+        🔔
+        <span
+            id="studentNotificationCount"
+            class="notification-badge badge"
+            hidden
+        >0</span>
+    </button>
+
+    <div
+        id="studentNotificationPanel"
+        class="notification-panel"
+        hidden
+    >
+        <div class="notification-panel-header">
+            <h3>Notifications</h3>
+            <button
+                type="button"
+                id="markAllStudentNotificationsRead"
+            >
+                Mark all as read
+            </button>
+        </div>
+
+        <div id="studentNotificationList" aria-live="polite">
+            <p>Loading notifications...</p>
+        </div>
+    </div>
+</div>
 
                 <div class="profile-avatar">
                     👩🏻
@@ -186,20 +207,8 @@
                 </div>
 
 
-                <div class="hero-illustration">
-
-                    <div class="building">
-                        🏢
-                    </div>
-
-                    <div class="tree tree-one">
-                        🌳
-                    </div>
-
-                    <div class="tree tree-two">
-                        🌳
-                    </div>
-
+               <div class="hero-illustration">
+                 <img src="images/Student.png" alt="Student Accommodation" class="hero-image">
                 </div>
 
             </section>
@@ -245,7 +254,7 @@
                         <input
                             type="text"
                             id="staySearch"
-                            placeholder="Search college, location or hostel..."
+                            placeholder="Search by college name or area..."
                         >
 
                     </div>
@@ -261,29 +270,7 @@
                 </div>
 
 
-                <div class="popular-searches">
-
-                    <strong>
-                        Popular Searches:
-                    </strong>
-
-                    <button onclick="setSearch('KIT College')">
-                        KIT College
-                    </button>
-
-                    <button onclick="setSearch('Shivaji University')">
-                        Shivaji University
-                    </button>
-
-                    <button onclick="setSearch('D Y Patil College')">
-                        D Y Patil College
-                    </button>
-
-                    <button onclick="setSearch('Rajaram College')">
-                        Rajaram College
-                    </button>
-
-                </div>
+                
 
             </section>
 
@@ -404,33 +391,22 @@
 
 
 
-                    <div
-                        class="quick-card orange-card">
+                 <!-- Messages Quick Access -->
+<div class="quick-card orange-card"
+     onclick="goToMessages()"
+     style="cursor: pointer;">
 
-                        <div class="quick-icon">
-                            💬
-                        </div>
+    <div class="quick-icon">
+        💬
+    </div>
 
-                        <div>
+    <div>
+        <h3>Messages</h3>
+        <p>Chat with property owners</p>
+    </div>
 
-                            <h3>
-                                Messages
-                            </h3>
-
-                            <p>
-                                Chat with property
-                                owners
-                            </p>
-
-                        </div>
-
-                        <span class="card-badge">
-                            3
-                        </span>
-
-                    </div>
-
-                </div>
+    <span class="card-badge"></span>
+</div>
 
             </section>
 
@@ -441,26 +417,73 @@
             <section class="recommended-section">
 
                 <div class="section-header">
+    <div>
+        <h2>Recommended Stays</h2>
+        <p id="hostelResultCount" aria-live="polite">
+            Loading stays...
+        </p>
+    </div>
 
-                    <div>
+    <div class="hostel-toolbar">
+        <select id="hostelSort" aria-label="Sort hostels">
+            <option value="default">Sort by</option>
+            <option value="rentLow">Rent: Low to High</option>
+            <option value="rentHigh">Rent: High to Low</option>
+            <option value="name">Hostel Name</option>
+        </select>
 
-                        <h2>
-                            Recommended Stays
-                        </h2>
+        <button
+            type="button"
+            id="openFiltersBtn"
+            class="view-all"
+            aria-haspopup="dialog"
+            aria-controls="hostelFilterDialog">
+            ☷ Filter
+            <span id="filterCount"></span>
+        </button>
+    </div>
+</div>
 
-                        <p>
-                            Popular accommodation near your college
-                        </p>
+<dialog id="hostelFilterDialog" class="hostel-filter-dialog">
+    <form id="hostelFilterForm">
+        <div class="filter-header">
+            <h2>Filters</h2>
+            <button type="button" id="closeFiltersBtn"
+                    class="filter-close">&times;</button>
+        </div>
 
-                    </div>
+        <div class="filter-body">
+            <fieldset>
+                <legend>Budget</legend>
+                <label><input type="checkbox" name="budget" value="under4000"> Under ₹4,000</label>
+                <label><input type="checkbox" name="budget" value="4000-6000"> ₹4,000–₹6,000</label>
+                <label><input type="checkbox" name="budget" value="6000-8000"> ₹6,000–₹8,000</label>
+                <label><input type="checkbox" name="budget" value="above8000"> Above ₹8,000</label>
+            </fieldset>
 
-                    <button class="view-all">
-                        View All →
-                    </button>
+           
 
-                </div>
+            <fieldset>
+                <legend>Facilities</legend>
+                <label><input type="checkbox" name="facility" value="Wi-Fi"> Wi-Fi</label>
+                <label><input type="checkbox" name="facility" value="Mess"> Mess</label>
+                <label><input type="checkbox" name="facility" value="Parking"> Parking</label>
+                <label><input type="checkbox" name="facility" value="Laundry"> Laundry</label>
+            </fieldset>
 
+            <fieldset>
+                <legend>Availability</legend>
+                <label><input type="checkbox" name="availability" value="Available"> Available</label>
+                <label><input type="checkbox" name="availability" value="Few Rooms Left"> Few Rooms Left</label>
+            </fieldset>
+        </div>
 
+        <div class="filter-actions">
+            <button type="button" id="clearFiltersBtn">Clear All</button>
+            <button type="submit" class="search-button">Apply Filters</button>
+        </div>
+    </form>
+</dialog>
 <div class="property-grid" id="propertyGrid">
 
     <p id="hostelLoadingMessage">
@@ -468,146 +491,207 @@
     </p>
 
 </div>
+
                 
 
-            </section>
+         </section>
 
 
 
-            <!-- ================= BOTTOM SECTION ================= -->
+           <!-- ================= BOTTOM SECTION ================= -->
 
-            <section class="bottom-grid">
+<section class="bottom-grid">
 
+    <!-- SAVED STAYS -->
+    <div class="bottom-card" id="savedStays">
 
-                <!-- SAVED STAYS -->
+        <div class="bottom-header">
+            <div>
+                <h2>Your Saved Stays</h2>
+                <p>Properties you have saved</p>
+            </div>
 
-                <div
-                    class="bottom-card"
-                    id="savedStays">
+            <button type="button">View All →</button>
+        </div>
 
-                    <div class="bottom-header">
+        <div id="savedPropertiesList">
+            <p class="saved-empty-message">
+                Loading your saved stays...
+            </p>
+        </div>
 
-                        <div>
-
-                            <h2>
-                                Your Saved Stays
-                            </h2>
-
-                            <p>
-                                Properties you have saved
-                            </p>
-
-                        </div>
-
-                        <button>
-                            View All →
-                        </button>
-
-                    </div>
+    </div>
 
 
-                    <div class="saved-property">
+    <!-- COMPARE HOSTELS -->
+    <div class="bottom-card" id="compare">
 
-                        <div class="saved-image">
-                            🏢
-                        </div>
+        <div class="bottom-header">
+            <div>
+                <h2>Compare Hostels</h2>
+                <p>Select hostels to compare their features and prices.</p>
+            </div>
+        </div>
 
-                        <div class="saved-details">
+        <p id="compareSelectionMessage">
+            Select at least two hostels from Find Stay.
+        </p>
 
-                            <h3>
-                                Sai Hostel
-                            </h3>
+        <button
+            type="button"
+            id="compareSelectedBtn"
+            class="search-button"
+            disabled>
+            Compare Selected
+        </button>
 
-                            <p>
-                                Kolhapur • 0.8 km from KIT
-                            </p>
+        <div id="comparisonResult"></div>
 
-                        </div>
-
-                        <strong>
-                            ₹5,000
-                            <small>/month</small>
-                        </strong>
-
-                        <span class="saved-heart">
-                            ♥
-                        </span>
-
-                    </div>
-
-                </div>
+    </div>
 
 
+    <!-- RECENT SEARCHES -->
+    <div class="bottom-card" id="recentSearches">
 
-                <!-- RECENT SEARCHES -->
+        <div class="bottom-header">
+            <div>
+                <h2>Recent Searches</h2>
+                <p>Your latest searches</p>
+            </div>
 
-                <div class="bottom-card">
+            <button type="button" onclick="clearSearches()">
+                Clear All
+            </button>
+        </div>
 
-                    <div class="bottom-header">
+        <div id="recentSearchesList"></div>
 
-                        <div>
-
-                            <h2>
-                                Recent Searches
-                            </h2>
-
-                            <p>
-                                Your latest searches
-                            </p>
-
-                        </div>
-
-                        <button onclick="clearSearches()">
-                            Clear All
-                        </button>
-
-                    </div>
+    </div>
 
 
-                    <div class="recent-search">
+    <!-- MESSAGES & ENQUIRIES -->
+    <section class="bottom-card" id="messages">
 
-                        <span>
-                            🔍
-                        </span>
+        <div class="bottom-header">
+            <div>
+                <h2>Messages & Enquiries</h2>
+                <p>Track the enquiries you have sent to hostel owners.</p>
+            </div>
 
-                        <strong>
-                            KIT College, Kolhapur
-                        </strong>
+            <button
+                type="button"
+                class="btn-secondary"
+                id="refreshMessagesBtn">
+                Refresh
+            </button>
+        </div>
 
-                        <small>
-                            Today
-                        </small>
+        <div id="studentMessagesList" aria-live="polite">
+            <p>Loading your enquiries...</p>
+        </div>
 
-                        <button>
-                            ×
-                        </button>
-
-                    </div>
+    </section>
 
 
-                    <div class="recent-search">
+    <!-- MY PROFILE -->
+    <section class="bottom-card" id="myProfile">
 
-                        <span>
-                            🔍
-                        </span>
+        <div class="bottom-header">
+            <div>
+                <h2>My Profile</h2>
+                <p>View and update your student details.</p>
+            </div>
+        </div>
+        <button type="button" class="search-button" id="showProfileBtn">
+  Update Profile
+</button>
+        <form id="studentProfileForm" hidden>
 
-                        <strong>
-                            Shivaji University, Kolhapur
-                        </strong>
+            <label for="profileName">Full Name</label>
+            <input
+                type="text"
+                id="profileName"
+                name="name"
+                required>
 
-                        <small>
-                            Yesterday
-                        </small>
+            <label for="profileEmail">Email</label>
+            <input
+                type="email"
+                id="profileEmail"
+                name="email"
+                readonly>
 
-                        <button>
-                            ×
-                        </button>
+            <label for="profilePhone">Phone</label>
+            <input
+                type="tel"
+                id="profilePhone"
+                name="phone"
+                pattern="[0-9]{10}"
+                maxlength="10"
+                required>
 
-                    </div>
+            <label for="profileCollege">College</label>
+            <input
+                type="text"
+                id="profileCollege"
+                name="college">
 
-                </div>
+           
 
-            </section>
+            <p id="profileMessage" aria-live="polite"></p>
+
+        </form>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+    <section class="bottom-card" id="settings">
+
+        <div class="bottom-header">
+            <div>
+                <h2>Settings</h2>
+                <p>Change your account password.</p>
+            </div>
+        </div>
+            <button type="button" class="search-button" id="showPasswordBtn">
+  Change Password
+</button>
+        <form id="changePasswordForm" hidden>
+
+            <label for="currentPassword">Current Password</label>
+            <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                required>
+
+            <label for="newPassword">New Password</label>
+            <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                minlength="8"
+                required>
+
+            <label for="confirmPassword">Confirm New Password</label>
+            <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                minlength="8"
+                required>
+
+            
+
+            <p id="passwordMessage" aria-live="polite"></p>
+
+        </form>
+
+    </section>
+
+</section>
+            
 
 
         </section>
@@ -679,40 +763,63 @@
             ).textContent = name;
 
         }
+        const profileForm = document.getElementById("studentProfileForm");
+  const passwordForm = document.getElementById("changePasswordForm");
 
+  document.getElementById("showProfileBtn").addEventListener("click", () => {
+    profileForm.hidden = !profileForm.hidden;
+  });
 
+  document.getElementById("showPasswordBtn").addEventListener("click", () => {
+    passwordForm.hidden = !passwordForm.hidden;
+  });
+function goToMessages() {
+    const messagesSection = document.getElementById("messages");
+
+    if (messagesSection) {
+        messagesSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    } else {
+        console.error("Messages section not found. Check the section ID.");
+    }
+}
         /* --------------------------------
            SEARCH
         -------------------------------- */
+     async function searchStay() {
+    const searchInput = document.getElementById("staySearch");
+    const search = searchInput.value.trim();
 
-        function searchStay() {
+    if (!search) {
+        alert("Please enter a college name or area.");
+        return;
+    }
 
-            const search =
-                document.getElementById(
-                    "staySearch"
-                ).value.trim();
+    // Save the search to the backend
+    await saveRecentSearch(search);
 
-            if (search === "") {
+    localStorage.setItem("lastSearch", search);
 
-                alert(
-                    "Please enter a college, location or hostel name."
-                );
+    const searchTerm = search.toLowerCase();
 
-                return;
+    const filteredHostels = allHostels.filter(hostel => {
+        const hostelName = (hostel.name || "").toLowerCase();
+        const location = (hostel.location || "").toLowerCase();
+        const collegeName = (hostel.collegeName || "").toLowerCase();
 
-            }
+        return hostelName.includes(searchTerm) ||
+               location.includes(searchTerm) ||
+               collegeName.includes(searchTerm);
+    });
 
-            localStorage.setItem(
-                "lastSearch",
-                search
-            );
+    renderHostels(filteredHostels);
 
-            alert(
-                "Searching for: " + search
-            );
-
-        }
-
+    document.getElementById("findStay").scrollIntoView({
+        behavior: "smooth"
+    });
+}
 
         /* --------------------------------
            POPULAR SEARCH
@@ -768,25 +875,17 @@
         -------------------------------- */
 
         function showCompareMessage() {
+    const compareSection = document.getElementById("compare");
 
-            alert(
-                "Compare feature will be available soon."
-            );
+    if (compareSection) {
+        compareSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+}
 
-        }
-
-
-        /* --------------------------------
-           CLEAR SEARCHES
-        -------------------------------- */
-
-        function clearSearches() {
-
-            alert(
-                "Recent searches cleared."
-            );
-
-        }
+       
 
 
         /* --------------------------------
@@ -794,66 +893,291 @@
         -------------------------------- */
 
         function studentLogout() {
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("studentName");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("stayFinderToken");
+    localStorage.removeItem("lastSearch");
 
-            /*
-             * Remove current login session.
-             */
-
-            localStorage.removeItem(
-                "currentUser"
-            );
-
-            localStorage.removeItem(
-                "loggedInUser"
-            );
-
-            localStorage.removeItem(
-                "studentName"
-            );
-
-            /*
-             * Return to homepage.
-             */
-
-            window.location.href =
-                "index.html";
-
-        }
+    window.location.href = "index.html";
+}
 
         /* --------------------------------
 LOAD HOSTELS FROM MONGODB
 -------------------------------- */
 
-async function loadHostels() {
-const propertyGrid = document.getElementById("propertyGrid");
+let allHostels = [];
+let savedHostels = [];
+let selectedHostelIds = new Set();
 
+async function loadSavedStays() {
+    const savedList = document.getElementById("savedPropertiesList");
 
-try {
-    const response = await fetch("/api/hostels");
-    const data = await response.json();
+    if (!savedList) return;
 
-    if (!response.ok || !data.success) {
-        throw new Error("Unable to load hostels.");
-    }
+    const token = localStorage.getItem("stayFinderToken");
 
-    propertyGrid.replaceChildren();
+    if (!token) {
+        savedList.replaceChildren();
 
-    if (!data.hostels || data.hostels.length === 0) {
-        propertyGrid.textContent = "No hostels are available yet.";
+        const message = document.createElement("p");
+        message.textContent = "Please log in to view your saved stays.";
+
+        savedList.appendChild(message);
         return;
     }
 
-    data.hostels.forEach(function (hostel) {
+    try {
+        const response = await fetch("/api/saved-stays", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load saved stays.");
+        }
+
+        savedHostels = (data.savedStays || [])
+            .map(item => item.hostel)
+            .filter(Boolean);
+
+        renderSavedStays();
+
+    } catch (error) {
+        console.error("Error loading saved stays:", error);
+
+        savedList.replaceChildren();
+
+        const message = document.createElement("p");
+        message.textContent = "Unable to load saved stays. Please try again.";
+
+        savedList.appendChild(message);
+    }
+}
+
+function renderSavedStays() {
+    const savedList = document.getElementById("savedPropertiesList");
+    if (!savedList) return;
+
+    savedList.replaceChildren();
+
+    if (savedHostels.length === 0) {
+        const message = document.createElement("p");
+        message.className = "saved-empty-message";
+        message.textContent = "You haven't saved any hostels yet.";
+        savedList.appendChild(message);
+        return;
+    }
+
+    savedHostels.forEach(hostel => {
+        const item = document.createElement("div");
+        item.className = "saved-property";
+
+        // Hostel image
+        const image = document.createElement("div");
+        image.className = "saved-image";
+
+        if (hostel.mainPhoto) {
+            const photo = document.createElement("img");
+            photo.src = hostel.mainPhoto;
+            photo.alt = (hostel.name || "Hostel") + " photo";
+            photo.loading = "lazy";
+
+            photo.addEventListener("error", () => {
+                image.replaceChildren();
+                image.textContent = "🏢";
+            });
+
+            image.appendChild(photo);
+        } else {
+            image.textContent = "🏢";
+        }
+
+        // Hostel details
+        const details = document.createElement("div");
+        details.className = "saved-details";
+
+        const name = document.createElement("h3");
+        name.textContent = hostel.name || "Unnamed Hostel";
+
+        const location = document.createElement("p");
+        location.textContent = hostel.location || "Location unavailable";
+
+        details.append(name, location);
+
+        // Monthly rent
+        const rent = document.createElement("strong");
+        rent.textContent =
+            `₹${Number(hostel.rent || 0).toLocaleString("en-IN")}`;
+
+        const month = document.createElement("small");
+        month.textContent = "/month";
+        rent.appendChild(month);
+
+        // Remove saved hostel
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "saved-heart";
+        removeButton.textContent = "♥";
+        removeButton.title = "Remove from saved stays";
+        removeButton.setAttribute("aria-label", "Remove saved hostel");
+
+        removeButton.addEventListener("click", event => {
+            event.stopPropagation();
+            removeSavedStay(hostel._id);
+        });
+
+        // Make the saved hostel clickable
+        item.tabIndex = 0;
+        item.setAttribute("role", "button");
+        item.setAttribute(
+            "aria-label",
+            `View details for ${hostel.name || "hostel"}`
+        );
+
+        item.addEventListener("click", () => {
+            showHostelDetails(hostel);
+        });
+
+        item.addEventListener("keydown", event => {
+            if (event.target !== item) return;
+
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                showHostelDetails(hostel);
+            }
+        });
+
+        item.append(image, details, rent, removeButton);
+        savedList.appendChild(item);
+    });
+}
+
+
+async function removeSavedStay(hostelId) {
+    const token = localStorage.getItem("stayFinderToken");
+
+    if (!token) {
+        alert("Please log in to manage saved stays.");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `/api/saved-stays/${encodeURIComponent(hostelId)}`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to remove saved hostel.");
+        }
+
+        savedHostels = savedHostels.filter(
+            hostel => hostel._id !== hostelId
+        );
+
+        renderSavedStays();
+
+        // Refresh hostel cards so their Save buttons reflect the change.
+        renderHostels(allHostels);
+
+    } catch (error) {
+        console.error("Remove saved stay error:", error);
+        alert(error.message || "Unable to remove saved hostel.");
+    }
+}
+
+async function loadHostels() {
+    const propertyGrid = document.getElementById("propertyGrid");
+
+    try {
+        const response = await fetch("/api/hostels");
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error("Unable to load hostels.");
+        }
+
+        allHostels = data.hostels || [];
+
+        renderHostels(allHostels);
+        
+    } catch (error) {
+        console.error("Error loading hostels:", error);
+
+        propertyGrid.replaceChildren();
+
+        propertyGrid.textContent =
+            "Unable to load hostels. Please try again later.";
+
+        updateHostelResultCount(0);
+    }
+}
+
+
+
+function renderHostels(hostels) {
+    const propertyGrid = document.getElementById("propertyGrid");
+
+    propertyGrid.replaceChildren();
+
+    updateHostelResultCount(hostels.length);
+
+    if (hostels.length === 0) {
+        const message = document.createElement("p");
+        message.textContent = "No hostels match your selected filters.";
+        propertyGrid.appendChild(message);
+        return;
+    }
+
+    hostels.forEach(function (hostel) {
         const card = document.createElement("div");
         card.className = "property-card";
 
-        const image = document.createElement("div");
-        image.className = "property-image property-one";
+        // Hostel card image: use the photo uploaded by the owner
+const image = document.createElement("div");
+image.className = "property-image property-one";
 
-        const house = document.createElement("div");
-        house.className = "property-house";
-        house.textContent = "🏢";
-        image.appendChild(house);
+if (hostel.mainPhoto) {
+    const photo = document.createElement("img");
+
+    photo.src = hostel.mainPhoto;
+    photo.alt = (hostel.name || "Hostel") + " photo";
+    photo.className = "property-card-photo";
+    photo.loading = "lazy";
+
+    // Show the placeholder if the image cannot load
+    photo.onerror = function () {
+        photo.remove();
+
+        if (!image.querySelector(".property-house")) {
+            const house = document.createElement("div");
+            house.className = "property-house";
+            house.textContent = "🏢";
+            image.appendChild(house);
+        }
+    };
+
+    image.appendChild(photo);
+} else {
+    // Keep the existing placeholder when no photo was uploaded
+    const house = document.createElement("div");
+    house.className = "property-house";
+    house.textContent = "🏢";
+    image.appendChild(house);
+}
 
         const info = document.createElement("div");
         info.className = "property-info";
@@ -863,7 +1187,10 @@ try {
 
         const location = document.createElement("p");
         location.className = "location";
-        location.textContent = "📍 " + (hostel.location || "Location not specified");
+        location.textContent =
+            "📍 " + (hostel.location || "Location not specified");
+
+        
 
         const rating = document.createElement("div");
         rating.className = "property-rating";
@@ -876,8 +1203,8 @@ try {
 
         const rentPeriod = document.createElement("small");
         rentPeriod.textContent = "/month";
-        rent.appendChild(rentPeriod);
 
+        rent.appendChild(rentPeriod);
         rating.append(status, rent);
 
         const facilities = document.createElement("div");
@@ -899,76 +1226,1970 @@ try {
         deposit.textContent =
             "Security deposit: ₹" + (hostel.securityDeposit ?? 0);
 
-        info.append(name, location, rating, facilities, rooms, deposit);
-        const enquiryButton = document.createElement("button");
-enquiryButton.type = "button";
-enquiryButton.textContent = "Send Enquiry";
-enquiryButton.className = "search-button";
+        info.append(
+            name,
+            location,
+            rating,
+            facilities,
+            rooms,
+            deposit
+        );
+        
+// View Details button
+const detailsButton = document.createElement("button");
+detailsButton.type = "button";
+detailsButton.textContent = "View Details";
+detailsButton.className = "view-details-btn";
 
-enquiryButton.addEventListener("click", function () {
-sendEnquiry(hostel._id, hostel.name);
+detailsButton.addEventListener("click", function () {
+    showHostelDetails(hostel);
 });
 
-info.appendChild(enquiryButton);
+info.appendChild(detailsButton);
 
-        card.append(image, info);
-        propertyGrid.appendChild(card);
+
+
+        const enquiryButton = document.createElement("button");
+        enquiryButton.type = "button";
+        enquiryButton.textContent = "Send Enquiry";
+        enquiryButton.className = "search-button";
+
+        enquiryButton.addEventListener("click", function () {
+            sendEnquiry(hostel._id, hostel.name);
+        });
+
+            info.appendChild(enquiryButton);
+
+// Save / Unsave Hostel button
+const saveButton = document.createElement("button");
+saveButton.type = "button";
+saveButton.className = "save-stay-btn";
+
+function updateSaveButton() {
+    const isSaved = savedHostels.some(
+        savedHostel => savedHostel._id === hostel._id
+    );
+
+    saveButton.textContent = isSaved ? "♥ Saved" : "♡ Save";
+    saveButton.classList.toggle("is-saved", isSaved);
+}
+
+updateSaveButton();
+
+saveButton.addEventListener("click", async function () {
+    const token = localStorage.getItem("stayFinderToken");
+
+    if (!token) {
+        alert("Please log in to save hostels.");
+        return;
+    }
+
+    const isSaved = savedHostels.some(
+        savedHostel => savedHostel._id === hostel._id
+    );
+
+    try {
+        let response;
+
+        if (isSaved) {
+            response = await fetch(
+                `/api/saved-stays/${encodeURIComponent(hostel._id)}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+        } else {
+            response = await fetch(
+                `/api/saved-stays/${encodeURIComponent(hostel._id)}`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to update saved stays.");
+        }
+
+        if (isSaved) {
+            savedHostels = savedHostels.filter(
+                savedHostel => savedHostel._id !== hostel._id
+            );
+        } else {
+            // Use the hostel object already loaded from the API.
+            savedHostels.push(hostel);
+        }
+
+        updateSaveButton();
+        renderSavedStays();
+
+    } catch (error) {
+        console.error("Save hostel error:", error);
+        alert(error.message || "Unable to update saved stays.");
+    }
+});
+
+info.appendChild(saveButton);
+// Compare checkbox
+const compareLabel = document.createElement("label");
+compareLabel.className = "compare-select-label";
+
+const compareCheckbox = document.createElement("input");
+compareCheckbox.type = "checkbox";
+compareCheckbox.className = "compare-hostel-checkbox";
+compareCheckbox.value = hostel._id;
+
+compareCheckbox.checked = selectedHostelIds.has(hostel._id);
+
+compareCheckbox.addEventListener("change", function () {
+    if (compareCheckbox.checked) {
+        if (selectedHostelIds.size >= 3) {
+            compareCheckbox.checked = false;
+            alert("You can compare up to 3 hostels at a time.");
+            return;
+        }
+
+        selectedHostelIds.add(hostel._id);
+    } else {
+        selectedHostelIds.delete(hostel._id);
+    }
+
+    updateCompareSelection();
+});
+
+const compareText = document.createElement("span");
+compareText.textContent = "Add to Compare";
+
+compareLabel.append(compareCheckbox, compareText);
+info.appendChild(compareLabel);
+
+card.append(image, info);
+propertyGrid.appendChild(card);
     });
-
-} catch (error) {
-    console.error("Error loading hostels:", error);
-    propertyGrid.textContent =
-        "Unable to load hostels. Please try again later.";
 }
 
+function updateCompareSelection() {
+    const message = document.getElementById("compareSelectionMessage");
+    const button = document.getElementById("compareSelectedBtn");
 
+    if (!message || !button) return;
+
+    const count = selectedHostelIds.size;
+
+    message.textContent =
+        `${count} hostel${count === 1 ? "" : "s"} selected. ` +
+        "Select at least 2 and up to 3 hostels.";
+
+    button.disabled = count < 2;
+
+    // Clear stale comparison output when the selection changes.
+    const result = document.getElementById("comparisonResult");
+
+    if (result) {
+        result.replaceChildren();
+    }
 }
-async function sendEnquiry(hostelId, hostelName) {
-const token = localStorage.getItem("stayFinderToken");
 
+async function compareSelectedHostels() {
+    const selectedHostels = allHostels.filter(hostel =>
+        selectedHostelIds.has(hostel._id)
+    );
 
-if (!token) {
-    alert("Please log in as a student before sending an enquiry.");
-    return;
-}
+    if (selectedHostels.length < 2) {
+        alert("Please select at least 2 hostels to compare.");
+        return;
+    }
 
-const message = prompt(
-    "Enter your enquiry for " + hostelName + ":"
-);
+    if (selectedHostels.length > 3) {
+        alert("You can compare up to 3 hostels at a time.");
+        return;
+    }
 
-if (!message || !message.trim()) {
-    return;
-}
+    const result = document.getElementById("comparisonResult");
+    if (!result) return;
+    let comparisonRatings = {};
 
 try {
-    const response = await fetch("/api/enquiries", {
-        method: "POST",
+    const response = await fetch(
+        "/api/reviews/comparison",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("stayFinderToken")}`
+            },
+            body: JSON.stringify({
+                hostelIds: selectedHostels.map(hostel => hostel._id)
+            })
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+        throw new Error(data.message || "Unable to load ratings.");
+    }
+
+    comparisonRatings = data.ratings;
+} catch (error) {
+    console.error("Unable to fetch comparison ratings:", error);
+    alert("Could not load hostel ratings. Please try again.");
+    return;
+}
+
+    result.replaceChildren();
+
+    // Helper: display values safely
+    function getValue(value) {
+        if (value === undefined || value === null || value === "") {
+            return "Not specified";
+        }
+
+        if (Array.isArray(value)) {
+            return value.length ? value.join(", ") : "Not specified";
+        }
+
+        return String(value);
+    }
+
+    // Helper: format money
+    function formatMoney(value) {
+        if (
+            value === undefined ||
+            value === null ||
+            value === "" ||
+            !Number.isFinite(Number(value))
+        ) {
+            return "Not specified";
+        }
+
+        return `₹${Number(value).toLocaleString("en-IN")}`;
+    }
+
+    // Build comparison table
+    const table = document.createElement("table");
+    table.className = "hostel-comparison-table";
+
+    const fields = [
+        { label: "Location", key: "location" },
+        { label: "Monthly Rent", key: "rent", money: true },
+        { label: "Security Deposit", key: "securityDeposit", money: true },
+        { label: "Total Rooms", key: "totalRooms" },
+        { label: "Available Rooms", key: "availableRooms" },
+        { label: "Status", key: "status" },
+        { label: "Facilities", key: "facilities" }
+    ];
+
+    // Add rating only when the API provides a valid rating
+   fields.push({
+    label: "Average Rating",
+    key: "rating",
+    rating: true
+});
+
+fields.push({
+    label: "Total Reviews",
+    key: "totalReviews",
+    reviewCount: true
+});
+
+fields.push({
+    label: "Positive Reviews",
+    key: "positivePercentage",
+    percentage: true
+});
+
+    const header = document.createElement("tr");
+
+    const firstHeading = document.createElement("th");
+    firstHeading.textContent = "Features";
+    header.appendChild(firstHeading);
+
+    selectedHostels.forEach(hostel => {
+        const heading = document.createElement("th");
+        heading.textContent = hostel.name || "Unnamed Hostel";
+        header.appendChild(heading);
+    });
+
+    table.appendChild(header);
+
+    fields.forEach(field => {
+        const row = document.createElement("tr");
+
+        const labelCell = document.createElement("th");
+        labelCell.textContent = field.label;
+        row.appendChild(labelCell);
+
+        selectedHostels.forEach(hostel => {
+            const cell = document.createElement("td");
+            const reviewSummary = comparisonRatings[hostel._id] || {};
+
+const value = field.rating
+    ? reviewSummary.averageRating
+    : field.reviewCount
+        ? reviewSummary.totalReviews
+        : field.percentage
+            ? reviewSummary.positivePercentage
+            : hostel[field.key];
+
+            if (field.money) {
+                cell.textContent = formatMoney(value);
+            } else if (field.rating) {
+                const rating = Number(value);
+
+                if (
+                    value !== undefined &&
+                    value !== null &&
+                    value !== "" &&
+                    Number.isFinite(rating) &&
+                    rating >= 0 &&
+                    rating <= 5
+                ) {
+                    cell.textContent = `⭐ ${rating.toFixed(1)} / 5`;
+                } else {
+                    cell.textContent = "No reviews yet";
+                }
+            } 
+            else if (field.percentage) {
+             cell.textContent =
+             value !== undefined && value !== null && value !== ""
+            ? `${value}%`
+            : "Not specified";
+            }
+            
+            else {
+                cell.textContent = getValue(value);
+            }
+
+            row.appendChild(cell);
+        });
+
+        table.appendChild(row);
+    });
+
+    result.appendChild(table);
+
+    // Create recommendation section
+    const recommendation = document.createElement("section");
+    recommendation.className = "comparison-recommendation";
+
+    const recommendationTitle = document.createElement("h3");
+    recommendationTitle.textContent = "🏆 Comparison Recommendation";
+
+    recommendation.appendChild(recommendationTitle);
+
+    // Score hostels using available, real information
+    const scoredHostels = selectedHostels.map(hostel => {
+        let score = 0;
+        const reasons = [];
+
+        const rent = Number(hostel.rent);
+        const availableRooms = Number(hostel.availableRooms);
+        const reviewSummary = comparisonRatings[hostel._id] || {};
+const rating = Number(reviewSummary.averageRating);
+const reviewCount = Number(reviewSummary.totalReviews || 0);
+
+        const validRent =
+            hostel.rent !== undefined &&
+            hostel.rent !== null &&
+            hostel.rent !== "" &&
+            Number.isFinite(rent) &&
+            rent >= 0;
+
+        const validAvailability =
+            hostel.availableRooms !== undefined &&
+            hostel.availableRooms !== null &&
+            hostel.availableRooms !== "" &&
+            Number.isFinite(availableRooms) &&
+            availableRooms >= 0;
+
+        const validRating =
+    reviewSummary.averageRating !== null &&
+    reviewSummary.averageRating !== undefined &&
+    Number.isFinite(rating) &&
+    rating >= 1 &&
+    rating <= 5 &&
+    reviewCount > 0;
+
+        if (validRent) {
+            // Lower rent receives a higher affordability score.
+            const rents = selectedHostels
+                .map(h => Number(h.rent))
+                .filter((r, index) =>
+                    hRentIsValid(selectedHostels[index])
+                );
+
+            const minimumRent = Math.min(...rents);
+            const maximumRent = Math.max(...rents);
+
+            const affordability =
+                maximumRent === minimumRent
+                    ? 10
+                    : 10 * (maximumRent - rent) /
+                      (maximumRent - minimumRent);
+
+            score += affordability * 0.4;
+
+            if (rent === minimumRent) {
+                reasons.push("lowest monthly rent");
+            }
+        }
+
+        if (validAvailability) {
+            score += Math.min(availableRooms, 10) * 0.5;
+
+            if (availableRooms > 0) {
+                reasons.push("rooms currently available");
+            }
+        }
+
+        if (validRating) {
+            score += rating * 2;
+
+            if (rating > 0) {
+                reasons.push(`rated ${rating.toFixed(1)} out of 5`);
+            }
+        }
+
+        const facilities = Array.isArray(hostel.facilities)
+            ? hostel.facilities
+            : [];
+
+        score += Math.min(facilities.length, 10) * 0.3;
+
+        if (facilities.length > 0) {
+            reasons.push("listed facilities");
+        }
+
+        return { hostel, score, reasons };
+    });
+
+    // If no usable information exists, don't claim a winner.
+    const hasComparableData = scoredHostels.some(item => {
+    const hostel = item.hostel;
+    const reviewSummary = comparisonRatings[hostel._id] || {};
+
+    const validRent =
+        hostel.rent !== undefined &&
+        hostel.rent !== null &&
+        hostel.rent !== "" &&
+        Number.isFinite(Number(hostel.rent));
+
+    const validRating =
+        reviewSummary.averageRating !== undefined &&
+        reviewSummary.averageRating !== null &&
+        Number.isFinite(Number(reviewSummary.averageRating)) &&
+        Number(reviewSummary.averageRating) >= 1 &&
+        Number(reviewSummary.averageRating) <= 5 &&
+        Number(reviewSummary.totalReviews) > 0;
+
+    const validAvailability =
+        hostel.availableRooms !== undefined &&
+        hostel.availableRooms !== null &&
+        hostel.availableRooms !== "";
+
+    return validRent || validRating || validAvailability;
+});
+
+    if (!hasComparableData) {
+        const message = document.createElement("p");
+        message.textContent =
+            "There is not enough information to recommend a hostel. " +
+            "Please check the rent, availability and rating details.";
+        recommendation.appendChild(message);
+        result.appendChild(recommendation);
+        return;
+    }
+
+    scoredHostels.sort((a, b) => b.score - a.score);
+
+    const best = scoredHostels[0];
+
+    const bestName = document.createElement("h4");
+    bestName.textContent = best.hostel.name || "Unnamed Hostel";
+    recommendation.appendChild(bestName);
+
+    const explanation = document.createElement("p");
+    explanation.textContent = best.reasons.length
+        ? `This hostel scores highest using the available data because it has ${best.reasons.join(", ")}.`
+        : "This hostel has the highest comparison score based on the available information.";
+    recommendation.appendChild(explanation);
+
+    const note = document.createElement("p");
+    note.className = "recommendation-note";
+    note.textContent =
+        "This is an automated comparison based on available data, not a guarantee. " +
+        "Visit the hostel and verify its details before booking.";
+    recommendation.appendChild(note);
+
+    result.appendChild(recommendation);
+
+    result.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+}
+// =========================================
+// STUDENT NOTIFICATIONS
+// =========================================
+
+const STUDENT_NOTIFICATIONS_API = "/api/notifications";
+
+// Load student notifications
+async function loadStudentNotifications() {
+    const token = localStorage.getItem("stayFinderToken");
+
+    const countElement = document.getElementById(
+        "studentNotificationCount"
+    );
+
+    const listElement = document.getElementById(
+        "studentNotificationList"
+    );
+
+    if (!countElement || !listElement) {
+        return;
+    }
+
+    if (!token) {
+        countElement.textContent = "0";
+        countElement.hidden = true;
+        listElement.textContent = "Please log in to view notifications.";
+        return;
+    }
+
+    try {
+        const response = await fetch(STUDENT_NOTIFICATIONS_API, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Unable to load notifications."
+            );
+        }
+
+        const notifications = data.notifications || [];
+        const unreadCount = Number(data.unreadCount) || 0;
+
+        // Update the notification badge
+        countElement.textContent = unreadCount;
+        countElement.hidden = unreadCount === 0;
+
+        // Display notifications
+        listElement.replaceChildren();
+
+        if (notifications.length === 0) {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.textContent = "No notifications yet.";
+            listElement.appendChild(emptyMessage);
+            return;
+        }
+
+        notifications.forEach(function (notification) {
+            const item = document.createElement("div");
+            item.className = "notification-item";
+
+            if (!notification.isRead) {
+                item.classList.add("unread");
+            }
+
+            const title = document.createElement("strong");
+            title.textContent = notification.title || "Notification";
+
+            const message = document.createElement("p");
+            message.textContent = notification.message || "";
+
+            const date = document.createElement("small");
+            date.textContent = notification.createdAt
+                ? new Date(notification.createdAt).toLocaleString("en-IN")
+                : "";
+
+            item.append(title, message, date);
+
+            if (!notification.isRead) {
+                const readButton = document.createElement("button");
+                readButton.type = "button";
+                readButton.textContent = "Mark as read";
+
+                readButton.addEventListener("click", function () {
+                    markStudentNotificationAsRead(notification._id);
+                });
+
+                item.appendChild(readButton);
+            }
+
+            listElement.appendChild(item);
+        });
+    } catch (error) {
+        console.error("Student notification error:", error);
+
+        countElement.textContent = "0";
+        countElement.hidden = true;
+        listElement.textContent = "Unable to load notifications.";
+    }
+}
+
+
+
+
+
+// Mark one student notification as read
+async function markStudentNotificationAsRead(notificationId) {
+    const token = localStorage.getItem("stayFinderToken");
+
+    if (!token) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${STUDENT_NOTIFICATIONS_API}/${notificationId}/read`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Unable to mark notification as read."
+            );
+        }
+
+        await loadStudentNotifications();
+    } catch (error) {
+        console.error("Mark student notification as read error:", error);
+        alert(error.message || "Unable to update notification.");
+    }
+}
+
+
+// Mark all student notifications as read
+async function markAllStudentNotificationsAsRead() {
+    const token = localStorage.getItem("stayFinderToken");
+
+    if (!token) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${STUDENT_NOTIFICATIONS_API}/read-all`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Unable to mark notifications as read."
+            );
+        }
+
+        await loadStudentNotifications();
+    } catch (error) {
+        console.error("Mark all student notifications as read error:", error);
+        alert(error.message || "Unable to update notifications.");
+    }
+}
+
+
+// Connect the notification bell and buttons
+document.addEventListener("DOMContentLoaded", function () {
+    const notificationButton = document.getElementById(
+        "studentNotificationButton"
+    );
+
+    const notificationPanel = document.getElementById(
+        "studentNotificationPanel"
+    );
+
+    const markAllButton = document.getElementById(
+        "markAllStudentNotificationsRead"
+    );
+
+    if (notificationButton && notificationPanel) {
+        notificationButton.addEventListener("click", function () {
+            const isOpening = notificationPanel.hidden;
+
+            notificationPanel.hidden = !isOpening;
+
+            notificationButton.setAttribute(
+                "aria-expanded",
+                String(isOpening)
+            );
+
+            if (isOpening) {
+                loadStudentNotifications();
+            }
+        });
+
+        // Close the panel when clicking outside it
+        document.addEventListener("click", function (event) {
+            const wrapper = notificationButton.closest(
+                ".notification-wrapper"
+            );
+
+            if (wrapper && !wrapper.contains(event.target)) {
+                notificationPanel.hidden = true;
+
+                notificationButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
+        });
+
+        // Close the panel with Escape
+        document.addEventListener("keydown", function (event) {
+            if (
+                event.key === "Escape" &&
+                !notificationPanel.hidden
+            ) {
+                notificationPanel.hidden = true;
+
+                notificationButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                notificationButton.focus();
+            }
+        });
+    }
+
+    if (markAllButton) {
+    markAllButton.addEventListener("click", async function () {
+        console.log("Mark all as read clicked");
+
+        markAllButton.disabled = true;
+
+        try {
+            await markAllStudentNotificationsAsRead();
+        } finally {
+            markAllButton.disabled = false;
+        }
+    });
+}
+
+    // Load the initial count
+    loadStudentNotifications();
+
+    // Refresh the count every 30 seconds
+    setInterval(loadStudentNotifications, 30000);
+});
+
+// Helper used by the scoring function
+function hRentIsValid(hostel) {
+    return hostel.rent !== undefined &&
+        hostel.rent !== null &&
+        hostel.rent !== "" &&
+        Number.isFinite(Number(hostel.rent)) &&
+        Number(hostel.rent) >= 0;
+}
+
+
+document.getElementById("compareSelectedBtn")
+    ?.addEventListener("click", compareSelectedHostels);
+
+// Display full details and reviews of a selected hostel
+async function showHostelDetails(hostel) {
+    const dialog = document.getElementById("hostelDetailsDialog");
+    const title = document.getElementById("detailsHostelName");
+    const content = document.getElementById("hostelDetailsContent");
+
+    if (!dialog || !title || !content) {
+        console.error("Hostel details dialog elements were not found.");
+        return;
+    }
+
+    title.textContent = hostel.name || "Hostel Details";
+    content.replaceChildren();
+
+    const body = document.createElement("div");
+    body.className = "hostel-details-body";
+
+    // Hostel photo
+    if (hostel.mainPhoto) {
+        const photo = document.createElement("img");
+        photo.src = hostel.mainPhoto;
+        photo.alt = (hostel.name || "Hostel") + " photo";
+        photo.className = "hostel-details-photo";
+        body.appendChild(photo);
+    }
+
+    // ===== Hostel Information Cards =====
+
+const informationSection = document.createElement("section");
+informationSection.className = "hostel-information-section";
+
+// Location card
+const locationCard = document.createElement("div");
+locationCard.className = "hostel-location-card";
+
+const locationIcon = document.createElement("span");
+locationIcon.className = "hostel-info-icon";
+locationIcon.textContent = "📍";
+
+const locationText = document.createElement("div");
+
+const locationLabel = document.createElement("span");
+locationLabel.className = "hostel-info-label";
+locationLabel.textContent = "LOCATION";
+
+const locationValue = document.createElement("strong");
+locationValue.className = "hostel-location-value";
+locationValue.textContent = hostel.location || "Not provided";
+
+locationText.append(locationLabel, locationValue);
+locationCard.append(locationIcon, locationText);
+
+// Rent and deposit cards
+const priceGrid = document.createElement("div");
+priceGrid.className = "hostel-price-grid";
+
+function createPriceCard(label, value, icon, extraClass) {
+    const card = document.createElement("div");
+    card.className = "hostel-price-card " + extraClass;
+
+    const cardIcon = document.createElement("span");
+    cardIcon.className = "hostel-price-icon";
+    cardIcon.textContent = icon;
+
+    const cardLabel = document.createElement("span");
+    cardLabel.className = "hostel-info-label";
+    cardLabel.textContent = label;
+
+    const cardValue = document.createElement("strong");
+    cardValue.className = "hostel-price-value";
+    cardValue.textContent =
+        "₹" + Number(value ?? 0).toLocaleString("en-IN");
+
+    card.append(cardIcon, cardLabel, cardValue);
+
+    return card;
+}
+
+priceGrid.append(
+    createPriceCard(
+        "Monthly Rent",
+        hostel.rent,
+        "💰",
+        "monthly-rent-card"
+    ),
+    createPriceCard(
+        "Security Deposit",
+        hostel.securityDeposit,
+        "🔐",
+        "security-deposit-card"
+    )
+);
+
+// Availability and rooms
+const availabilityCard = document.createElement("div");
+availabilityCard.className = "hostel-availability-card";
+
+const availabilityHeader = document.createElement("div");
+availabilityHeader.className = "hostel-availability-header";
+
+const availabilityLabel = document.createElement("span");
+availabilityLabel.className = "hostel-info-label";
+availabilityLabel.textContent = "ROOM AVAILABILITY";
+
+const statusBadge = document.createElement("span");
+statusBadge.className = "hostel-status-badge";
+
+const status = String(hostel.status || "Not provided").trim();
+const normalizedStatus = status.toLowerCase();
+
+statusBadge.textContent = status;
+
+if (normalizedStatus.includes("available") &&
+    !normalizedStatus.includes("few") &&
+    !normalizedStatus.includes("full")) {
+    statusBadge.classList.add("status-available");
+} else if (normalizedStatus.includes("few")) {
+    statusBadge.classList.add("status-limited");
+} else if (normalizedStatus.includes("full")) {
+    statusBadge.classList.add("status-full");
+} else {
+    statusBadge.classList.add("status-unknown");
+}
+
+availabilityHeader.append(availabilityLabel, statusBadge);
+
+const roomsRow = document.createElement("div");
+roomsRow.className = "hostel-rooms-row";
+
+const roomsLabel = document.createElement("span");
+roomsLabel.textContent = "Available rooms";
+
+const roomsValue = document.createElement("strong");
+roomsValue.textContent = String(hostel.availableRooms ?? 0);
+
+roomsRow.append(roomsLabel, roomsValue);
+availabilityCard.append(availabilityHeader, roomsRow);
+
+// Facilities section
+const facilitiesSection = document.createElement("section");
+facilitiesSection.className = "hostel-facilities-section";
+
+const facilitiesHeading = document.createElement("h3");
+facilitiesHeading.textContent = "Facilities & Amenities";
+
+const facilitiesDescription = document.createElement("p");
+facilitiesDescription.className = "hostel-section-description";
+facilitiesDescription.textContent =
+    "Explore the facilities offered at this hostel.";
+
+const facilitiesContainer = document.createElement("div");
+facilitiesContainer.className = "hostel-details-facilities";
+
+const facilities = Array.isArray(hostel.facilities)
+    ? hostel.facilities
+    : [];
+
+if (facilities.length > 0) {
+    facilities.forEach(function (facility) {
+        const item = document.createElement("span");
+        item.className = "hostel-facility-tag";
+
+        const check = document.createElement("span");
+        check.textContent = "✓";
+        check.setAttribute("aria-hidden", "true");
+
+        const facilityName = document.createElement("span");
+        facilityName.textContent = facility;
+
+        item.append(check, facilityName);
+        facilitiesContainer.appendChild(item);
+    });
+} else {
+    const emptyFacilities = document.createElement("p");
+    emptyFacilities.className = "hostel-empty-message";
+    emptyFacilities.textContent = "No facilities listed yet.";
+    facilitiesContainer.appendChild(emptyFacilities);
+}
+
+facilitiesSection.append(
+    facilitiesHeading,
+    facilitiesDescription,
+    facilitiesContainer
+);
+
+// Add the new sections to the popup
+informationSection.append(
+    locationCard,
+    priceGrid,
+    availabilityCard,
+    facilitiesSection
+);
+
+body.appendChild(informationSection);
+
+    // Send Enquiry button
+    const enquiryButton = document.createElement("button");
+    enquiryButton.type = "button";
+    enquiryButton.className = "search-button";
+    enquiryButton.textContent = "Send Enquiry";
+
+    enquiryButton.addEventListener("click", function () {
+        sendEnquiry(hostel._id, hostel.name);
+    });
+
+    body.appendChild(enquiryButton);
+
+    // Reviews section
+    const reviewsSection = document.createElement("section");
+    reviewsSection.className = "hostel-reviews-section";
+
+    const reviewsHeading = document.createElement("h3");
+    reviewsHeading.textContent = "⭐ Student Reviews";
+    reviewsSection.appendChild(reviewsHeading);
+
+    const reviewSummary = document.createElement("p");
+    reviewSummary.textContent = "Loading reviews...";
+    reviewsSection.appendChild(reviewSummary);
+
+    const reviewsList = document.createElement("div");
+    reviewsList.className = "hostel-reviews-list";
+    reviewsSection.appendChild(reviewsList);
+
+    // Review submission form
+    const token = localStorage.getItem("stayFinderToken");
+
+    const reviewFormHeading = document.createElement("h3");
+    reviewFormHeading.textContent = "Write a Review";
+    reviewsSection.appendChild(reviewFormHeading);
+
+    if (!token) {
+        const loginMessage = document.createElement("p");
+        loginMessage.textContent = "Please log in to submit a review.";
+        reviewsSection.appendChild(loginMessage);
+    } else {
+        const reviewForm = document.createElement("form");
+        reviewForm.id = "hostelReviewForm";
+
+        const ratingLabel = document.createElement("label");
+        ratingLabel.textContent = "Your rating";
+
+        const ratingSelect = document.createElement("select");
+        ratingSelect.name = "rating";
+        ratingSelect.required = true;
+
+        const ratingPlaceholder = document.createElement("option");
+        ratingPlaceholder.value = "";
+        ratingPlaceholder.textContent = "Select a rating";
+        ratingPlaceholder.disabled = true;
+        ratingPlaceholder.selected = true;
+        ratingSelect.appendChild(ratingPlaceholder);
+
+        for (let rating = 5; rating >= 1; rating--) {
+            const option = document.createElement("option");
+            option.value = rating;
+            option.textContent = "⭐".repeat(rating) + " (" + rating + "/5)";
+            ratingSelect.appendChild(option);
+        }
+
+        ratingLabel.appendChild(ratingSelect);
+
+        const commentLabel = document.createElement("label");
+        commentLabel.textContent = "Your comment";
+
+        const commentInput = document.createElement("textarea");
+        commentInput.name = "comment";
+        commentInput.placeholder = "Share your experience with this hostel...";
+        commentInput.required = true;
+        commentInput.maxLength = 1000;
+        commentInput.rows = 4;
+
+        commentLabel.appendChild(commentInput);
+
+        const submitButton = document.createElement("button");
+        submitButton.type = "submit";
+        submitButton.className = "search-button";
+        submitButton.textContent = "Submit Review";
+
+        const formMessage = document.createElement("p");
+        formMessage.setAttribute("aria-live", "polite");
+
+        reviewForm.append(ratingLabel, commentLabel, submitButton, formMessage);
+        reviewsSection.appendChild(reviewForm);
+
+        reviewForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const rating = Number(ratingSelect.value);
+            const comment = commentInput.value.trim();
+
+            if (!rating || !comment) {
+                formMessage.textContent = "Please select a rating and enter a comment.";
+                return;
+            }
+
+            submitButton.disabled = true;
+            formMessage.textContent = "Submitting your review...";
+
+            try {
+                const response = await fetch("/api/reviews", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    },
+                    body: JSON.stringify({
+                        hostelId: hostel._id,
+                        rating: rating,
+                        comment: comment
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Unable to submit review.");
+                }
+
+                formMessage.textContent = "Your review was submitted successfully!";
+                reviewForm.reset();
+
+                await loadHostelReviews(hostel._id, reviewSummary, reviewsList);
+            } catch (error) {
+                console.error("Review submission error:", error);
+                formMessage.textContent = error.message;
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+    }
+
+    body.appendChild(reviewsSection);
+    content.appendChild(body);
+
+    if (!dialog.open) {
+        dialog.showModal();
+    }
+
+    // Load existing reviews from the backend
+    await loadHostelReviews(hostel._id, reviewSummary, reviewsList);
+}
+
+
+// Load existing reviews for one hostel
+async function loadHostelReviews(hostelId, summaryElement, reviewsList) {
+    summaryElement.textContent = "Loading reviews...";
+    reviewsList.replaceChildren();
+
+    const token = localStorage.getItem("stayFinderToken");
+
+    try {
+        const headers = {};
+        if (token) {
+            headers.Authorization = "Bearer " + token;
+        }
+
+        const response = await fetch(
+            "/api/reviews/hostel/" + encodeURIComponent(hostelId),
+            { headers }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load reviews.");
+        }
+
+        const summary = data.summary || {};
+        const reviews = data.reviews || [];
+
+        summaryElement.textContent =
+            "⭐ " + (summary.averageRating ?? 0) + "/5 · " +
+            (summary.totalReviews ?? reviews.length) + " review(s) · " +
+            (summary.positivePercentage ?? 0) + "% positive";
+
+        if (reviews.length === 0) {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.textContent = "No reviews yet. Be the first to review this hostel!";
+            reviewsList.appendChild(emptyMessage);
+            return;
+        }
+
+        reviews.forEach(function (review) {
+            const reviewCard = document.createElement("article");
+            reviewCard.className = "hostel-review-card";
+
+            const studentName = document.createElement("strong");
+            studentName.textContent =
+                review.student?.name || "Student";
+
+            const rating = document.createElement("p");
+            const numericRating = Number(review.rating) || 0;
+            rating.textContent =
+                "⭐".repeat(Math.max(0, Math.min(5, numericRating))) +
+                " (" + numericRating + "/5)";
+
+            const comment = document.createElement("p");
+            comment.textContent = review.comment || "";
+
+            const date = document.createElement("small");
+            date.textContent = review.createdAt
+                ? new Date(review.createdAt).toLocaleDateString()
+                : "";
+
+            reviewCard.append(studentName, rating, comment, date);
+            reviewsList.appendChild(reviewCard);
+        });
+    } catch (error) {
+        console.error("Load reviews error:", error);
+        summaryElement.textContent = error.message;
+    }
+}
+
+
+
+function updateHostelResultCount(count) {
+    const resultCount = document.getElementById("hostelResultCount");
+
+    if (resultCount) {
+        resultCount.textContent =
+            count + (count === 1 ? " stay found" : " stays found");
+    }
+}
+
+function applyHostelFilters() {
+    const form = document.getElementById("hostelFilterForm");
+
+    const selectedBudgets = Array.from(
+        form.querySelectorAll('input[name="budget"]:checked')
+    ).map(input => input.value);
+
+    const selectedFacilities = Array.from(
+        form.querySelectorAll('input[name="facility"]:checked')
+    ).map(input => input.value);
+
+    const selectedAvailability = Array.from(
+        form.querySelectorAll('input[name="availability"]:checked')
+    ).map(input => input.value);
+
+    let filteredHostels = allHostels.filter(function (hostel) {
+        const rent = Number(hostel.rent ?? 0);
+
+        const budgetMatches =
+            selectedBudgets.length === 0 ||
+            selectedBudgets.some(function (budget) {
+                if (budget === "under4000") {
+                    return rent < 4000;
+                }
+
+                if (budget === "4000-6000") {
+                    return rent >= 4000 && rent <= 6000;
+                }
+
+                if (budget === "6000-8000") {
+                    return rent > 6000 && rent <= 8000;
+                }
+
+                if (budget === "above8000") {
+                    return rent > 8000;
+                }
+
+                return false;
+            });
+
+        const hostelFacilities = (hostel.facilities || [])
+            .map(facility => String(facility).trim().toLowerCase());
+
+        const facilitiesMatch =
+            selectedFacilities.length === 0 ||
+            selectedFacilities.every(function (facility) {
+                return hostelFacilities.includes(
+                    facility.trim().toLowerCase()
+                );
+            });
+
+        const availabilityMatch =
+            selectedAvailability.length === 0 ||
+            selectedAvailability.includes(hostel.status);
+
+        return budgetMatches && facilitiesMatch && availabilityMatch;
+    });
+
+    document.getElementById("filterCount").textContent =
+        selectedBudgets.length +
+        selectedFacilities.length +
+        selectedAvailability.length > 0
+            ? "(" +
+              (
+                  selectedBudgets.length +
+                  selectedFacilities.length +
+                  selectedAvailability.length
+              ) +
+              ")"
+            : "";
+
+    renderHostels(filteredHostels);
+}
+
+// Fetch recent searches from MongoDB
+async function getRecentSearches() {
+    const token = localStorage.getItem("stayFinderToken");
+
+    if (!token) return [];
+
+    try {
+        const response = await fetch("/api/recent-searches", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load recent searches.");
+        }
+
+        return data.searches || [];
+    } catch (error) {
+        console.error("Load recent searches error:", error);
+        return [];
+    }
+}
+
+
+// Save a search to MongoDB
+async function saveRecentSearch(location) {
+    const token = localStorage.getItem("stayFinderToken");
+
+    if (!token) {
+        console.error("Please log in to save recent searches.");
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/recent-searches", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ location })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to save search.");
+        }
+
+        await renderRecentSearches();
+    } catch (error) {
+        console.error("Save recent search error:", error);
+    }
+}
+
+
+// Display recent searches
+async function renderRecentSearches() {
+    const list = document.getElementById("recentSearchesList");
+    if (!list) return;
+
+    list.replaceChildren();
+
+    const loading = document.createElement("p");
+    loading.textContent = "Loading recent searches...";
+    list.appendChild(loading);
+
+    const searches = await getRecentSearches();
+
+    list.replaceChildren();
+
+    if (searches.length === 0) {
+        const message = document.createElement("p");
+        message.className = "saved-empty-message";
+        message.textContent =
+            "No recent searches yet. Search for a stay to get started.";
+
+        list.appendChild(message);
+        return;
+    }
+
+    searches.forEach(search => {
+        const row = document.createElement("div");
+        row.className = "recent-search";
+        row.style.cursor = "pointer";
+
+        const icon = document.createElement("span");
+        icon.textContent = "🔍";
+
+        const location = document.createElement("strong");
+        location.textContent = search.location;
+
+        const date = document.createElement("small");
+        date.textContent = formatSearchDate(search.searchedAt);
+
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.textContent = "×";
+        removeButton.title = "Remove this search";
+        removeButton.setAttribute(
+            "aria-label",
+            "Remove " + search.location
+        );
+
+        // Repeat a search when its row is clicked
+        row.addEventListener("click", event => {
+            if (event.target.closest("button")) return;
+            repeatRecentSearch(search.location);
+        });
+
+        // Individual deletion is not supported by the current API.
+        // Prevent this button from falsely appearing to delete a search.
+        removeButton.addEventListener("click", event => {
+            event.stopPropagation();
+            alert("Use Clear All to remove your recent searches.");
+        });
+
+        row.append(icon, location, date, removeButton);
+        list.appendChild(row);
+    });
+}
+
+
+// Format search dates
+function formatSearchDate(dateString) {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) return "";
+
+    const now = new Date();
+
+    if (date.toDateString() === now.toDateString()) {
+        return "Today";
+    }
+
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+
+    if (date.toDateString() === yesterday.toDateString()) {
+        return "Yesterday";
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short"
+    });
+}
+
+
+// Clear all recent searches from MongoDB
+async function clearSearches() {
+    const token = localStorage.getItem("stayFinderToken");
+
+    if (!token) {
+        alert("Please log in to clear recent searches.");
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/recent-searches", {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to clear searches.");
+        }
+
+        await renderRecentSearches();
+    } catch (error) {
+        console.error("Clear searches error:", error);
+        alert(error.message || "Unable to clear recent searches.");
+    }
+}
+
+
+// Repeat a previous search
+function repeatRecentSearch(location) {
+    const searchInput = document.getElementById("staySearch");
+
+    if (!searchInput) return;
+
+    searchInput.value = location;
+    searchStay();
+}
+
+
+async function sendEnquiry(hostelId, hostelName) {
+    const token = localStorage.getItem("stayFinderToken");
+
+    if (!token) {
+        alert("Please log in as a student before sending an enquiry.");
+        return;
+    }
+
+    // Remove an existing enquiry form, if present
+    const existingForm = document.getElementById("hostelEnquiryForm");
+
+    if (existingForm) {
+        existingForm.remove();
+    }
+
+    // Find the hostel details popup
+    const content = document.getElementById("hostelDetailsContent");
+
+    if (!content) {
+        alert("Hostel details section could not be found.");
+        return;
+    }
+
+    // Create the enquiry form
+    const enquiryForm = document.createElement("form");
+    enquiryForm.id = "hostelEnquiryForm";
+    enquiryForm.className = "hostel-enquiry-form";
+
+    const heading = document.createElement("h3");
+    heading.textContent = "✉️ Send Enquiry";
+
+    const description = document.createElement("p");
+    description.textContent =
+        "Have questions about " + hostelName +
+        "? Write your message below.";
+
+    const label = document.createElement("label");
+    label.htmlFor = "hostelEnquiryMessage";
+    label.textContent = "Your message";
+
+    const textarea = document.createElement("textarea");
+    textarea.id = "hostelEnquiryMessage";
+    textarea.name = "message";
+    textarea.rows = 5;
+    textarea.maxLength = 1000;
+    textarea.required = true;
+    textarea.placeholder =
+        "Hi, I am interested in this hostel. Please share more details...";
+    textarea.setAttribute("aria-label", "Your enquiry message");
+
+    const messageInfo = document.createElement("small");
+    messageInfo.className = "hostel-enquiry-hint";
+    messageInfo.textContent = "Maximum 1000 characters.";
+
+    const statusMessage = document.createElement("p");
+    statusMessage.className = "hostel-enquiry-status";
+    statusMessage.setAttribute("aria-live", "polite");
+
+    const actions = document.createElement("div");
+    actions.className = "hostel-enquiry-actions";
+
+    const cancelButton = document.createElement("button");
+    cancelButton.type = "button";
+    cancelButton.className = "hostel-enquiry-cancel";
+    cancelButton.textContent = "Cancel";
+
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.className = "hostel-enquiry-submit";
+    submitButton.textContent = "Send Enquiry";
+
+    actions.append(cancelButton, submitButton);
+
+    enquiryForm.append(
+        heading,
+        description,
+        label,
+        textarea,
+        messageInfo,
+        statusMessage,
+        actions
+    );
+
+    // Place the form near the top of the hostel details
+    content.prepend(enquiryForm);
+
+    // Close the form when Cancel is clicked
+    cancelButton.addEventListener("click", function () {
+        enquiryForm.remove();
+    });
+
+    // Submit the enquiry to the existing backend
+    enquiryForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const message = textarea.value.trim();
+
+        if (!message) {
+            statusMessage.textContent = "Please enter your enquiry.";
+            textarea.focus();
+            return;
+        }
+
+        submitButton.disabled = true;
+        cancelButton.disabled = true;
+        submitButton.textContent = "Sending...";
+
+        try {
+            const response = await fetch("/api/enquiries", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                    hostelId: hostelId,
+                    message: message
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.message || "Unable to send enquiry."
+                );
+            }
+
+            statusMessage.textContent =
+                "✓ Your enquiry was sent successfully!";
+
+            statusMessage.classList.add("enquiry-success");
+            textarea.disabled = true;
+            submitButton.remove();
+            cancelButton.textContent = "Close";
+
+            // Keep the success message visible
+            cancelButton.disabled = false;
+
+        } catch (error) {
+            console.error("Error sending enquiry:", error);
+
+            statusMessage.textContent =
+                error.message || "Could not send your enquiry. Please try again.";
+
+            statusMessage.classList.add("enquiry-error");
+
+            submitButton.disabled = false;
+            cancelButton.disabled = false;
+            submitButton.textContent = "Try Again";
+        }
+    });
+
+    // Bring the form into view and focus the message box
+    enquiryForm.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+    textarea.focus();
+}
+// ========================================
+// STUDENT MESSAGES & ENQUIRIES
+// ========================================
+
+async function loadStudentMessages() {
+const messagesList = document.getElementById("studentMessagesList");
+
+
+if (!messagesList) return;
+
+const token = localStorage.getItem("stayFinderToken");
+
+messagesList.replaceChildren();
+
+if (!token) {
+    messagesList.textContent = "Please log in to view your enquiries.";
+    updateMessageBadge(0);
+    return;
+}
+
+const loading = document.createElement("p");
+loading.textContent = "Loading your enquiries...";
+messagesList.appendChild(loading);
+
+try {
+    const response = await fetch("/api/enquiries/student", {
+        method: "GET",
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-        },
-        body: JSON.stringify({
-            hostelId: hostelId,
-            message: message.trim()
-        })
+            Authorization: "Bearer " + token
+        }
     });
 
     const data = await response.json();
 
     if (!response.ok || !data.success) {
-        alert(data.message || "Unable to send enquiry.");
+        throw new Error(data.message || "Unable to load enquiries.");
+    }
+
+    const enquiries = data.enquiries || [];
+
+    messagesList.replaceChildren();
+
+    // Update the badge with enquiries awaiting attention.
+    const pendingCount = enquiries.filter(enquiry =>
+        ["New", "Pending"].includes(enquiry.status)
+    ).length;
+
+    updateMessageBadge(pendingCount);
+
+    if (enquiries.length === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.className = "saved-empty-message";
+        emptyMessage.textContent =
+            "You haven't sent any enquiries yet. Find a hostel and send an enquiry to get started.";
+
+        messagesList.appendChild(emptyMessage);
         return;
     }
 
-    alert("Your enquiry was sent successfully!");
+    enquiries.forEach(enquiry => {
+        const card = document.createElement("article");
+        card.className = "student-message-card";
+
+        const hostelName = document.createElement("h3");
+        hostelName.textContent =
+            enquiry.hostel?.name || "Hostel details unavailable";
+
+        const message = document.createElement("p");
+        message.textContent = enquiry.message || "No message available.";
+
+        const status = document.createElement("span");
+        status.className = "enquiry-status";
+        status.textContent = enquiry.status || "New";
+        status.classList.add(
+            "status-" +
+            String(enquiry.status || "new")
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+        );
+
+        const date = document.createElement("small");
+        date.textContent = enquiry.createdAt
+            ? "Sent on " + new Date(enquiry.createdAt).toLocaleDateString("en-IN")
+            : "";
+
+        const details = document.createElement("div");
+        details.className = "student-message-details";
+        details.append(status, date);
+
+        card.append(hostelName, message, details);
+        messagesList.appendChild(card);
+    });
 
 } catch (error) {
-    console.error("Error sending enquiry:", error);
-    alert("Could not send your enquiry. Please try again.");
+    console.error("Load student messages error:", error);
+
+    messagesList.replaceChildren();
+
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent =
+        error.message || "Unable to load your enquiries. Please try again.";
+
+    messagesList.appendChild(errorMessage);
 }
 
 
 }
+//Update the message badge
+function updateMessageBadge(count) {
+    const unreadCount = Math.max(
+        0,
+        Number.isFinite(Number(count)) ? Number(count) : 0
+    );
+
+    // Sidebar Messages badge
+    const sidebarBadge = document.querySelector(
+        '.student-sidebar a[href="#messages"] .notification-badge'
+    );
+
+    if (sidebarBadge) {
+        sidebarBadge.textContent = unreadCount;
+        sidebarBadge.hidden = unreadCount === 0;
+    }
+
+    // Quick Access Messages badge
+    const quickMessagesCard = document.querySelector(
+        ".quick-card.orange-card"
+    );
+
+    if (quickMessagesCard) {
+        let quickBadge = quickMessagesCard.querySelector(".card-badge");
+
+        if (unreadCount === 0) {
+            quickBadge?.remove();
+        } else {
+            if (!quickBadge) {
+                quickBadge = document.createElement("span");
+                quickBadge.className = "card-badge";
+                quickMessagesCard.appendChild(quickBadge);
+            }
+
+            quickBadge.textContent = unreadCount;
+        }
+    }
+
+   
+}
+
+const changePasswordForm =
+    document.getElementById("changePasswordForm");
+
+if (changePasswordForm) {
+    changePasswordForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const currentPassword =
+            document.getElementById("currentPassword").value;
+
+        const newPassword =
+            document.getElementById("newPassword").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        const passwordMessage =
+            document.getElementById("passwordMessage");
+
+        const token = localStorage.getItem("stayFinderToken");
+
+        if (!token) {
+            passwordMessage.textContent =
+                "Your session has expired. Please log in again.";
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            passwordMessage.textContent =
+                "New passwords do not match.";
+            return;
+        }
+
+        try {
+            passwordMessage.textContent = "Updating password...";
+
+            const response = await fetch(
+                "http://localhost:5000/api/auth/change-password",
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        currentPassword,
+                        newPassword,
+                        confirmPassword
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            passwordMessage.textContent =
+                data.message || "Unable to update password.";
+
+            if (response.ok && data.success) {
+                changePasswordForm.reset();
+            }
+        } catch (error) {
+            console.error("Password update failed:", error);
+
+            passwordMessage.textContent =
+                "Could not connect to the server. Please try again.";
+        }
+    });
+}
+// Refresh enquiries when the Refresh button is clicked.
+document.getElementById("refreshMessagesBtn")
+?.addEventListener("click", loadStudentMessages);
+
+
+    // Open the filter popup
+document.getElementById("openFiltersBtn").addEventListener("click", function () {
+    document.getElementById("hostelFilterDialog").showModal();
+});
+
+// Close the filter popup
+document.getElementById("closeFiltersBtn").addEventListener("click", function () {
+    document.getElementById("hostelFilterDialog").close();
+});
+
+// Apply selected filters without reloading the page.
+document.getElementById("hostelFilterForm")
+    .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        applyHostelFilters();
+
+        document.getElementById("hostelFilterDialog").close();
+    });
+
+// Clear every checkbox and show all database records again.
+document.getElementById("clearFiltersBtn")
+    .addEventListener("click", function () {
+        document.getElementById("hostelFilterForm").reset();
+
+        document.getElementById("filterCount").textContent = "";
+
+        applyHostelFilters();
+    });
+
+document.getElementById("hostelSort")
+    .addEventListener("change", function () {
+        const sortValue = this.value;
+
+        const selectedBudgets = Array.from(
+            document.querySelectorAll(
+                '#hostelFilterForm input[name="budget"]:checked'
+            )
+        ).map(input => input.value);
+
+        const selectedFacilities = Array.from(
+            document.querySelectorAll(
+                '#hostelFilterForm input[name="facility"]:checked'
+            )
+        ).map(input => input.value);
+
+        const selectedAvailability = Array.from(
+            document.querySelectorAll(
+                '#hostelFilterForm input[name="availability"]:checked'
+            )
+        ).map(input => input.value);
+
+        let hostels = allHostels.filter(function (hostel) {
+            const rent = Number(hostel.rent ?? 0);
+
+            const budgetMatches =
+                selectedBudgets.length === 0 ||
+                selectedBudgets.some(function (budget) {
+                    if (budget === "under4000") return rent < 4000;
+                    if (budget === "4000-6000") return rent >= 4000 && rent <= 6000;
+                    if (budget === "6000-8000") return rent > 6000 && rent <= 8000;
+                    if (budget === "above8000") return rent > 8000;
+                    return false;
+                });
+
+            const facilities = (hostel.facilities || [])
+                .map(value => String(value).trim().toLowerCase());
+
+            const facilitiesMatch =
+                selectedFacilities.length === 0 ||
+                selectedFacilities.every(value =>
+                    facilities.includes(value.trim().toLowerCase())
+                );
+
+            const availabilityMatch =
+                selectedAvailability.length === 0 ||
+                selectedAvailability.includes(hostel.status);
+
+            return budgetMatches && facilitiesMatch && availabilityMatch;
+        });
+
+        if (sortValue === "rentLow") {
+            hostels.sort((a, b) =>
+                Number(a.rent ?? 0) - Number(b.rent ?? 0)
+            );
+        } else if (sortValue === "rentHigh") {
+            hostels.sort((a, b) =>
+                Number(b.rent ?? 0) - Number(a.rent ?? 0)
+            );
+        } else if (sortValue === "name") {
+            hostels.sort((a, b) =>
+                String(a.name || "").localeCompare(String(b.name || ""))
+            );
+        }
+
+        renderHostels(hostels);
+    });
+
 
 
 
@@ -976,17 +3197,43 @@ try {
            PAGE LOAD
         -------------------------------- */
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
+        
+document.addEventListener("DOMContentLoaded", function () {
+    loadStudentName();
+    loadHostels();
+    loadSavedStays();
+    renderRecentSearches();
+    loadStudentMessages();
+    const closeButton = document.getElementById("closeHostelDetailsBtn");
+    const detailsDialog = document.getElementById("hostelDetailsDialog");
 
-                loadStudentName();
-                loadHostels();
+    if (closeButton && detailsDialog) {
+        closeButton.addEventListener("click", function () {
+            detailsDialog.close();
+        });
+    }
+});
 
-            }
-        );
+
 
     </script>
+    <!-- Hostel Details Dialog -->
+<dialog id="hostelDetailsDialog" class="hostel-details-dialog">
+    <div class="hostel-details-header">
+        <h2 id="detailsHostelName">Hostel Details</h2>
 
+        <button
+            type="button"
+            id="closeHostelDetailsBtn"
+            class="hostel-details-close"
+            aria-label="Close hostel details">
+            &times;
+        </button>
+    </div>
+
+    <div id="hostelDetailsContent">
+        <!-- Details will be inserted here using JavaScript -->
+    </div>
+</dialog>
 </body>
 </html>

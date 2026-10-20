@@ -563,6 +563,15 @@
                             style="width: 100%; padding: 12px; margin-top: 8px;"
                         >
                     </div>
+                    <!-- COLLEGE NAME -->
+<div style="margin-bottom: 20px;">
+   <label for="editCollegeName">College Name</label>
+<input
+    type="text"
+    id="editCollegeName"
+    placeholder="Enter college name"
+>
+</div>
 
 
                     <!-- LOCATION -->
@@ -741,7 +750,32 @@
                         </div>
 
                     </div>
-                          <!-- ================= HOSTEL PHOTOS ================= -->
+      
+
+
+                    <!-- BUTTONS -->
+
+                    <div style="display: flex; gap: 10px;">
+
+                        <button
+                            type="submit"
+                            class="primary-dashboard-button">
+                            Save Changes
+                        </button>
+
+                        <button
+                            type="button"
+                            id="cancelEditProperty"
+                            class="primary-dashboard-button">
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+                                <!-- ================= HOSTEL PHOTOS ================= -->
 <section
     id="hostelPhotos"
     class="dashboard-card full-width-section"
@@ -810,30 +844,6 @@
         </div>
     </div>
 </section>
-
-
-                    <!-- BUTTONS -->
-
-                    <div style="display: flex; gap: 10px;">
-
-                        <button
-                            type="submit"
-                            class="primary-dashboard-button">
-                            Save Changes
-                        </button>
-
-                        <button
-                            type="button"
-                            id="cancelEditProperty"
-                            class="primary-dashboard-button">
-                            Cancel
-                        </button>
-
-                    </div>
-
-                </form>
-
-            </section>
 
 
             <!-- ================= LOWER GRID ================= -->
@@ -992,33 +1002,29 @@
                 </section>
 
 
-                <!-- ENQUIRIES -->
 
-                <section class="dashboard-card" id="enquiries">
-
-                    <div class="dashboard-card-header">
-
-                        <div>
-                            <h2>💬 Recent Enquiries</h2>
-                            <p>Students interested in your property</p>
-                        </div>
-
-                        <button type="button" id="viewAllEnquiriesBtn">
-                            View All
-                        </button>
-
-                    </div>
-
-
-                    <div class="enquiry-list" id="enquiryList">
-                    <p>Loading enquiries...</p>
-                     </div>
-
-
-                </section>
+                
 
             </div>
+                 <!-- ================= RECENT ENQUIRIES ================= -->
+            <section class="dashboard-card full-width-section" id="enquiries">
 
+                <div class="dashboard-card-header">
+                    <div>
+                        <h2>💬 Recent Enquiries</h2>
+                        <p>Students interested in your property</p>
+                    </div>
+
+                    <button type="button" id="viewAllEnquiriesBtn">
+                        View All
+                    </button>
+                </div>
+
+                <div class="enquiry-list" id="enquiryList">
+                    <p>Loading enquiries...</p>
+                </div>
+
+            </section>
 
             <!-- ================= PRICING ================= -->
 

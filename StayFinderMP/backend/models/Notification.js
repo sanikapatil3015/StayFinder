@@ -2,26 +2,35 @@ const mongoose = require("mongoose");
 
 const notificationSchema = new mongoose.Schema(
     {
-        owner: {
+        recipient: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
+            required: true,
+            index: true
+        },
+
+        recipientRole: {
+            type: String,
+            enum: ["owner", "student"],
             required: true
         },
 
         type: {
             type: String,
-            enum: ["enquiry", "review"],
+            enum: ["enquiry", "review", "message", "system"],
             required: true
         },
 
         title: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
 
         message: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
 
         isRead: {

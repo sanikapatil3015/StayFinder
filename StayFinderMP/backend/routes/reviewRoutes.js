@@ -2,7 +2,8 @@ const express = require("express");
 
 const {
     createReview,
-    getHostelReviews
+    getHostelReviews,
+    getComparisonRatings
 } = require("../controllers/reviewController");
 
 const protect =
@@ -25,6 +26,10 @@ router.get(
     protect,
     getHostelReviews
 );
-
+router.post(
+    "/comparison",
+    protect,
+    getComparisonRatings
+);
 
 module.exports = router;

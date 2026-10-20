@@ -1,5 +1,5 @@
 console.log("Admin login JavaScript loaded successfully!");
-const API_URL = "/api/auth";
+const API_URL = "http://localhost:5000/api/auth";
 
 const adminLoginForm = document.getElementById("adminLoginForm");
 const emailInput = document.getElementById("email");
@@ -27,7 +27,6 @@ if (!email || !password) {
 loginButton.disabled = true;
 loginButton.textContent = "Logging in...";
 showMessage("Verifying admin credentials...", "success");
-
 try {
     const response = await fetch(`${API_URL}/login`, {
         method: "POST",
@@ -41,42 +40,39 @@ try {
         })
     });
 
-    const data = await response.json();
+    // Read the response safely
+    const data = await response.json().catch(() => ({}));
 
+    // Handle unsuccessful login
     if (!response.ok) {
-        showMessage(data.message || "Admin login failed.");
-        return;
+        throw new Error(data.message || "Admin login failed.");
     }
 
-    // Never allow student or owner accounts into the admin panel.
+    // Confirm that the returned account is an admin
     if (!data.user || data.user.role !== "admin") {
-        showMessage("Access denied. This account is not an administrator.");
-        return;
+        throw new Error("This account does not have admin access.");
     }
 
-    // Save the existing authentication format.
-    if (data.token) {
-        localStorage.setItem("stayFinderToken", data.token);
+    if (!data.token) {
+        throw new Error("Login succeeded, but the server did not return a token.");
     }
 
-    localStorage.setItem(
-        "stayFinderUser",
-        JSON.stringify(data.user)
-    );
+    // Store the login session
+    localStorage.setItem("stayFinderToken", data.token);
+    localStorage.setItem("stayFinderUser", JSON.stringify(data.user));
 
     showMessage("Admin login successful. Redirecting...", "success");
 
-    setTimeout(function () {
-        window.location.href = "admin-dashboard.html";
-    }, 700);
+    // Navigate to the dashboard in the same frontend folder
+    window.location.replace(
+        new URL("./admin-dashboard.html", window.location.href).href
+    );
 
 } catch (error) {
     console.error("Admin login error:", error);
-    showMessage(
-        "Cannot connect to the server. Please check that the backend is running."
-    );
-
-} finally {
+    showMessage(error.message || "Unable to connect to the server.", "error");
+}
+ finally {
     loginButton.disabled = false;
     loginButton.textContent = "Login as Admin";
 }

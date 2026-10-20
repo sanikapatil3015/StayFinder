@@ -32,4 +32,10 @@ const reviewSchema = new mongoose.Schema(
     }
 );
 
+reviewSchema.index(
+    { student: 1, hostel: 1 },
+    { unique: true }
+);
+
+module.exports = mongoose.model("Review", reviewSchema);
 module.exports = mongoose.model("Review", reviewSchema);
