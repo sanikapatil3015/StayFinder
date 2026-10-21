@@ -2,9 +2,14 @@
 // OWNER DASHBOARD
 // CONNECT FRONTEND TO BACKEND
 // =====================================================
+const API_BASE_URL = "https://stay-finder-backend-t2ch.onrender.com";
+const API_URL = `${API_BASE_URL}/api/hostels`;
 
-const API_URL = "/api/hostels";
+const OWNER_PROFILE_API = `${API_BASE_URL}/api/owner/profile`;
+const NOTIFICATIONS_API = `${API_BASE_URL}/api/notifications`;
+
 let currentHostel = null;
+
 
 // =====================================================
 // LOAD OWNER HOSTEL
@@ -1848,7 +1853,7 @@ function updateHostelAnalytics(hostel) {
 // OWNER PROFILE & SETTINGS
 // =====================================================
 
-const OWNER_PROFILE_API = "/api/owner/profile";
+
 
 // Load the owner's profile from the backend
 async function loadOwnerProfile() {
@@ -2187,7 +2192,7 @@ setupPasswordForm();
 // OWNER NOTIFICATIONS
 // =====================================================
 
-const NOTIFICATIONS_API = "/api/notifications";
+
 
 // Load notifications from the backend
 async function loadOwnerNotifications() {
