@@ -1071,23 +1071,29 @@ const data = responseText ? JSON.parse(responseText) : {};
            ROLE-BASED REDIRECT
         ================================================= */
 
-        setTimeout(function() {
-    console.log("Logged-in user:", data.user);
-    console.log("User role:", data.user?.role);
+        
+setTimeout(function () {
+    const user = data.user || data.data?.user;
+    const role = user?.role || data.role || data.data?.role;
 
-    if (data.user?.role === "student") {
-        window.location.href = "/student.html";
-    }
-    else if (data.user?.role === "owner") {
-        window.location.href = "/owner.html";
-    }
-    else if (data.user?.role === "admin") {
-        window.location.href = "/admin-dashboard.html";
-    }
-    else {
-        showMessage("Unknown user role. Please contact support.", "error");
+    console.log("Login response:", data);
+    console.log("Detected user role:", role);
+
+    if (role === "student") {
+        window.location.href = "student.html";
+    } else if (role === "owner") {
+        window.location.href = "owner.html";
+    } else if (role === "admin") {
+        window.location.href = "admin-dashboard.html";
+    } else {
+        showMessage(
+            "Login succeeded, but the user role was not found. Please check the login response.",
+            "error"
+        );
     }
 }, 700);
+
+
 
     }
 
