@@ -1,5 +1,5 @@
 console.log("Admin login JavaScript loaded successfully!");
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "https://stay-finder-backend-t2ch.onrender.com/api/auth";
 
 const adminLoginForm = document.getElementById("adminLoginForm");
 const emailInput = document.getElementById("email");

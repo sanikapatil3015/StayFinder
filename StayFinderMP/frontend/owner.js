@@ -239,7 +239,7 @@ if (propertyImage) {
 
         mainPhotoElement.src = hostel.mainPhoto.startsWith("http")
             ? hostel.mainPhoto
-            : "http://localhost:5000" + hostel.mainPhoto;
+            : "https://stay-finder-backend-t2ch.onrender.com" + hostel.mainPhoto;
 
         mainPhotoElement.style.display = "block";
 
@@ -1783,7 +1783,7 @@ if (!photo) {
 
 photo.src = hostel.mainPhoto.startsWith("http")
     ? hostel.mainPhoto
-    : "http://localhost:5000" + hostel.mainPhoto;
+    : "https://stay-finder-backend-t2ch.onrender.com" + hostel.mainPhoto;
 
 photo.style.display = "block";
 

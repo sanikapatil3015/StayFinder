@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/hostels";
+const API_URL = "https://stay-finder-backend-t2ch.onrender.com/api/hostels";
 
 const token = localStorage.getItem("stayFinderToken");
 
