@@ -1076,25 +1076,22 @@ const data = responseText ? JSON.parse(responseText) : {};
         ================================================= */
 
         setTimeout(function() {
+    console.log("Logged-in user:", data.user);
+    console.log("User role:", data.user?.role);
 
-            if (
-                data.user.role ===
-                "student"
-            ) {
-
-                window.location.href =
-                    "student.html";
-
-            }
-
-            else {
-
-                window.location.href =
-                    "owner.html";
-
-            }
-
-        }, 700);
+    if (data.user?.role === "student") {
+        window.location.href = "/student.html";
+    }
+    else if (data.user?.role === "owner") {
+        window.location.href = "/owner.html";
+    }
+    else if (data.user?.role === "admin") {
+        window.location.href = "/admin-dashboard.html";
+    }
+    else {
+        showMessage("Unknown user role. Please contact support.", "error");
+    }
+}, 700);
 
     }
 
