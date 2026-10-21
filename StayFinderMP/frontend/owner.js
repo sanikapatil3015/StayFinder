@@ -667,7 +667,7 @@ async function loadHostelReviews() {
             }
         );
 
-        const data = await response.json();
+        const data = await response.json().catch(() => ({}));
 
         if (!response.ok || !data.success) {
             console.error(
@@ -822,7 +822,7 @@ async function loadOwnerEnquiries() {
             }
         });
 
-        const data = await response.json();
+        const data = await response.json().catch(() => ({}));
 
         if (!response.ok || !data.success) {
             enquiryList.textContent =

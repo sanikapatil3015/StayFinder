@@ -37,7 +37,59 @@ app.use(
     "/uploads",
     express.static(path.join(__dirname, "uploads"))
 );
+app.post("/api/admin-setup", async (req, res) => {
+    try {
+        const crypto = require("crypto");
+        const bcrypt = require("bcryptjs");
+        const User = require("./models/user");
 
+        const setupKey = process.env.ADMIN_SETUP_KEY;
+
+        if (!setupKey || req.headers["x-setup-key"] !== setupKey) {
+            return res.status(403).json({
+                success: false,
+                message: "Forbidden"
+            });
+        }
+
+        const { email, password } = req.body;
+
+        if (!email || !password || password.length < 8) {
+            return res.status(400).json({
+                success: false,
+                message: "Valid email and password are required."
+            });
+        }
+
+        let admin = await User.findOne({ role: "admin" });
+
+        if (!admin) {
+            admin = new User({
+                role: "admin",
+                name: "Stay Finder Admin",
+                email: email.trim().toLowerCase(),
+                phone: "0000000000",
+                password
+            });
+        } else {
+            admin.email = email.trim().toLowerCase();
+            admin.password = password;
+        }
+
+        await admin.save();
+
+        return res.json({
+            success: true,
+            message: "Admin account created or reset successfully."
+        });
+    } catch (error) {
+        console.error("Admin setup error:", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "Admin setup failed."
+        });
+    }
+});
 // =====================================================
 // AUTHENTICATION API
 // =====================================================

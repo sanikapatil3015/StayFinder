@@ -5,61 +5,65 @@ const bcrypt = require("bcryptjs");
 const User = require("./models/user");
 
 async function createAdmin() {
-    try {
-        if (
-            !process.env.MONGO_URI ||
-            !process.env.ADMIN_EMAIL ||
-            !process.env.ADMIN_PASSWORD
-        ) {
-            throw new Error(
-                "MONGO_URI, ADMIN_EMAIL and ADMIN_PASSWORD must be set in .env"
-            );
-        }
+try {
+const { MONGO_URI, ADMIN_EMAIL, ADMIN_PASSWORD } = process.env;
 
-        await mongoose.connect(process.env.MONGO_URI);
 
-        const existingAdmin = await User.findOne({
-            role: "admin"
-        });
+    if (!MONGO_URI || !ADMIN_EMAIL || !ADMIN_PASSWORD) {
+        throw new Error(
+            "MONGO_URI, ADMIN_EMAIL and ADMIN_PASSWORD must be set in .env"
+        );
+    }
 
-        if (existingAdmin) {
-            console.log(
-                "An admin account already exists. No new account created."
-            );
-            return;
-        }
+    await mongoose.connect(MONGO_URI);
 
-        const email = process.env.ADMIN_EMAIL.toLowerCase().trim();
-        const password = process.env.ADMIN_PASSWORD;
+    const email = ADMIN_EMAIL.toLowerCase().trim();
 
+    // Find an existing admin by role or configured email.
+    let admin = await User.findOne({
+        $or: [
+            { email, role: "admin" },
+            { role: "admin" }
+        ]
+    });
+
+    if (admin) {
+        admin.email = email;
+        admin.password = ADMIN_PASSWORD;
+        admin.role = "admin";
+        admin.name = "Stay Finder Admin";
+        await admin.save();
+
+        console.log("Existing admin account updated successfully.");
+        console.log("Admin email:", email);
+    } else {
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
             throw new Error(
-                "This email already belongs to another account. Choose a different admin email."
+                "This email belongs to a non-admin account. Choose a different ADMIN_EMAIL."
             );
         }
-
-        const hashedPassword = await bcrypt.hash(password, 12);
 
         await User.create({
             role: "admin",
             name: "Stay Finder Admin",
             email,
             phone: "0000000000",
-            password: hashedPassword
+            password: ADMIN_PASSWORD
         });
 
         console.log("Admin account created successfully.");
         console.log("Admin email:", email);
-
-    } catch (error) {
-        console.error("Admin creation failed:", error.message);
-        process.exitCode = 1;
-
-    } finally {
-        await mongoose.disconnect();
     }
+} catch (error) {
+    console.error("Admin setup failed:", error.message);
+    process.exitCode = 1;
+} finally {
+    await mongoose.disconnect();
+}
+
+
 }
 
 createAdmin();
