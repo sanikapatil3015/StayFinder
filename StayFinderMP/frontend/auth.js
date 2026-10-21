@@ -1030,8 +1030,12 @@ async function loginUser() {
             );
 
 
-        const data =
-            await response.json();
+        const responseText = await response.text();
+
+console.log("Login response status:", response.status);
+console.log("Login response body:", responseText);
+
+const data = responseText ? JSON.parse(responseText) : {};
 
 
         /* =================================================
