@@ -540,15 +540,7 @@ function registerUser() {
        CONFIRM PASSWORD
     ================================================= */
 
-    console.log(
-        "Password:",
-        JSON.stringify(password)
-    );
-
-    console.log(
-        "Confirm Password:",
-        JSON.stringify(confirmPassword)
-    );
+    
 
 
     if (password !== confirmPassword) {
@@ -697,8 +689,12 @@ async function registerStudent(
             );
 
 
-        const data =
-            await response.json();
+        const responseText = await response.text();
+
+console.log("Registration status:", response.status);
+console.log("Registration response:", responseText);
+
+const data = responseText ? JSON.parse(responseText) : {};
 
 
         /* =================================================

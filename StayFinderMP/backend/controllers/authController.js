@@ -313,7 +313,7 @@ const register = async (req, res) => {
         // HASH PASSWORD
         // =================================================
 
-        const hashedPassword = password;
+        const hashedPassword = await bcrypt.hash(password, 10);
 
 
         // =================================================
