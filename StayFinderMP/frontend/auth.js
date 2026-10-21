@@ -9,7 +9,7 @@
    BACKEND API
 ===================================================== */
 
-const API_URL = "/api/auth";
+const API_URL = "https://stay-finder-backend-t2ch.onrender.com/api/auth";
 
 
 /* =====================================================

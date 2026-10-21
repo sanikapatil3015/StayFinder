@@ -494,7 +494,7 @@ console.log("Login role received:", role);
         return res.status(200).json({
             success: true,
             message: "Login successful.",
-            token,
+            token:token,
             user: userResponse(user)
         });
 
