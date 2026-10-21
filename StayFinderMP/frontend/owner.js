@@ -658,7 +658,7 @@ async function loadHostelReviews() {
         }
 
         const response = await fetch(
-            `/api/reviews/hostel/${currentHostel._id}`,
+            `${API_BASE_URL}/api/reviews/hostel/${currentHostel._id}`,
             {
                 method: "GET",
                 headers: {
@@ -815,7 +815,7 @@ async function loadOwnerEnquiries() {
     }
 
     try {
-        const response = await fetch("/api/enquiries/my", {
+        const response = await fetch(`${API_BASE_URL}/api/enquiries/my`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -945,7 +945,7 @@ if (enquiriesCountElement) {
 
                         try {
                             const updateResponse = await fetch(
-                                `/api/enquiries/${enquiry._id}/status`,
+                                `${API_BASE_URL}/api/enquiries/${enquiry._id}/status`,
                                 {
                                     method: "PATCH",
                                     headers: {
@@ -1030,7 +1030,7 @@ replyButton.addEventListener("click", async function () {
 
     try {
         const response = await fetch(
-            `/api/enquiries/${enquiry._id}/reply`,
+            `${API_BASE_URL}/api/enquiries/${enquiry._id}/reply`,
             {
                 method: "POST",
                 headers: {
@@ -1627,16 +1627,30 @@ additionalPhotosInput.addEventListener("change", function () {
 function displaySavedPhotos(hostel) {
     savedPhotosContainer.replaceChildren();
 
+    function getPhotoUrl(photoPath) {
+        if (!photoPath) return "";
+
+        return photoPath.startsWith("http")
+            ? photoPath
+            : `${API_BASE_URL}${photoPath.startsWith("/") ? "" : "/"}${photoPath}`;
+    }
+
     if (hostel.mainPhoto) {
         savedPhotosContainer.appendChild(
-            createPhotoImage(hostel.mainPhoto, "Main hostel photo")
+            createPhotoImage(
+                getPhotoUrl(hostel.mainPhoto),
+                "Main hostel photo"
+            )
         );
     }
 
     if (Array.isArray(hostel.photos)) {
         hostel.photos.forEach(function (photo, index) {
             savedPhotosContainer.appendChild(
-                createPhotoImage(photo, "Hostel gallery photo " + (index + 1))
+                createPhotoImage(
+                    getPhotoUrl(photo),
+                    "Hostel gallery photo " + (index + 1)
+                )
             );
         });
     }
@@ -1645,7 +1659,6 @@ function displaySavedPhotos(hostel) {
         savedPhotosContainer.textContent = "No saved photos yet.";
     }
 }
-
 // Upload selected photos
 uploadButton.addEventListener("click", async function () {
     if (!currentHostel || !currentHostel._id) {
@@ -2101,7 +2114,7 @@ async function handleChangePassword(event) {
     button.textContent = "Updating...";
 
     try {
-        const response = await fetch("/api/auth/change-password", {
+        const response = await fetch(`${API_BASE_URL}/api/auth/change-password`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
