@@ -1,26 +1,19 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const path = require("path");
 
 const authRoutes = require("./routes/authRoutes");
-
-const hostelRoutes =
-    require("./routes/hostelRoutes");
+const hostelRoutes = require("./routes/hostelRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
-
 const enquiryRoutes = require("./routes/enquiryRoutes");
-
 const profileRoutes = require("./routes/profileRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const savedStayRoutes = require("./routes/savedStayRoutes");
 const recentSearchRoutes = require("./routes/recentSearchRoutes");
-// =====================================================
-// LOAD ENVIRONMENT VARIABLES
-// =====================================================
 
-dotenv.config();
 
 // =====================================================
 // CREATE EXPRESS APPLICATION

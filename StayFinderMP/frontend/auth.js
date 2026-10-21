@@ -186,6 +186,12 @@ function switchAuthMode(mode) {
 
     const aadhaarGroup =
         document.getElementById("aadhaarGroup");
+    const forgotPasswordGroup = document.getElementById("forgotPasswordGroup");
+
+if (forgotPasswordGroup) {
+    forgotPasswordGroup.style.display =
+        mode === "login" ? "block" : "none";
+}
 
 
     /* =================================================

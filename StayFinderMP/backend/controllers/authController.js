@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Hostel = require("../models/Hostel");
+const crypto = require("crypto");
+const { sendPasswordResetEmail } = require("../utils/mailer");
 
 // =====================================================
 // PASSWORD VALIDATION
@@ -599,11 +601,184 @@ await user.save();
     }
 };
 
+// =====================================================
+// FORGOT PASSWORD
+// POST /api/auth/forgot-password
+// =====================================================
+const forgotPassword = async (req, res) => {
+    try {
+        const email =
+            typeof req.body.email === "string"
+                ? req.body.email.trim().toLowerCase()
+                : "";
+
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: "Please enter your email address."
+            });
+        }
+
+        // Only student and owner accounts use this recovery flow.
+        const user = await User.findOne({
+            email,
+            role: { $in: ["student", "owner"] }
+        });
+
+        // Use the same response whether the account exists or not.
+        const genericMessage =
+            "If an eligible account exists for this email, a password-reset link will be sent.";
+
+        if (!user) {
+            return res.status(200).json({
+                success: true,
+                message: genericMessage
+            });
+        }
+
+        // Generate a secure random token.
+        const resetToken = crypto.randomBytes(32).toString("hex");
+
+        // Store only the SHA-256 hash, never the raw token.
+        user.resetPasswordToken = crypto
+            .createHash("sha256")
+            .update(resetToken)
+            .digest("hex");
+
+        // Link expires after 15 minutes.
+        user.resetPasswordExpires =
+            new Date(Date.now() + 15 * 60 * 1000);
+
+        await user.save();
+
+        const frontendUrl = process.env.FRONTEND_URL;
+
+        if (!frontendUrl) {
+            throw new Error("FRONTEND_URL is missing from .env");
+        }
+
+        const resetLink =
+    `${frontendUrl.replace(/\/$/, "")}/reset-password.html?token=${resetToken}`;
+
+        try {
+            await sendPasswordResetEmail(user.email, resetLink);
+        } catch (emailError) {
+            // Invalidate the token if sending the email fails.
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+            await user.save();
+
+            throw emailError;
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: genericMessage
+        });
+    }  catch (error) {
+    console.error("===== FORGOT PASSWORD ERROR =====");
+    console.error(error);
+
+    if (error instanceof Error) {
+        console.error("Error name:", error.name);
+        console.error("Error message:", error.message);
+        console.error("Error stack:", error.stack);
+    } else {
+        console.error("Error value:", String(error));
+    }
+
+    return res.status(500).json({
+        success: false,
+        message: "Unable to process the password-reset request right now."
+    });
+}
+};
+
+
+// =====================================================
+// RESET PASSWORD
+// POST /api/auth/reset-password
+// =====================================================
+const resetPassword = async (req, res) => {
+    try {
+        const { token, newPassword, confirmPassword } = req.body;
+
+        if (
+            typeof token !== "string" ||
+            !/^[a-f0-9]{64}$/i.test(token)
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid or expired reset link."
+            });
+        }
+
+        if (!isStrongPassword(newPassword)) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character."
+            });
+        }
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "Passwords do not match."
+            });
+        }
+
+        const hashedToken = crypto
+            .createHash("sha256")
+            .update(token)
+            .digest("hex");
+
+        const user = await User.findOne({
+            resetPasswordToken: hashedToken,
+            resetPasswordExpires: { $gt: new Date() },
+            role: { $in: ["student", "owner"] }
+        }).select("+resetPasswordToken +resetPasswordExpires +password");
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid or expired reset link."
+            });
+        }
+
+        // Assign the plain password. Your existing User model's
+        // pre-save hook will hash it automatically.
+        user.password = newPassword;
+
+        // Make the reset token unusable after successful reset.
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Password reset successfully. You can now log in."
+        });
+    } catch (error) {
+    console.error("Reset password error:", error);
+
+    return res.status(500).json({
+        success: false,
+        message: "Unable to reset the password right now."
+    });
+}
+
+};
+
+
+// =====================================================
+// EXPORT CONTROLLERS
+// =====================================================
 module.exports = {
-
     register,
-
     login,
-    changePassword
-
+    changePassword,
+    forgotPassword,
+    resetPassword
 };

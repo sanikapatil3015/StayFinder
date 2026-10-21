@@ -34,6 +34,17 @@ const userSchema = new mongoose.Schema(
       required: true,
       select: false
     },
+    resetPasswordToken: {
+    type: String,
+    default: undefined,
+    select: false
+},
+
+resetPasswordExpires: {
+    type: Date,
+    default: undefined,
+    select: false
+},
 
     college: {
       type: String,

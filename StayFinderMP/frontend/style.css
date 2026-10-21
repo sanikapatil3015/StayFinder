@@ -819,3 +819,20 @@ footer p {
         max-width: 100%;
     }
 }
+
+.forgot-password {
+    text-align: right;
+    margin-top: 8px;
+    margin-bottom: 18px;
+}
+
+.forgot-password a {
+    color: #173b70;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}

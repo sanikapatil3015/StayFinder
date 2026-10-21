@@ -3,7 +3,9 @@ const express = require("express");
 const {
     register,
     login,
-    changePassword
+    changePassword,
+    forgotPassword,
+    resetPassword
 } = require("../controllers/authController");
 
 
@@ -34,5 +36,11 @@ router.post(
 const protect = require("../middleware/authMiddleware");
 
 router.patch("/change-password", protect, changePassword);
+
+// Forgot password: request a reset email
+router.post("/forgot-password", forgotPassword);
+
+// Reset password: save the new password
+router.post("/reset-password", resetPassword);
 
 module.exports = router;
