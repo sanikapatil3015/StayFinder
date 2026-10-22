@@ -910,6 +910,20 @@ function studentLogout() {
 LOAD HOSTELS FROM MONGODB
 -------------------------------- */
 
+function getHostelImageUrl(photoPath) {
+    if (!photoPath) return "";
+
+    if (photoPath.startsWith("http://") ||
+        photoPath.startsWith("https://")) {
+        return photoPath;
+    }
+
+    return "https://stay-finder-backend-t2ch.onrender.com" +
+        (photoPath.startsWith("/") ? photoPath : "/" + photoPath);
+}
+
+
+
 let allHostels = [];
 let savedHostels = [];
 let selectedHostelIds = new Set();
@@ -987,7 +1001,7 @@ function renderSavedStays() {
 
         if (hostel.mainPhoto) {
             const photo = document.createElement("img");
-            photo.src = hostel.mainPhoto;
+            photo.src = getHostelImageUrl(hostel.mainPhoto);
             photo.alt = (hostel.name || "Hostel") + " photo";
             photo.loading = "lazy";
 
@@ -1156,7 +1170,7 @@ image.className = "property-image property-one";
 if (hostel.mainPhoto) {
     const photo = document.createElement("img");
 
-    photo.src = hostel.mainPhoto;
+    photo.src = getHostelImageUrl(hostel.mainPhoto);
     photo.alt = (hostel.name || "Hostel") + " photo";
     photo.className = "property-card-photo";
     photo.loading = "lazy";
@@ -2038,7 +2052,7 @@ async function showHostelDetails(hostel) {
     // Hostel photo
     if (hostel.mainPhoto) {
         const photo = document.createElement("img");
-        photo.src = hostel.mainPhoto;
+        photo.src = getHostelImageUrl(hostel.mainPhoto);
         photo.alt = (hostel.name || "Hostel") + " photo";
         photo.className = "hostel-details-photo";
         body.appendChild(photo);
