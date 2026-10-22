@@ -2854,13 +2854,24 @@ async function sendEnquiry(hostelId, hostelName) {
                 })
             });
 
-            const data = await response.json();
+            const responseText = await response.text();
 
-            if (!response.ok || !data.success) {
-                throw new Error(
-                    data.message || "Unable to send enquiry."
-                );
-            }
+console.log("Enquiry response status:", response.status);
+console.log("Enquiry response:", responseText);
+
+let data = {};
+
+try {
+    data = responseText ? JSON.parse(responseText) : {};
+} catch {
+    throw new Error("Server returned an invalid response. Please try again.");
+}
+
+if (!response.ok || !data.success) {
+    throw new Error(
+        data.message || "Unable to send enquiry. Please check the backend."
+    );
+}
 
             statusMessage.textContent =
                 "✓ Your enquiry was sent successfully!";
