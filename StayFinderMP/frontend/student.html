@@ -1121,7 +1121,11 @@ async function loadHostels() {
 
     try {
         const response = await fetch("https://stay-finder-backend-t2ch.onrender.com/api/hostels");
-        const data = await response.json();
+        const responseText = await response.text();
+console.log("Save hostel response status:", response.status);
+console.log("Save hostel response:", responseText);
+
+const data = responseText ? JSON.parse(responseText) : {};
 
         if (!response.ok || !data.success) {
             throw new Error("Unable to load hostels.");
