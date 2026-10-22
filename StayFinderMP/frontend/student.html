@@ -953,8 +953,8 @@ async function loadSavedStays() {
             }
         });
 
-        const data = await response.json();
-
+       const text = await response.text();
+const data = text ? JSON.parse(text) : {};
         if (!response.ok || !data.success) {
             throw new Error(data.message || "Unable to load saved stays.");
         }
@@ -1440,7 +1440,7 @@ async function compareSelectedHostels() {
 
 try {
     const response = await fetch(
-        "/api/reviews/comparison",
+        "https://stay-finder-backend-t2ch.onrender.com/api/reviews/comparison",
         {
             method: "POST",
             headers: {
@@ -1453,7 +1453,8 @@ try {
         }
     );
 
-    const data = await response.json();
+   const text = await response.text();
+const data = text ? JSON.parse(text) : {};
 
     if (!response.ok || !data.success) {
         throw new Error(data.message || "Unable to load ratings.");
