@@ -173,6 +173,7 @@ nav a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 .hero-image img {
     width: 100%;
@@ -192,7 +193,6 @@ img {
 .college-icon {
     font-size: 180px;
 }
-
 .student-icon {
 position: absolute;
 bottom: 10px;
@@ -201,13 +201,7 @@ font-size: 90px;
 z-index: 2;
 }
 
-@media (max-width: 768px) {
-.student-icon {
-font-size: 65px;
-bottom: 15px;
-right: 15%;
-}
-}
+
 .pin {
     position: absolute;
     font-size: 35px;
@@ -781,9 +775,9 @@ footer p {
         font-size: 35px;
     }
     .student-icon {
-font-size: 40px;
-bottom: 10%;
-right: 8%;
+font-size: 45px;
+bottom: 10px;
+right: 10%;
 z-index: 2;
 }
 }
