@@ -3,6 +3,12 @@ const path = require("path");
 const fs = require("fs");
 const Review = require("../models/Review");
 
+const supabase = require("../utils/supabaseClient");
+const crypto = require("crypto");
+
+const SUPABASE_BUCKET =
+    process.env.SUPABASE_BUCKET || "hostel-photos";
+
 // =====================================================
 // GET LOGGED-IN OWNER'S HOSTELS
 // =====================================================
@@ -248,6 +254,7 @@ async function getAllHostels(req, res) {
     }
 }
 // Upload main hostel photo and additional photos
+// Upload main hostel photo and additional photos to Supabase Storage
 async function uploadHostelPhotos(req, res) {
     try {
         if (req.user.role !== "owner") {
@@ -271,21 +278,76 @@ async function uploadHostelPhotos(req, res) {
 
         const files = req.files || {};
 
-        // Update the main photo if a new one was uploaded
-        if (files.mainPhoto && files.mainPhoto.length > 0) {
-            hostel.mainPhoto =
-                "/uploads/hostels/" + files.mainPhoto[0].filename;
+        const mainPhotoFile =
+            files.mainPhoto && files.mainPhoto.length > 0
+                ? files.mainPhoto[0]
+                : null;
+
+        const galleryFiles = files.photos || [];
+
+        if (!mainPhotoFile && galleryFiles.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Please select at least one photo."
+            });
         }
 
-        // Add newly uploaded photos to the existing gallery
-        if (files.photos && files.photos.length > 0) {
-            const newPhotos = files.photos.map(
-                file => "/uploads/hostels/" + file.filename
-            );
+        // Upload a photo to Supabase and return its public URL.
+        async function uploadToSupabase(file) {
+            const extension = require("path")
+                .extname(file.originalname)
+                .toLowerCase();
+
+            const storagePath =
+                `${hostel._id}/${crypto.randomUUID()}${extension}`;
+
+            const { error: uploadError } = await supabase
+                .storage
+                .from(SUPABASE_BUCKET)
+                .upload(storagePath, file.buffer, {
+                    contentType: file.mimetype,
+                    upsert: false
+                });
+
+            if (uploadError) {
+                console.error(
+                    "Supabase photo upload error:",
+                    uploadError.message
+                );
+
+                throw new Error("Unable to upload a hostel photo.");
+            }
+
+            const { data } = supabase
+                .storage
+                .from(SUPABASE_BUCKET)
+                .getPublicUrl(storagePath);
+
+            if (!data || !data.publicUrl) {
+                throw new Error("Unable to generate the photo URL.");
+            }
+
+            return data.publicUrl;
+        }
+
+        // Upload the main photo if provided.
+        if (mainPhotoFile) {
+            hostel.mainPhoto =
+                await uploadToSupabase(mainPhotoFile);
+        }
+
+        // Upload additional gallery photos if provided.
+        if (galleryFiles.length > 0) {
+            const newPhotoUrls = [];
+
+            for (const file of galleryFiles) {
+                const photoUrl = await uploadToSupabase(file);
+                newPhotoUrls.push(photoUrl);
+            }
 
             hostel.photos = [
-                ...hostel.photos,
-                ...newPhotos
+                ...(hostel.photos || []),
+                ...newPhotoUrls
             ];
         }
 
@@ -294,15 +356,19 @@ async function uploadHostelPhotos(req, res) {
         return res.status(200).json({
             success: true,
             message: "Hostel photos uploaded successfully.",
-            hostel: hostel
+            hostel
         });
 
     } catch (error) {
-        console.error("Upload hostel photos error:", error);
+        console.error(
+            "Upload hostel photos error:",
+            error
+        );
 
         return res.status(500).json({
             success: false,
-            message: "Unable to upload hostel photos."
+            message:
+                error.message || "Unable to upload hostel photos."
         });
     }
 }

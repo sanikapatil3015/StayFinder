@@ -1,25 +1,4 @@
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
-
-// Create the uploads folder if it doesn't exist
-const uploadDirectory = path.join(__dirname, "..", "uploads", "hostels");
-
-fs.mkdirSync(uploadDirectory, { recursive: true });
-
-// Configure where photos will be saved
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDirectory);
-    },
-
-    filename: function (req, file, cb) {
-        const uniqueName =
-            Date.now() + "-" + Math.round(Math.random() * 1e9);
-
-        cb(null, uniqueName + path.extname(file.originalname).toLowerCase());
-    }
-});
 
 // Accept image files only
 function imageFileFilter(req, file, cb) {
@@ -32,13 +11,18 @@ function imageFileFilter(req, file, cb) {
     if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {
-        cb(new Error("Only JPG, PNG, and WEBP images are allowed."));
+        cb(
+            new Error(
+                "Only JPG, PNG, and WEBP images are allowed."
+            )
+        );
     }
 }
 
-// Configure upload limits
+// Store uploaded images in memory temporarily.
+// The controller will upload them to Supabase Storage.
 const upload = multer({
-    storage: storage,
+    storage: multer.memoryStorage(),
     fileFilter: imageFileFilter,
     limits: {
         fileSize: 5 * 1024 * 1024,
