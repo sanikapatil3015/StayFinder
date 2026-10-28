@@ -196,13 +196,16 @@ img {
 .student-icon {
 position: absolute;
 bottom: 10px;
+right: 20%;
 font-size: 90px;
+z-index: 2;
 }
 
 @media (max-width: 768px) {
 .student-icon {
-font-size: 45px;
-bottom: 5px;
+font-size: 65px;
+bottom: 15px;
+right: 15%;
 }
 }
 .pin {
@@ -777,6 +780,12 @@ footer p {
     .hero h1 {
         font-size: 35px;
     }
+    .student-icon {
+font-size: 40px;
+bottom: 10%;
+right: 8%;
+z-index: 2;
+}
 }
 /* ===============================
    OWNER REGISTER FORM
