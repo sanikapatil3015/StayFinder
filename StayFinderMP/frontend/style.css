@@ -194,11 +194,17 @@ img {
 }
 
 .student-icon {
-    position: absolute;
-    bottom: 10px;
-    font-size: 90px;
+position: absolute;
+bottom: 10px;
+font-size: 90px;
 }
 
+@media (max-width: 768px) {
+.student-icon {
+font-size: 45px;
+bottom: 5px;
+}
+}
 .pin {
     position: absolute;
     font-size: 35px;
