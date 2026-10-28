@@ -2575,7 +2575,7 @@ async function saveRecentSearch(location) {
     }
 
     try {
-        const response = await fetch("/api/recent-searches", {
+        const response = await fetch("https://stay-finder-backend-t2ch.onrender.com/api/recent-searches", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -2702,7 +2702,7 @@ async function clearSearches() {
     }
 
     try {
-        const response = await fetch("/api/recent-searches", {
+        const response = await fetch("https://stay-finder-backend-t2ch.onrender.com/api/recent-searches", {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`
